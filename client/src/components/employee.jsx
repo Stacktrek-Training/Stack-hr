@@ -2,6 +2,7 @@
     import image1 from './../assets/logo.png'
     import { Table } from "flowbite-react";
     import { Modal, Button, Label, TextInput } from "flowbite-react";
+import EditEmployee from "./edit_employee";
 
 
     const Employee = () => { 
@@ -24,27 +25,28 @@
             <li 
             className="py-3 px-4 hover:bg-gray-900 hover:rounded-tl-lg hover:rounded-bl-lg"
             >
-            <a href="/Dashboard" className="block">
+            <a href="/Dashboard" className="block font-semibold">
                 Dashboard
             </a>
             </li>
             <li
             className="py-3 px-4 hover:bg-gray-900 hover:rounded-tl-lg hover:rounded-bl-lg"
             >
-            <a href="#" className="block">
+            <a href="#" className="block font-semibold">
                 Payrols
             </a>
             </li>
             <li 
             className="py-3 px-4 hover:bg-gray-900 hover:rounded-tl-lg hover:rounded-bl-lg"
             >
-            <a href="/Employee" className="block">
+            <a href="/Employee" className="block font-semibold">
                 Employee
             </a>
             </li>
         </ul>
         </div>
         <div className="flex-1 p-12 mt-20">
+            {/* Modal */}
     <div className="mb-10">
     <Button onClick={toggleModal}>
     Add Employee
@@ -56,7 +58,7 @@
   popup={true}
   onClose={handleCloseModal}
 >
-        <Modal.Header />
+        <Modal.Header><h2 className="font-bold"> Add Employee </h2> </Modal.Header> 
         <Modal.Body>
         <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
             <div>
@@ -87,6 +89,20 @@
                 required={true}
             />
             </div>
+            <div>
+            <div className="mb-2 block">
+                <Label
+                value="Salary ₱"
+                />
+            </div>
+            <TextInput
+                id="salary"
+                type="number"
+                placeholder="Salary"
+                required={true}
+            />
+            </div>
+            
             <div className="w-full flex justify-center ">
             <Button>
                 Save 
@@ -108,6 +124,12 @@
         <Table.HeadCell>
         Job roles
         </Table.HeadCell>
+        <Table.HeadCell>
+        Salary
+        </Table.HeadCell>
+        <Table.HeadCell>
+        Buttons
+        </Table.HeadCell>
     
     </Table.Head>
     <Table.Body className="divide-y">
@@ -121,7 +143,14 @@
         <Table.Cell>
             Front-End
         </Table.Cell>
-        
+        <Table.Cell>
+            Wanmilyon
+        </Table.Cell>
+        <Table.Cell className="flex">
+            <EditEmployee/>
+            <button className=" border-none bg-red-800 px-2 py-1 rounded-md text-white
+            hover:bg-red-700  font-semibold " > Delete</button>
+        </Table.Cell>
         </Table.Row>
     </Table.Body>
     </Table>

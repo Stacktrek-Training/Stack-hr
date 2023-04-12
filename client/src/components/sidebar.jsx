@@ -9,23 +9,23 @@ const  Sidebar = () => {
             <img src={image1} alt="logo"/>          </div>
           <ul className="pl-2">
             <li 
-            className="py-3 px-4 hover:bg-gray-900 hover:rounded-tl-lg hover:rounded-bl-lg"
+            className="py-3 px-4 hover:bg-gray-900 hover:rounded-tl-lg hover:rounded-bl-lg "
             >
-              <a href="/Dashboard" className="block">
+              <a href="/Dashboard" className="block font-semibold">
                 Dashboard
               </a>
             </li>
             <li
              className="py-3 px-4 hover:bg-gray-900 hover:rounded-tl-lg hover:rounded-bl-lg"
             >
-              <a href="#" className="block">
+              <a href="#" className="block font-semibold">
                 Payrols
               </a>
             </li>
             <li 
             className="py-3 px-4 hover:bg-gray-900 hover:rounded-tl-lg hover:rounded-bl-lg"
             >
-              <a href="/Employee" className="block">
+              <a href="/Employee" className="block font-semibold">
                 Employee
               </a>
             </li>
