@@ -103,6 +103,8 @@ import axios from 'axios';
                 type='text'
                 placeholder="Employee Name"
                 required={true}
+                name='name'
+                onChange={(e) => setName(e.target.value)}
             />
             </div>
             <div>
@@ -117,6 +119,8 @@ import axios from 'axios';
                 type="text"
                 placeholder="Job role"
                 required={true}
+                value={jobRoles}
+                onChange={(e) => setJobRoles(e.target.value)}
             />
             </div>
             <div>
