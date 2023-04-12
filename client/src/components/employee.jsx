@@ -1,7 +1,8 @@
-    import React, {useState} from "react"; 
+import React, { useEffect, useState } from 'react'
     import image1 from './../assets/logo.png'
     import { Table } from "flowbite-react";
     import { Modal, Button, Label, TextInput } from "flowbite-react";
+    import axios from 'axios';
 
 
     const Employee = () => { 
@@ -14,6 +15,35 @@
     const handleCloseModal = () => {
         setShowModal(false);
     };
+    // for getting all employees
+    const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:4000/employee')
+      .then(response => {
+        setEmployees(response.data);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  //add employee
+
+  const [name, setName] = useState("");
+  const [jobRoles, setJobRoles] = useState("");
+
+  const handleSave = () => {
+    axios.post("http://localhost:4000/employee", {
+        full_name: name,
+        job_title: jobRoles,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+    handleCloseModal();
+  };
     return (
         
         <div className="flex h-screen bg-gray-200 m-0">
@@ -68,9 +98,9 @@
             </div>
             <TextInput
                 id="name"
+                type='text'
                 placeholder="Employee Name"
                 required={true}
-                
             />
             </div>
             <div>
@@ -83,12 +113,12 @@
             <TextInput
                 id="jobroles"
                 type="text"
-                placeholder=" Job role"
+                placeholder="Job role"
                 required={true}
             />
             </div>
             <div className="w-full flex justify-center ">
-            <Button>
+            <Button onClick={handleSave}>
                 Save 
             </Button>
             </div>
@@ -111,18 +141,18 @@
     
     </Table.Head>
     <Table.Body className="divide-y">
-        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-            1
-        </Table.Cell>
-        <Table.Cell>
-            Sunny Virgo
-        </Table.Cell>
-        <Table.Cell>
-            Front-End
-        </Table.Cell>
-        
-        </Table.Row>
+        {employees.map((employee, index) => (
+          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={employee.employee_id}>
+            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{index + 1}</Table.Cell>
+            <Table.Cell>{employee.full_name}</Table.Cell>
+            <Table.Cell>{employee.job_title}</Table.Cell>
+          </Table.Row>
+        ))}
+
+
+
+
+
     </Table.Body>
     </Table>
         </div>
