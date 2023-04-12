@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-    import image1 from './../assets/logo.png'
-    import { Table } from "flowbite-react";
-    import { Modal, Button, Label, TextInput } from "flowbite-react";
+import image1 from './../assets/logo.png'
+import { Table } from "flowbite-react";
+import { Modal, Button, Label, TextInput } from "flowbite-react";
 import EditEmployee from "./edit_employee";
 import axios from 'axios';
-
+import './style.css';
 
     const Employee = () => { 
     const [showModal, setShowModal] = useState(false);
@@ -36,9 +36,11 @@ import axios from 'axios';
     axios.post("http://localhost:4000/employee", {
         full_name: name,
         job_title: jobRoles,
+        
       })
       .then((response) => {
         console.log(response.data);
+        window.location.href = '/employee';
       })
       .catch((error) => {
         console.error(error.message);
@@ -75,12 +77,33 @@ import axios from 'axios';
             </li>
         </ul>
         </div>
-        <div className="flex-1 p-12 mt-20">
+        <div className="flex-1 p-12 mt-9">
             {/* Modal */}
-    <div className="mb-10">
-    <Button onClick={toggleModal}>
+    <div className="mb-5 flex ">
+    <Button  onClick={toggleModal}>
     Add Employee
     </Button>
+    
+<form class="flex items-center">   
+    <label for="simple-search" class="sr-only">Search</label>
+    <div class="relative w-full search ">
+        <div class="search_icon  inset-y-0  flex items-center  ">
+            <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400"
+             fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path 
+             fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+             clip-rule="evenodd"></path></svg>
+        </div>
+        <input type="text" id="simple-search" 
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30  pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+         placeholder="Search"
+         required/>
+    </div>
+    <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <span class="sr-only">Search</span>
+    </button>
+</form>
+
 
 <Modal
   show={showModal}
@@ -99,12 +122,11 @@ import axios from 'axios';
                 />
             </div>
             <TextInput
-                id="name"
                 type='text'
                 placeholder="Employee Name"
-                required={true}
                 name='name'
                 onChange={(e) => setName(e.target.value)}
+               
             />
             </div>
             <div>
@@ -147,43 +169,47 @@ import axios from 'axios';
     </Modal>
     </div>
             {/* Tables For employee */}
-        <Table hoverable={true}>
-    <Table.Head>
-        <Table.HeadCell>
-        #   
-        </Table.HeadCell>
-        <Table.HeadCell>
-        Employee Name
-        </Table.HeadCell>
-        <Table.HeadCell>
-        Job roles
-        </Table.HeadCell>
-        <Table.HeadCell>
-        Salary
-        </Table.HeadCell>
-        <Table.HeadCell>
-        Buttons
-        </Table.HeadCell>
-    
-    </Table.Head>
-    <Table.Body className="divide-y">
+       
+<div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    #
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Employee Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Job Roles
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Buttons
+                </th>
+            </tr>
+        </thead>
+        <tbody>
         {employees.map((employee, index) => (
-          <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={employee.employee_id}>
-            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">{index + 1}</Table.Cell>
-            <Table.Cell>{employee.full_name}</Table.Cell>
-            <Table.Cell>{employee.job_title}</Table.Cell>
-            <Table.Cell>Salary</Table.Cell>
-            <Table.Cell className='flex'><EditEmployee/>   <button className=" border-none bg-red-800 px-2 py-1 rounded-md text-white
-            hover:bg-red-700  font-semibold " > Delete</button></Table.Cell>
-          </Table.Row>
-        ))}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"  key={employee.employee_id}>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                {index + 1}
+                </th>
+                <td class="px-6 py-4">
+                {employee.job_title}
+                </td>
+                <td class="px-6 py-4">
+                Salary
+                </td>
+                <td class=" py-4 flex">
+                <EditEmployee/> <button className=" border-none bg-red-800 px-2 py-1 rounded-md text-white
+            hover:bg-red-700  font-semibold " > Delete</button>
+                </td>
+            </tr>
+               ))}
+        </tbody>
+    </table>
+</div>
 
-
-
-
-
-    </Table.Body>
-    </Table>
         </div>
     </div>
     )  

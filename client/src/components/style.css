@@ -1,0 +1,14 @@
+.Table { 
+    background: black;
+    max-height: 470px;
+    overflow-y: auto;
+}
+.search { 
+   margin-left: 600px;
+    
+}
+.search_icon { 
+    position: absolute;
+    right: 180px;
+    ;
+}
