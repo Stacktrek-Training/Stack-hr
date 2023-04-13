@@ -125,6 +125,7 @@ import './style.css';
                 type='text'
                 placeholder="Employee Name"
                 name='name'
+                value={name}
                 onChange={(e) => setName(e.target.value)}
                
             />
@@ -195,10 +196,10 @@ import './style.css';
                 {index + 1}
                 </th>
                 <td class="px-6 py-4">
-                {employee.job_title}
+                {employee.full_name}
                 </td>
                 <td class="px-6 py-4">
-                Salary
+                {employee.job_title}
                 </td>
                 <td class=" py-4 flex">
                 <EditEmployee/> <button className=" border-none bg-red-800 px-2 py-1 rounded-md text-white

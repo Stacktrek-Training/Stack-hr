@@ -1,10 +1,10 @@
 .Table { 
     background: black;
-    max-height: 470px;
+    max-height: 75vh;
     overflow-y: auto;
 }
 .search { 
-   margin-left: 600px;
+   margin-left: 500px;
     
 }
 .search_icon { 
