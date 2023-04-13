@@ -1,7 +1,9 @@
 import React, {useState} from "react";
+import axios from "axios";
 
 
-    const EditEmployee = () => { 
+    const EditEmployee = ({employee}) => { 
+        console.log(employee)
         const [isModalOpen, setIsModalOpen] = useState(false);
         const handleModalOpen = () => {
             setIsModalOpen(true);
@@ -10,9 +12,35 @@ import React, {useState} from "react";
           const handleModalClose = () => {
             setIsModalOpen(false);
           };
+          const [firstName, setFirstName] = useState(employee.firstname);
+          const [middleName, setMiddleName] = useState(employee.middlename);
+          const [lastName, setLastName] = useState(employee.lastname);
+          const [address, setAddress] = useState(employee.address);
+          const [contact, setContact] = useState(employee.contact);
+          const [jobTitle, setJobTitle] = useState(employee.job_title);
+          const [id, setId] = useState(employee.employee_id);
+        const editEmp= async (id) =>{
         
+             const response = await axios.put(`http://localhost:4000/employee/${id}`, {
+                firstname: firstName,
+                middlename: middleName,
+                lastname: lastName,
+                address: address,
+                contact: contact,
+                job_title: jobTitle
+              })
+              
+              .then((response) => {
+                console.log(response.data);
+              })
+              .catch((error) => {
+                console.error(error.message);
+              });
         
-    
+          
+          };
+        
+              
     return ( 
         <>
         {/* <!-- Modal toggle --> */}
@@ -40,13 +68,15 @@ import React, {useState} from "react";
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">Edit Employee</h3>
-                <form class="space-y flex flex-wrap gap-4 flex-row" action="#">
+                <form class="space-y flex flex-wrap gap-4 flex-row" onSubmit={editEmp(id)}>
                     <div>
                         <label for="firstname" 
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
                         <input type="text"
                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
-                         placeholder="First Name" required
+                         placeholder="First Name" value={firstName} 
+                         onChange={(e) => setFirstName(e.target.value)}
+                         required
                         />
                        
                     </div>
@@ -55,6 +85,8 @@ import React, {useState} from "react";
                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Middle Name</label>
                         <input type="text" 
                          placeholder="Middle Name" 
+                         value={middleName}
+                         onChange={(e) => setMiddleName(e.target.value)}
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
                         required 
                         />
@@ -64,25 +96,33 @@ import React, {useState} from "react";
                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Last Name</label>
                         <input type="text" 
                         placeholder="Last Name " 
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
                     </div>
                     <div>
                         <label for="Job roles"
                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Job roles</label>
                         <input type="text" 
+                        value={jobTitle}
+                        onChange={(e) => setJobTitle(e.target.value)}
                         placeholder="Job roles " 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
                     </div>
                     <div>
                         <label for="address"
                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Address</label>
-                        <input type="text" 
+                        <input type="text"
+                        value={address} 
+                        onChange={(e) =>setAddress(e.target.value)}
                         placeholder="Address " 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
                     </div> <div>
                         <label for="contact"
                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Contact</label>
                         <input type="number" 
+                        value={contact}
+                        onChange={(e) => setContact(e.target.value)}
                         placeholder="Contact " 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
                     </div>

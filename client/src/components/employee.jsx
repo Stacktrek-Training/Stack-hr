@@ -262,7 +262,7 @@ import './style.css';
                 {employee.contact}
                 </td>
                 <td class=" py-4 flex">
-                <EditEmployee/> <button className=" border-none bg-red-800 px-2 py-1 rounded-md text-white
+                <EditEmployee employee= {employee}/> <button className=" border-none bg-red-800 px-2 py-1 rounded-md text-white
             hover:bg-red-700  font-semibold " onClick={()=>deleteEmp(employee.employee_id)} > Delete</button>
                 </td>
             </tr>
