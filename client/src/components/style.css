@@ -3,9 +3,11 @@
     max-height: 470px;
     overflow-y: auto;
 }
-.search { 
-   margin-left: 600px;
+
     
+
+.Add { 
+    margin-left: 600px;
 }
 .search_icon { 
     position: absolute;

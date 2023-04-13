@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import image1 from './../assets/logo.png'
-import { Table } from "flowbite-react";
-import { Modal, Button, Label, TextInput } from "flowbite-react";
 import EditEmployee from "./edit_employee";
 import axios from 'axios';
 import './style.css';
 
     const Employee = () => { 
-    const [showModal, setShowModal] = useState(false);
-
-    const toggleModal = () => {
-        setShowModal(!showModal);
-    };
-
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const handleModalOpen = () => {
+        setIsModalOpen(true);
+      };
+    
+      const handleModalClose = () => {
+        setIsModalOpen(false);
+      };
+    
     // for getting all employees
     const [employees, setEmployees] = useState([]);
 
@@ -55,21 +53,21 @@ import './style.css';
             <img src={image1} alt="logo"/>          </div>
         <ul className="pl-2">
             <li 
-            className="py-3 px-4 hover:bg-gray-900 hover:rounded-tl-lg hover:rounded-bl-lg"
+            className="py-3 px-4 hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg"
             >
             <a href="/Dashboard" className="block font-semibold">
                 Dashboard
             </a>
             </li>
             <li
-            className="py-3 px-4 hover:bg-gray-900 hover:rounded-tl-lg hover:rounded-bl-lg"
+            className="py-3 px-4 hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg"
             >
-            <a href="#" className="block font-semibold">
+            <a href="/Payrol" className="block font-semibold">
                 Payrols
             </a>
             </li>
             <li 
-            className="py-3 px-4 hover:bg-gray-900 hover:rounded-tl-lg hover:rounded-bl-lg"
+            className="py-3 px-4 hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg"
             >
             <a href="/Employee" className="block font-semibold">
                 Employee
@@ -80,9 +78,7 @@ import './style.css';
         <div className="flex-1 p-12 mt-9">
             {/* Modal */}
     <div className="mb-5 flex ">
-    <Button  onClick={toggleModal}>
-    Add Employee
-    </Button>
+    
     
 <form class="flex items-center">   
     <label for="simple-search" class="sr-only">Search</label>
@@ -103,70 +99,67 @@ import './style.css';
         <span class="sr-only">Search</span>
     </button>
 </form>
+{/* <!-- Modal toggle --> */}
+<button 
+  onClick={handleModalOpen}
+  class=" Add block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" 
+  type="button">
+  Add Employee
+</button>
+{/* <!-- Main modal --> */}
+<div id="modal" tabindex="-1" aria-hidden="true"
+    class={`fixed  z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 ${
+        isModalOpen ? '' : 'hidden'
+      } flex items-center justify-center`}>
 
-
-<Modal
-  show={showModal}
-  size="md"
-  popup={true}
-  onClose={handleCloseModal}
->
-        <Modal.Header><h2 className="font-bold"> Add Employee </h2> </Modal.Header> 
-        <Modal.Body>
-        <div className="space-y-6 px-6 pb-4 sm:pb-6 lg:px-8 xl:pb-8">
-            <div>
-            <div className="mb-2 block">
-                <Label
-                htmlFor="name"
-                value="Employee Name"
-                />
-            </div>
-            <TextInput
-                type='text'
-                placeholder="Employee Name"
-                name='name'
-                onChange={(e) => setName(e.target.value)}
-               
-            />
-            </div>
-            <div>
-            <div className="mb-2 block">
-                <Label
-                htmlFor="jobroles"
-                value=" Job roles"
-                />
-            </div>
-            <TextInput
-                id="jobroles"
-                type="text"
-                placeholder="Job role"
-                required={true}
-                value={jobRoles}
-                onChange={(e) => setJobRoles(e.target.value)}
-            />
-            </div>
-            <div>
-            <div className="mb-2 block">
-                <Label
-                value="Salary ₱"
-                />
-            </div>
-            <TextInput
-                id="salary"
-                type="number"
-                placeholder="Salary"
-                required={true}
-            />
-            </div>
-            
-            <div className="w-full flex justify-center ">
-            <Button onClick={handleSave}>
-                Save 
-            </Button>
+    <div class="relative w-full max-w-md max-h-full">
+        {/* <!-- Modal content --> */}
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <button type="button" 
+            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+            onClick={handleModalClose}>
+                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <span class="sr-only">Close modal</span>
+            </button>
+            <div class="px-6 py-6 lg:px-8">
+                <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">Add Employee</h3>
+                <form class="space-y-6" action="#">
+                    <div>
+                        <label for="name" 
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Employee Name</label>
+                        <input type="text"
+                          value={name}
+                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
+                         placeholder="Employee Name" required
+                         onChange={(e) => setName(e.target.value)}/>
+                       
+                    </div>
+                    <div>
+                        <label for="Job roles"
+                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Job Roles</label>
+                        <input type="text" 
+                        value={jobRoles}
+                        placeholder=" Job roles" 
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
+                        required 
+                        onChange={(e) => setJobRoles(e.target.value)}/>
+                    </div>
+                    <div>
+                        <label for="Salary"
+                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Salary</label>
+                        <input type="number" name="salary"  placeholder="Salary" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                    </div>
+                
+                
+                    <button type="submit" 
+                     class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                     onClick={handleSave}>Save</button>
+                </form>
             </div>
         </div>
-        </Modal.Body>
-    </Modal>
+    </div>
+</div>
+
     </div>
             {/* Tables For employee */}
        
@@ -184,6 +177,9 @@ import './style.css';
                     Job Roles
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Salary
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Buttons
                 </th>
             </tr>
@@ -195,13 +191,17 @@ import './style.css';
                 {index + 1}
                 </th>
                 <td class="px-6 py-4">
+                {employee.full_name}
+                </td>
+                <td class="px-6 py-4">
                 {employee.job_title}
                 </td>
                 <td class="px-6 py-4">
                 Salary
                 </td>
-                <td class=" py-4 flex">
-                <EditEmployee/> <button className=" border-none bg-red-800 px-2 py-1 rounded-md text-white
+                
+                <td class=" py-4  flex">
+                <EditEmployee/> <button className=" border-none bg-red-800 px-2 py-1 ml-2 rounded-md text-white
             hover:bg-red-700  font-semibold " > Delete</button>
                 </td>
             </tr>
