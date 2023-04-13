@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Sidebar from './components/sidebar'
+import Dashboard from './components/dashboard'
 import Employee from './components/employee';
 
 function App() {
@@ -12,10 +12,10 @@ function App() {
         <Route path="/Employee">
           <Employee />
         </Route>
-        <Route path="/Payrol">
+        <Route path="/Payroll">
         </Route>
-        <Route path="/">
-          <Sidebar />
+        <Route path="/Dashboard">
+          <Dashboard />
         </Route>
       </Switch>
     </BrowserRouter>
