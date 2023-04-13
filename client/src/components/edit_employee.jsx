@@ -40,38 +40,55 @@ import React, {useState} from "react";
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">Edit Employee</h3>
-                <form class="space-y-6" action="#">
+                <form class="space-y flex flex-wrap gap-4 flex-row" action="#">
                     <div>
-                        <label for="name" 
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Employee Name</label>
+                        <label for="firstname" 
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
                         <input type="text"
                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
-                         placeholder="Employee Name" required
+                         placeholder="First Name" required
                         />
                        
                     </div>
                     <div>
-                        <label for="Job roles"
-                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Job Roles</label>
+                        <label for="middlename"
+                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Middle Name</label>
                         <input type="text" 
-                        placeholder=" Job roles" 
+                         placeholder="Middle Name" 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" 
                         required 
                         />
                     </div>
                     <div>
-                        <label for="Salary"
-                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Salary</label>
-                        <input type="number" 
-                        name="salary"  
-                        placeholder="Salary" 
+                        <label for="lastname"
+                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Last Name</label>
+                        <input type="text" 
+                        placeholder="Last Name " 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
                     </div>
-                
-                
+                    <div>
+                        <label for="Job roles"
+                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Job roles</label>
+                        <input type="text" 
+                        placeholder="Job roles " 
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                    </div>
+                    <div>
+                        <label for="address"
+                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Address</label>
+                        <input type="text" 
+                        placeholder="Address " 
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                    </div> <div>
+                        <label for="contact"
+                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"> Contact</label>
+                        <input type="number" 
+                        placeholder="Contact " 
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required/>
+                    </div>
                     <button type="submit" 
                      class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                     >Save</button>
+                     >Update</button>
                 </form>
             </div>
         </div>
