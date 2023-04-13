@@ -48,7 +48,16 @@ app.put("/employee/:id", async (req, res)=>{
         console.error(error.message)
     }
 })
-
+//delete employee
+app.delete("/employee/:id", async (req, res) =>{
+    try {
+        const { id } = req.params
+        const deleteEmp = await pool.query("DELETE FROM employee WHERE employee_id = $1 ", [id])
+        res.json("Employee deleted")
+    } catch (error) {
+        console.error(error.message)
+    }
+})
 //end of employee
 app.listen(4000, () =>{
     console.log('Listening to port 4000');

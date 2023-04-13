@@ -47,6 +47,19 @@ import './style.css';
       });
     handleCloseModal();
   };
+  //delete employee
+
+  async function deleteEmp(id){
+    try {
+        axios.delete(`http://localhost:4000/employee/${id}`)
+        .then((response) =>{
+            console.log(response.data);
+            window.location.href = '/employee';
+        })
+    } catch (error) {
+        console.error(error.message)
+    }
+  }
     return (
         
         <div className="flex h-screen bg-gray-200 m-0">
@@ -146,19 +159,7 @@ import './style.css';
                 onChange={(e) => setJobRoles(e.target.value)}
             />
             </div>
-            <div>
-            <div className="mb-2 block">
-                <Label
-                value="Salary ₱"
-                />
-            </div>
-            <TextInput
-                id="salary"
-                type="number"
-                placeholder="Salary"
-                required={true}
-            />
-            </div>
+          
             
             <div className="w-full flex justify-center ">
             <Button onClick={handleSave}>
@@ -202,8 +203,8 @@ import './style.css';
                 {employee.job_title}
                 </td>
                 <td class=" py-4 flex">
-                <EditEmployee/> <button className=" border-none bg-red-800 px-2 py-1 rounded-md text-white
-            hover:bg-red-700  font-semibold " > Delete</button>
+                <EditEmployee employee={employee}/> <button className=" border-none bg-red-800 px-2 py-1 rounded-md text-white
+            hover:bg-red-700  font-semibold " onClick={() =>deleteEmp(employee.employee_id)} > Delete</button>
                 </td>
             </tr>
                ))}

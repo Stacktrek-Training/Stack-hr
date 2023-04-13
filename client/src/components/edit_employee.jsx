@@ -55,19 +55,7 @@ import { Modal, Button, Label, TextInput } from "flowbite-react";
                 required={true}
             />
             </div>
-            <div>
-            <div className="mb-2 block">
-                <Label
-                value="Salary ₱"
-                />
-            </div>
-            <TextInput
-                id="salary"
-                type="number"
-                placeholder="Salary"
-                required={true}
-            />
-            </div>
+           
             
             <div className="w-full flex justify-center ">
             <Button>
