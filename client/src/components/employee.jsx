@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import image1 from './../assets/logo.png'
 import EditEmployee from "./edit_employee";
+import Delete_Employee from './delete_employee';
 import axios from 'axios';
 import './style.css';
 
@@ -84,7 +85,7 @@ import './style.css';
             className="py-3 px-4 hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg"
             >
             <a href="/Payrol" className="block font-semibold">
-                Payrols
+                Payrolls
             </a>
             </li>
             <li 
@@ -113,7 +114,7 @@ import './style.css';
         <input type="text" id="simple-search" 
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30  pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
          placeholder="Search"
-         required/>
+         required autoComplete='off'/>
     </div>
 </div>
 {/* <!-- Modal toggle --> */}
@@ -261,9 +262,8 @@ import './style.css';
                 <td class="px-6 py-4">
                 {employee.contact}
                 </td>
-                <td class=" py-4 flex">
-                <EditEmployee/> <button className=" border-none bg-red-800 px-2 py-1 rounded-md text-white
-            hover:bg-red-700  font-semibold " onClick={()=>deleteEmp(employee.employee_id)} > Delete</button>
+                <td class=" py-4 flex gap-2">
+                <EditEmployee/> <Delete_Employee employee={employee}/>
                 </td>
             </tr>
                ))}

@@ -19,7 +19,7 @@ const  Sidebar = () => {
              className="py-3 px-4 hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg"
             >
               <a href="/Payrol" className="block font-semibold">
-                Payrols
+                Payrolls
               </a>
             </li>
             <li 
