@@ -263,7 +263,7 @@ import './style.css';
                 {employee.contact}
                 </td>
                 <td class=" py-4 flex gap-2">
-                <EditEmployee/> <Delete_Employee employee={employee}/>
+                <EditEmployee employee= {employee}/> <Delete_Employee employee={employee}/>
                 </td>
             </tr>
                ))}

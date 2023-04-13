@@ -30,7 +30,7 @@ app.get("/employee/:id", async (req, res) =>{
 app.post("/employee", async (req, res) =>{
     try {
         const { firstname, middlename, lastname, address, contact, date_inserted, date_updated, job_title } =req.body;
-        const insertEmployee = await pool.query("INSERT INTO EMPLOYEES (firstname, middlename, lastname, address, contact, date_inserted, date_updated, job_title)VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [firstname, middlename, lastname, address, contact, date_inserted, date_updated, job_title])
+        const insertEmployee = await pool.query("INSERT INTO EMPLOYEES (firstname, middlename, lastname, address, contact, date_inserted, date_updated, job_title)VALUES($1, $2, $3, $4, $5, CURRENT_TIMESTAMP, $6, $7) RETURNING *", [firstname, middlename, lastname, address, contact, date_updated, job_title])
         res.json("Inserted data")
         
     } catch (error) {
@@ -41,8 +41,8 @@ app.post("/employee", async (req, res) =>{
 app.put("/employee/:id", async (req, res)=>{
     try {
         const { id } = req.params
-        const { full_name, job_title } = req.body
-        const updateEmp = await pool.query("UPDATE employee SET full_name=$1, job_title=$2 WHERE employee_id =$3", [full_name, job_title, id])
+        const { firstname, middlename, lastname, address, contact, date_inserted, date_updated, job_title  } = req.body
+        const updateEmp = await pool.query("UPDATE EMPLOYEES SET firstname=$1, middlename=$2, lastname=$3, address=$4, contact=$5, date_inserted=$6, date_updated=CURRENT_TIMESTAMP, job_title=$7  WHERE employee_id =$8", [firstname, middlename, lastname, address, contact, date_inserted, job_title, id])
         res.json(updateEmp.rows)
     } catch (error) {
         console.error(error.message)
