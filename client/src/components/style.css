@@ -1,16 +1,12 @@
 .Table { 
     background: black;
-    max-height: 470px;
+    max-height: 75vh;
     overflow-y: auto;
 }
-
-    
-
 .Add { 
     margin-left: 600px;
 }
 .search_icon { 
     position: absolute;
     right: 180px;
-    ;
 }
