@@ -10,7 +10,7 @@ app.use(express.json());
 //get all employees
 app.get("/employee", async (req, res) =>{
     try {
-        const getEmployee = await pool.query("SELECT * FROM employee")
+        const getEmployee = await pool.query("SELECT * FROM EMPLOYEES")
         res.json(getEmployee.rows)
     } catch (error) {
         console.error(error.message)
@@ -20,7 +20,7 @@ app.get("/employee", async (req, res) =>{
 app.get("/employee/:id", async (req, res) =>{
     try {
         const { id }= req.params;
-        const getEMP = await pool.query("SELECT * FROM employee WHERE employee_id=$1", [id])
+        const getEMP = await pool.query("SELECT * FROM EMPLOYEES WHERE employee_id=$1", [id])
         res.json(getEMP.rows)
     } catch (error) {
         console.error(error.message)
@@ -29,8 +29,8 @@ app.get("/employee/:id", async (req, res) =>{
 // add employee
 app.post("/employee", async (req, res) =>{
     try {
-        const { full_name, job_title } =req.body;
-        const insertEmployee = await pool.query("INSERT INTO employee (full_name, job_title)VALUES($1, $2) RETURNING *", [full_name, job_title])
+        const { firstname, middlename, lastname, address, contact, date_inserted, date_updated, job_title } =req.body;
+        const insertEmployee = await pool.query("INSERT INTO EMPLOYEES (firstname, middlename, lastname, address, contact, date_inserted, date_updated, job_title)VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *", [firstname, middlename, lastname, address, contact, date_inserted, date_updated, job_title])
         res.json("Inserted data")
         
     } catch (error) {
@@ -52,7 +52,7 @@ app.put("/employee/:id", async (req, res)=>{
 app.delete("/employee/:id", async (req, res) =>{
     try {
         const { id } = req.params
-        const deleteEmp = await pool.query("DELETE FROM employee WHERE employee_id = $1 ", [id])
+        const deleteEmp = await pool.query("DELETE FROM EMPLOYEES WHERE employee_id = $1 ", [id])
         res.json("Employee deleted")
     } catch (error) {
         console.error(error.message)

@@ -12,6 +12,8 @@ function App() {
         <Route path="/Employee">
           <Employee />
         </Route>
+        <Route path="/Payrol">
+        </Route>
         <Route path="/">
           <Sidebar />
         </Route>

@@ -3,12 +3,10 @@
     max-height: 75vh;
     overflow-y: auto;
 }
-.search { 
-   margin-left: 500px;
-    
+.Add { 
+    margin-left: 600px;
 }
 .search_icon { 
     position: absolute;
     right: 180px;
-    ;
 }
