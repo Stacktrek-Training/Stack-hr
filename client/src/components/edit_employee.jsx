@@ -68,7 +68,7 @@ import axios from "axios";
             </button>
             <div class="px-6 py-6 lg:px-8">
                 <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">Edit Employee</h3>
-                <form class="space-y flex flex-wrap gap-4 flex-row" action="" onSubmit={editEmp(id)}>
+                <form class="space-y flex flex-wrap gap-1 flex-row" action="" onSubmit={editEmp(id)}>
                     <div>
                         <label for="firstname" 
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>

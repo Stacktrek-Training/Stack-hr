@@ -2,7 +2,7 @@
 * { 
     margin: 0;
     padding: 0;
-    -webkit-margin-bottom-collapse:discard   ;
+    font-family: Montserrat;
 }
 .Table { 
     background: black;
@@ -16,15 +16,20 @@
     position: absolute;
     right: 180px;
 }
-.side { 
+/* .side { 
    z-index: 10;
+} */
+.image { 
+    margin-right: 800px;
+}
+.ul { 
+    margin-top: 100px;
 }
 .avatar { 
     height: 50px; 
     width: 50px;
-    border: 1px solid black;
+
 }
-.Button  {
-    margin-top: 13px;
-    color: white;
+.Font { 
+    font-size: 50px;
 }

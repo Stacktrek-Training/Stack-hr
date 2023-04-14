@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Dashboard from './components/dashboard'
 import Employee from './components/employee';
+import Payroll from './components/payrolls';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -13,6 +14,7 @@ function App() {
           <Employee />
         </Route>
         <Route path="/Payroll">
+          <Payroll/>
         </Route>
         <Route path="/Dashboard">
           <Dashboard />
