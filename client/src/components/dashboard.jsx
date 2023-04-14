@@ -11,7 +11,7 @@ const Dashboard = () => {
   };
   return (
     <div className="h-screen relative"> {/* Use relative position for the parent container */}
-      <nav className="bg-blue-700 border-gray-200 dark:bg- dark:border-gray-700 absolute w-full "> {/* Use absolute position for the navbar */}
+      <nav className="bg-blue-700 border-gray-200 dark:bg- dark:border-gray-700 fixed w-full "> {/* Use absolute position for the navbar */}
         <div className="p-2 px-2 flex justify-end items-center pr-10 mx-auto">
             <div className=""> 
         <div className="image ">
@@ -26,24 +26,36 @@ const Dashboard = () => {
     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
     className="Button  flex justify-left cursor-pointer "
   >
-    <img class="avatar rounded-full hover:ring-8" src={image2} alt="User dropdown"/>
+    <img class="avatar rounded-full hover:ring-4" src={image2} alt="User dropdown"/>
 
 
   </a>
   <div
     className={`${
       isDropdownOpen ? "" : "hidden "
-    } absolute right-2 top-10 mt-2 py-2 w-32 bg-white rounded-md divide-y shadow-lg z-10 text-center`}
-  >  <a
+    } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-10 text-center`}
+  > 
+  <h1 className=" px-4 py-2 text-sm text-gray-700 cursor-default hover:text-gray-900 border-b border-solid border-gray-200"> 
+    Sunny Virgo
+  <p className="pt-2"> Admin</p>
+  </h1>
+     <a
   href="#"
-  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
->
-  Settings
+  className=" px-4 py-2 text-sm flex text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mr-3">
+  <path fill-rule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clip-rule="evenodd" />
+</svg>
+
+  Profile 
 </a>
     <a
       href="#"
-      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+      className=" px-4 py-2 text-sm flex text-gray-700 hover:bg-gray-100 hover:text-gray-900"
     >
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mr-3">
+  <path fill-rule="evenodd" d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm5.03 4.72a.75.75 0 010 1.06l-1.72 1.72h10.94a.75.75 0 010 1.5H10.81l1.72 1.72a.75.75 0 11-1.06 1.06l-3-3a.75.75 0 010-1.06l3-3a.75.75 0 011.06 0z" clip-rule="evenodd" />
+</svg>
+
       Logout
     </a>
   </div>
@@ -98,53 +110,7 @@ const Dashboard = () => {
 
     </div>
     <div className="flex-1 flex-wrap  flex-col p-20 ">
-    <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-        <h5 class="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400">Premium plan</h5>
-        <div class="flex items-baseline text-gray-900 dark:text-white">
-            <span class="text-3xl font-semibold">$</span>
-            <span class="text-5xl font-extrabold tracking-tight">10000</span>
-            <span class="ml-1 text-xl font-normal text-gray-500 dark:text-gray-400">/month</span>
-        </div>
-        {/* <!-- List --> */}
-        <ul role="list" class="space-y-5 my-7">
-            <li class="flex space-x-3">
-                {/* <!-- Icon --> */}
-                <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-blue-600 dark:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Check icon</title><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">2 team members</span>
-            </li>
-            <li class="flex space-x-3">
-                {/* <!-- Icon --> */}
-                <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-blue-600 dark:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Check icon</title><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">20GB Cloud storage</span>
-            </li>
-            <li class="flex space-x-3">
-                {/* <!-- Icon --> */}
-                <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-blue-600 dark:text-blue-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Check icon</title><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                <span class="text-base font-normal leading-tight text-gray-500 dark:text-gray-400">Integration help</span>
-            </li>
-            <li class="flex space-x-3 line-through decoration-gray-500">
-                {/* <!-- Icon --> */}
-                <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Check icon</title><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                <span class="text-base font-normal leading-tight text-gray-500">Sketch Files</span>
-            </li>
-            <li class="flex space-x-3 line-through decoration-gray-500">
-                {/* <!-- Icon --> */}
-                <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Check icon</title><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                <span class="text-base font-normal leading-tight text-gray-500">API Access</span>
-            </li>
-            <li class="flex space-x-3 line-through decoration-gray-500">
-                {/* <!-- Icon --> */}
-                <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Check icon</title><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                <span class="text-base font-normal leading-tight text-gray-500">Complete documentation</span>
-            </li>
-            <li class="flex space-x-3 line-through decoration-gray-500">
-                {/* <!-- Icon --> */}
-                <svg aria-hidden="true" class="flex-shrink-0 w-5 h-5 text-gray-400 dark:text-gray-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><title>Check icon</title><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                <span class="text-base font-normal leading-tight text-gray-500">24×7 phone & email support</span>
-            </li>
-        </ul>
-        <button type="button" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Choose plan</button>
-    </div>
+    
     
         </div>
       </div>
