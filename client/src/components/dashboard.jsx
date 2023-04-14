@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import image1 from "./../assets/logo.png";
 import image2 from "./../assets/th.jfif";
 import "./style.css";
+import Admin from "./admin_dashboard";
 
 const Dashboard = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -35,7 +36,7 @@ const Dashboard = () => {
             <div
               className={`${
                 isDropdownOpen ? "" : "hidden "
-              } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-10 text-center`}
+              } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-10 text-center Form`}
             >
               <h1 className=" px-4 py-2 text-sm text-gray-700 cursor-default hover:text-gray-900 border-b border-solid border-gray-200">
                 Sunny Virgo
@@ -143,16 +144,8 @@ const Dashboard = () => {
           </ul>
         </div>
         <div className="flex-1 flex-wrap  flex-col p-20 ">
-          <div className="bg-orange-400 rounded-2xl w-3/5">
-            <h5 class="mb-2 text-2xl  text-center font-bold tracking-tight text-white dark:text-white">
-              Employee
-            </h5>
-            <p class="font-bold text-gray-100 dark:text-gray-400 text-center Font ">
-              120
-            </p>
-          </div>
+          <Admin />
         </div>
-        <div className="flex-1 flex-wrap  flex-col p-20 "></div>
       </div>
     </div>
   );

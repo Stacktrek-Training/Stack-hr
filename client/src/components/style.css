@@ -1,35 +1,33 @@
-
-* { 
-    margin: 0;
-    padding: 0;
-    font-family: Montserrat;
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Montserrat;
 }
-.Table { 
-    background: black;
-    max-height: 75vh;
-    overflow-y: auto;
+.Table {
+  background: black;
+  max-height: 75vh;
+  overflow-y: auto;
 }
-.Add { 
-    margin-left: 600px;
+.Add {
+  margin-left: 600px;
 }
-.search_icon { 
-    position: absolute;
-    right: 180px;
+.search_icon {
+  position: absolute;
+  right: 180px;
 }
-.side { 
-   z-index: 10;
+.side {
+  z-index: 10;
 }
-.image { 
-    margin-top: -100px;
+.image {
+  margin-top: -100px;
 }
-.ul { 
-    margin-top: 100px;
+.ul {
+  margin-top: 100px;
 }
-.avatar { 
-    height: 50px; 
-    width: 50px;
-
+.avatar {
+  height: 50px;
+  width: 50px;
 }
-.Font { 
-    font-size: 50px;
+.Font {
+  font-size: 50px;
 }
