@@ -11,6 +11,9 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
+        <Route exact path="/">
+          <Dashboard />
+        </Route>
         <Route path="/Employee">
           <Employee />
         </Route>
@@ -19,9 +22,6 @@ function App() {
         </Route>
         <Route path="/Payroll">
           <Payroll />
-        </Route>
-        <Route path="/Dashboard">
-          <Dashboard />
         </Route>
       </Switch>
     </BrowserRouter>
