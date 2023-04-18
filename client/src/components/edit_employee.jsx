@@ -14,22 +14,52 @@ const EditEmployee = ({ employee }) => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  const [firstName, setFirstName] = useState(employee.firstname);
-  const [middleName, setMiddleName] = useState(employee.middlename);
-  const [lastName, setLastName] = useState(employee.lastname);
-  const [address, setAddress] = useState(employee.address);
-  const [contact, setContact] = useState(employee.contact);
-  const [jobTitle, setJobTitle] = useState(employee.job_title);
+  const [first_name, setFirstName] = useState(employee.first_name);
+  const [middle_name, setMiddleName] = useState(employee.middle_name);
+  const [last_name, setLastName] = useState(employee.last_name);
+  const [province, setProvince] = useState(employee.province);
+  const [city, setCity] = useState(employee.city);
+  const [municipality, setMunicipality] = useState(employee.municipality);
+  const [baranggay, setBaranggay] = useState(employee.baranggay);
+  const [zipcode, setZipcode] = useState(employee.zipcode);
+  const [mobile_number, setMobileNumber] = useState(employee.mobile_number);
+  const [telephone_number, setTelephoneNumber] = useState(
+    employee.telephone_number
+  );
+  const [work_email, setWorkEmail] = useState(employee.work_email);
+  const [personal_email, setPersonalEmail] = useState(employee.personal_email);
+  const [emergency_contact_person, setEmergencyContactPerson] = useState(
+    employee.emergency_contact_person
+  );
+  const [emergency_contact_email, setEmergencyContactEmail] = useState(
+    employee.emergency_contact_email
+  );
+  const [emergency_contact_number, setEmergencyContactNumber] = useState(
+    employee.emergency_contact_number
+  );
+  const [relationship, setRelationship] = useState(employee.relationship);
+  const [job_title, setJobTitle] = useState(employee.job_title);
   const [id, setId] = useState(employee.employee_id);
-  const editEmp = async (id) => {
-    const response = await axios
+  async function editEmp(id) {
+    const response = axios
       .put(`http://localhost:4000/employee/${id}`, {
-        firstname: firstName,
-        middlename: middleName,
-        lastname: lastName,
-        address: address,
-        contact: contact,
-        job_title: jobTitle,
+        first_name: first_name,
+        middle_name: middle_name,
+        last_name: last_name,
+        province: province,
+        city: city,
+        municipality: municipality,
+        baranggay: baranggay,
+        zipcode: zipcode,
+        mobile_number: mobile_number,
+        telephone_number: telephone_number,
+        work_email: work_email,
+        personal_email: personal_email,
+        emergency_contact_person: emergency_contact_person,
+        emergency_contact_email: emergency_contact_email,
+        emergency_contact_number: emergency_contact_number,
+        relationship: relationship,
+        job_title: job_title,
       })
 
       .then((response) => {
@@ -38,7 +68,7 @@ const EditEmployee = ({ employee }) => {
       .catch((error) => {
         console.error(error.message);
       });
-  };
+  }
 
   return (
     <>
@@ -102,7 +132,7 @@ const EditEmployee = ({ employee }) => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="First Name"
-                    value={firstName}
+                    value={first_name}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
                   />
@@ -118,7 +148,7 @@ const EditEmployee = ({ employee }) => {
                   <input
                     type="text"
                     placeholder="Middle Name"
-                    value={middleName}
+                    value={middle_name}
                     onChange={(e) => setMiddleName(e.target.value)}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
@@ -135,7 +165,7 @@ const EditEmployee = ({ employee }) => {
                   <input
                     type="text"
                     placeholder="Last Name "
-                    value={lastName}
+                    value={last_name}
                     onChange={(e) => setLastName(e.target.value)}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
@@ -151,7 +181,7 @@ const EditEmployee = ({ employee }) => {
                   </label>
                   <input
                     type="text"
-                    value={jobTitle}
+                    value={job_title}
                     onChange={(e) => setJobTitle(e.target.value)}
                     placeholder="Job roles "
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
@@ -164,11 +194,10 @@ const EditEmployee = ({ employee }) => {
                   </label>
                   <input
                     type="text"
-                    value={address}
+                    value={province}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Address"
-                    required
-                    onChange={(e) => setAddress(e.target.value)}
+                    placeholder="Province"
+                    onChange={(e) => setProvince(e.target.value)}
                   />
                 </div>
                 <div>
@@ -178,8 +207,9 @@ const EditEmployee = ({ employee }) => {
                   <input
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Address"
-                    required
+                    placeholder="City"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
                   />
                 </div>
                 <div>
@@ -190,6 +220,8 @@ const EditEmployee = ({ employee }) => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Municipality"
+                    value={municipality}
+                    onChange={(e) => setMunicipality(e.target.value)}
                     required
                   />
                 </div>
@@ -201,6 +233,8 @@ const EditEmployee = ({ employee }) => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Baranggay"
+                    value={baranggay}
+                    onChange={(e) => setBaranggay(e.target.value)}
                     required
                   />
                 </div>
@@ -214,6 +248,8 @@ const EditEmployee = ({ employee }) => {
                     placeholder="  Zip Code"
                     onInput={handleZipCodeChange}
                     maxLength={4}
+                    value={zipcode}
+                    onChange={(e) => setZipcode(e.target.value)}
                     required
                   />
                 </div>
@@ -223,13 +259,13 @@ const EditEmployee = ({ employee }) => {
                   </label>
                   <input
                     type="text"
-                    value={contact}
+                    value={mobile_number}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder=" Mobile no."
                     onInput={handleZipCodeChange}
                     maxLength={11}
                     required
-                    onChange={(e) => setContact(e.target.value)}
+                    onChange={(e) => setMobileNumber(e.target.value)}
                   />
                 </div>
                 <div>
@@ -242,6 +278,8 @@ const EditEmployee = ({ employee }) => {
                     placeholder=" Telephone no."
                     onInput={handleZipCodeChange}
                     maxLength={15}
+                    value={telephone_number}
+                    onChange={(e) => setTelephoneNumber(e.target.value)}
                     required
                   />
                 </div>
@@ -253,6 +291,8 @@ const EditEmployee = ({ employee }) => {
                     type="email"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder=" Work Email"
+                    value={work_email}
+                    onChange={(e) => setWorkEmail(e.target.value)}
                     required
                   />
                 </div>
@@ -264,6 +304,8 @@ const EditEmployee = ({ employee }) => {
                     type="email"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder=" Personal Email"
+                    value={personal_email}
+                    onChange={(e) => setPersonalEmail(e.target.value)}
                     required
                   />
                 </div>
@@ -275,6 +317,8 @@ const EditEmployee = ({ employee }) => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Emergency Contact Person"
+                    value={emergency_contact_person}
+                    onChange={(e) => setEmergencyContactPerson(e.target.value)}
                     required
                   />
                 </div>
@@ -286,6 +330,8 @@ const EditEmployee = ({ employee }) => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Relationship"
+                    value={relationship}
+                    onChange={(e) => setRelationship(e.target.value)}
                     required
                   />
                 </div>
@@ -297,6 +343,8 @@ const EditEmployee = ({ employee }) => {
                     type="email"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Emergency Contact Email"
+                    value={emergency_contact_email}
+                    onChange={(e) => setEmergencyContactEmail(e.target.value)}
                     required
                   />
                 </div>
@@ -310,6 +358,8 @@ const EditEmployee = ({ employee }) => {
                     placeholder="Emergency Contact No"
                     maxLength={11}
                     onInput={handleZipCodeChange}
+                    value={emergency_contact_number}
+                    onChange={(e) => setEmergencyContactNumber(e.target.value)}
                     required
                   />
                 </div>
