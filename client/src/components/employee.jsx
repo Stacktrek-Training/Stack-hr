@@ -12,6 +12,10 @@ const Employee = () => {
     setIsModalOpen(true);
   };
 
+  const handleZipCodeChange = (event) => {
+    event.target.value = event.target.value.replace(/[^0-9]/gi, "");
+  };
+
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
@@ -99,7 +103,7 @@ const Employee = () => {
             <div
               className={`${
                 isDropdownOpen ? "" : "hidden "
-              } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-10 text-center`}
+              } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md Profile font-bold shadow-lg  text-center`}
             >
               <h1 className=" px-4 py-2 text-sm text-gray-700 cursor-default hover:text-gray-900 border-b border-solid border-gray-200">
                 Sunny Virgo
@@ -125,7 +129,7 @@ const Employee = () => {
               </a>
               <a
                 href="#"
-                className=" px-4 py-2 text-sm flex text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                className=" px-4 py-2 text-sm flex text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -292,7 +296,7 @@ const Employee = () => {
                 isModalOpen ? "" : "hidden"
               } flex items-center justify-center`}
             >
-              <div class="relative w-full max-w-md max-h-full">
+              <div class="relative w-full max-w-3xl max-h-full">
                 {/* <!-- Modal content --> */}
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                   <button
@@ -320,7 +324,7 @@ const Employee = () => {
                       Add Employee
                     </h3>
                     <form
-                      class="space-y flex flex-wrap gap-1.5 flex-row  "
+                      class="space-y flex flex-wrap gap-2 flex-col  "
                       onSubmit={handleSave}
                     >
                       <div>
@@ -371,13 +375,11 @@ const Employee = () => {
                           onChange={(e) => setlastName(e.target.value)}
                         />
                       </div>
-
                       <div>
                         <label
                           for="Job roles"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          {" "}
                           Job Roles
                         </label>
                         <input
@@ -390,11 +392,8 @@ const Employee = () => {
                         />
                       </div>
                       <div>
-                        <label
-                          for="address"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                          Address
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Province
                         </label>
                         <input
                           type="text"
@@ -406,21 +405,148 @@ const Employee = () => {
                         />
                       </div>
                       <div>
-                        <label
-                          for="contact"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                          Contact
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          City
                         </label>
                         <input
-                          type="number"
+                          type="text"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="Address"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Municipality
+                        </label>
+                        <input
+                          type="text"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="Municipality"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Baranggay
+                        </label>
+                        <input
+                          type="text"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="Baranggay"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Zip Code
+                        </label>
+                        <input
+                          type="text"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="  Zip Code"
+                          onInput={handleZipCodeChange}
+                          maxLength={4}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Mobile no.
+                        </label>
+                        <input
+                          type="text"
                           value={contact}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Contact"
+                          placeholder=" Mobile no."
+                          onInput={handleZipCodeChange}
+                          maxLength={11}
                           required
                           onChange={(e) => setContact(e.target.value)}
                         />
                       </div>
+                      <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Telephone no.
+                        </label>
+                        <input
+                          type="text"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder=" Telephone no."
+                          onInput={handleZipCodeChange}
+                          maxLength={15}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Work Email
+                        </label>
+                        <input
+                          type="email"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder=" Work Email"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Personal Email
+                        </label>
+                        <input
+                          type="email"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder=" Personal Email"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Emergency Contact Person
+                        </label>
+                        <input
+                          type="text"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="Emergency Contact Person"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Relationship
+                        </label>
+                        <input
+                          type="text"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="Relationship"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Emergency Contact Email
+                        </label>
+                        <input
+                          type="email"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="Emergency Contact Email"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                          Emergency Contact No
+                        </label>
+                        <input
+                          type="text"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="Emergency Contact No"
+                          maxLength={11}
+                          onInput={handleZipCodeChange}
+                          required
+                        />
+                      </div>
+                      <div></div>
                       <button
                         type="submit"
                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -436,8 +562,8 @@ const Employee = () => {
           {/* Tables For employee */}
 
           <div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-5">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 ">
                 <tr>
                   <th scope="col" class="px-6 py-3">
                     #

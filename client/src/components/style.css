@@ -4,10 +4,10 @@
   font-family: Montserrat;
 }
 .Table {
-  background: black;
   max-height: 75vh;
   overflow-y: auto;
 }
+
 .search_icon {
   position: absolute;
   right: 180px;
