@@ -134,7 +134,7 @@ app.delete("/employee/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deleteEmp = await pool.query(
-      "DELETE FROM EMPLOYEES WHERE employee_id = $1 ",
+      `DELETE FROM "EMPLOYEES" WHERE employee_id = $1 `,
       [id]
     );
     res.json("Employee deleted");

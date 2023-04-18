@@ -11,7 +11,6 @@ const Employee = () => {
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
-
   const handleZipCodeChange = (event) => {
     event.target.value = event.target.value.replace(/[^0-9]/gi, "");
   };
@@ -39,22 +38,44 @@ const Employee = () => {
 
   //add employee
 
-  const [firstname, setFirstName] = useState("");
-  const [middlename, setMiddleName] = useState("");
-  const [lastname, setlastName] = useState("");
-  const [jobRoles, setJobRoles] = useState("");
-  const [address, setAddress] = useState("");
-  const [contact, setContact] = useState("");
+  const [first_name, setFirstName] = useState("");
+  const [middle_name, setMiddleName] = useState("");
+  const [last_name, setlastName] = useState("");
+  const [province, setProvince] = useState("");
+  const [city, setCity] = useState("");
+  const [municipality, setMunicipality] = useState("");
+  const [baranggay, setBaranggay] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [mobile_number, setMobileNumber] = useState("");
+  const [telephone_number, setTelephoneNumber] = useState("");
+  const [work_email, setWorkEmail] = useState("");
+  const [personal_email, setPersonalEmail] = useState("");
+  const [emergency_contact_person, setEmergencyContactPerson] = useState("");
+  const [emergency_contact_email, setEmergencyContactEmail] = useState("");
+  const [emergency_contact_number, setEmergencyContactNumber] = useState("");
+  const [relationship, setRelationship] = useState("");
+  const [job_title, setJobTitle] = useState("");
 
   const handleSave = () => {
     axios
       .post("http://localhost:4000/employee", {
-        firstname: firstname,
-        middlename: middlename,
-        lastname: lastname,
-        job_title: jobRoles,
-        address: address,
-        contact: contact,
+        first_name: first_name,
+        middle_name: middle_name,
+        last_name: last_name,
+        province: province,
+        city: city,
+        municipality: municipality,
+        baranggay: baranggay,
+        zipcode: zipcode,
+        mobile_number: mobile_number,
+        telephone_number: telephone_number,
+        work_email: work_email,
+        personal_email: personal_email,
+        emergency_contact_person: emergency_contact_person,
+        emergency_contact_email: emergency_contact_email,
+        emergency_contact_number: emergency_contact_number,
+        relationship: relationship,
+        job_title: job_title,
       })
       .then((response) => {
         console.log(response.data);
@@ -103,7 +124,7 @@ const Employee = () => {
             <div
               className={`${
                 isDropdownOpen ? "" : "hidden "
-              } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md Profile font-bold shadow-lg  text-center`}
+              } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-10 text-center`}
             >
               <h1 className=" px-4 py-2 text-sm text-gray-700 cursor-default hover:text-gray-900 border-b border-solid border-gray-200">
                 Sunny Virgo
@@ -129,7 +150,7 @@ const Employee = () => {
               </a>
               <a
                 href="#"
-                className=" px-4 py-2 text-sm flex text-gray-700 hover:bg-gray-100 hover:text-gray-900 "
+                className=" px-4 py-2 text-sm flex text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -296,7 +317,7 @@ const Employee = () => {
                 isModalOpen ? "" : "hidden"
               } flex items-center justify-center`}
             >
-              <div class="relative w-full max-w-3xl max-h-full">
+              <div class="relative w-full max-w-2xl max-h-full">
                 {/* <!-- Modal content --> */}
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                   <button
@@ -324,7 +345,7 @@ const Employee = () => {
                       Add Employee
                     </h3>
                     <form
-                      class="space-y flex flex-wrap gap-2 flex-col  "
+                      class="space-y flex flex-wrap gap-1.5 flex-col  "
                       onSubmit={handleSave}
                     >
                       <div>
@@ -336,7 +357,7 @@ const Employee = () => {
                         </label>
                         <input
                           type="text"
-                          value={firstname}
+                          value={first_name}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="First Name"
                           onChange={(e) => setFirstName(e.target.value)}
@@ -352,7 +373,7 @@ const Employee = () => {
                         </label>
                         <input
                           type="text"
-                          value={middlename}
+                          value={middle_name}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="Middle Name"
                           onChange={(e) => setMiddleName(e.target.value)}
@@ -368,27 +389,29 @@ const Employee = () => {
                         </label>
                         <input
                           type="text"
-                          value={lastname}
+                          value={last_name}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="Last Name"
                           required
                           onChange={(e) => setlastName(e.target.value)}
                         />
                       </div>
+
                       <div>
                         <label
                           for="Job roles"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
+                          {" "}
                           Job Roles
                         </label>
                         <input
                           type="text"
-                          value={jobRoles}
+                          value={job_title}
                           placeholder=" Job roles"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           required
-                          onChange={(e) => setJobRoles(e.target.value)}
+                          onChange={(e) => setJobTitle(e.target.value)}
                         />
                       </div>
                       <div>
@@ -397,11 +420,11 @@ const Employee = () => {
                         </label>
                         <input
                           type="text"
-                          value={address}
+                          value={province}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Address"
+                          placeholder="Province"
                           required
-                          onChange={(e) => setAddress(e.target.value)}
+                          onChange={(e) => setProvince(e.target.value)}
                         />
                       </div>
                       <div>
@@ -411,7 +434,9 @@ const Employee = () => {
                         <input
                           type="text"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Address"
+                          placeholder="City"
+                          value={city}
+                          onChange={(e) => setCity(e.target.value)}
                           required
                         />
                       </div>
@@ -423,6 +448,8 @@ const Employee = () => {
                           type="text"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="Municipality"
+                          value={municipality}
+                          onChange={(e) => setMunicipality(e.target.value)}
                           required
                         />
                       </div>
@@ -434,6 +461,8 @@ const Employee = () => {
                           type="text"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="Baranggay"
+                          value={baranggay}
+                          onChange={(e) => setBaranggay(e.target.value)}
                           required
                         />
                       </div>
@@ -447,6 +476,8 @@ const Employee = () => {
                           placeholder="  Zip Code"
                           onInput={handleZipCodeChange}
                           maxLength={4}
+                          value={zipcode}
+                          onChange={(e) => setZipcode(e.target.value)}
                           required
                         />
                       </div>
@@ -456,13 +487,13 @@ const Employee = () => {
                         </label>
                         <input
                           type="text"
-                          value={contact}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder=" Mobile no."
                           onInput={handleZipCodeChange}
                           maxLength={11}
                           required
-                          onChange={(e) => setContact(e.target.value)}
+                          value={mobile_number}
+                          onChange={(e) => setMobileNumber(e.target.value)}
                         />
                       </div>
                       <div>
@@ -475,6 +506,8 @@ const Employee = () => {
                           placeholder=" Telephone no."
                           onInput={handleZipCodeChange}
                           maxLength={15}
+                          value={telephone_number}
+                          onChange={(e) => setTelephoneNumber(e.target.value)}
                           required
                         />
                       </div>
@@ -486,6 +519,8 @@ const Employee = () => {
                           type="email"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder=" Work Email"
+                          value={work_email}
+                          onChange={(e) => setWorkEmail(e.target.value)}
                           required
                         />
                       </div>
@@ -497,6 +532,8 @@ const Employee = () => {
                           type="email"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder=" Personal Email"
+                          value={personal_email}
+                          onChange={(e) => setPersonalEmail(e.target.value)}
                           required
                         />
                       </div>
@@ -508,6 +545,10 @@ const Employee = () => {
                           type="text"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="Emergency Contact Person"
+                          value={emergency_contact_person}
+                          onChange={(e) =>
+                            setEmergencyContactPerson(e.target.value)
+                          }
                           required
                         />
                       </div>
@@ -519,6 +560,8 @@ const Employee = () => {
                           type="text"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="Relationship"
+                          value={relationship}
+                          onChange={(e) => setRelationship(e.target.value)}
                           required
                         />
                       </div>
@@ -530,6 +573,10 @@ const Employee = () => {
                           type="email"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="Emergency Contact Email"
+                          value={emergency_contact_email}
+                          onChange={(e) =>
+                            setEmergencyContactEmail(e.target.value)
+                          }
                           required
                         />
                       </div>
@@ -543,10 +590,13 @@ const Employee = () => {
                           placeholder="Emergency Contact No"
                           maxLength={11}
                           onInput={handleZipCodeChange}
+                          value={emergency_contact_number}
+                          onChange={(e) =>
+                            setEmergencyContactNumber(e.target.value)
+                          }
                           required
                         />
                       </div>
-                      <div></div>
                       <button
                         type="submit"
                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -562,8 +612,8 @@ const Employee = () => {
           {/* Tables For employee */}
 
           <div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400 mt-5">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0 ">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
                 <tr>
                   <th scope="col" class="px-6 py-3">
                     #
@@ -598,12 +648,16 @@ const Employee = () => {
                       {index + 1}
                     </th>
                     <td class="px-6 py-4 capitalize">
-                      {employee.lastname}, {employee.firstname}{" "}
-                      {employee.middlename}
+                      {employee.last_name}, {employee.first_name}{" "}
+                      {employee.middle_name}
                     </td>
                     <td class="px-6 py-4">{employee.job_title}</td>
-                    <td class="px-6 py-4">{employee.address}</td>
-                    <td class="px-6 py-4">{employee.contact}</td>
+                    <td class="px-6 py-4">
+                      {employee.province}, {employee.city},
+                      {employee.municipality}, {employee.baranggay} (
+                      {employee.zipcode})
+                    </td>
+                    <td class="px-6 py-4">{employee.mobile_number}</td>
                     <td class=" py-4 flex gap-2">
                       <EditEmployee employee={employee} />{" "}
                       <Delete_Employee employee={employee} />
