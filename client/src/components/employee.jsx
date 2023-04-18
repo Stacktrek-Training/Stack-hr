@@ -399,7 +399,7 @@ const Employee = () => {
                           type="text"
                           value={address}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Address"
+                          placeholder="Province"
                           required
                           onChange={(e) => setAddress(e.target.value)}
                         />
@@ -411,7 +411,7 @@ const Employee = () => {
                         <input
                           type="text"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Address"
+                          placeholder="City"
                           required
                         />
                       </div>
@@ -601,9 +601,9 @@ const Employee = () => {
                       {employee.lastname}, {employee.firstname}{" "}
                       {employee.middlename}
                     </td>
-                    <td class="px-6 py-4">{employee.job_title}</td>
-                    <td class="px-6 py-4">{employee.address}</td>
-                    <td class="px-6 py-4">{employee.contact}</td>
+                    <td class="px-6 py-4 capitalize ">{employee.job_title}</td>
+                    <td class="px-6 py-4 capitalize ">{employee.address}</td>
+                    <td class="px-6 py-4 capitalize">{employee.contact}</td>
                     <td class=" py-4 flex gap-2">
                       <EditEmployee employee={employee} />{" "}
                       <Delete_Employee employee={employee} />
