@@ -1,5 +1,6 @@
 CREATE DATABASE "STACK-HR";
 
+<<<<<<< HEAD
  CREATE TABLE EMPLOYEES ("employee_id" SERIAL PRIMARY KEY, "firstname" VARCHAR(100), "middlename" VARCHAR(100), "lastname" VARCHAR(100), "address" VARCHAR(100), "contact" VARCHAR(100), "date_inserted" TIMESTAMP DEFAULT NOW(), "date_updated" TIMESTAMP DEFAULT NOW(), "job_title" VARCHAR(100));
 
 //For Stack-Expense
@@ -25,3 +26,14 @@ CREATE TABLE reports (
 );
 
 
+=======
+
+CREATE TABLE "EMPLOYEES"(employee_id SERIAL PRIMARY KEY, first_name VARCHAR, middle_name VARCHAR, last_name VARCHAR,
+ province VARCHAR, city VARCHAR, municipality VARCHAR, baranggay VARCHAR, zipcode INTEGER,
+ mobile_number INTEGER, telephone_number VARCHAR, work_email VARCHAR, personal_email VARCHAR,
+ emergency_contact_person VARCHAR, emergency_contact_email VARCHAR,
+ emergency_contact_number INTEGER, relationship VARCHAR, 
+ job_title VARCHAR, date_created DATE, date_updated DATE, status INTEGER);
+
+ CREATE TABLE "SALARIES" ("salary_id" SERIAL PRIMARY KEY, "employee_id" INTEGER, "salary" DECIMAL, "status" INTEGER, "date_created" DATE, "date_updated" DATE);
+>>>>>>> c2c20088a622e87d3bcf03517b1b2bd1d51c4ca7
