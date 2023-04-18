@@ -134,7 +134,7 @@ app.delete("/employee/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deleteEmp = await pool.query(
-      "DELETE FROM EMPLOYEES WHERE employee_id = $1 ",
+      `DELETE FROM "EMPLOYEES" WHERE employee_id = $1 `,
       [id]
     );
     res.json("Employee deleted");
@@ -152,6 +152,35 @@ app.post("/salaries/", async (req, res) => {
       ("INSERT INTO SALARIES (employee_id, salary, status, date_created, date_updated) VALUES($1, $2, 0, CURRENT TIMESTAMP)",
       [employee_id, salary]);
     res.json(insertSalary.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+//stack-Expense
+//get category by id
+app.get("/category/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getEMP = await pool.query(
+      `SELECT * FROM "CATEGORIES" WHERE category_Id=$1`,
+      [id]
+    );
+    res.json(getEMP.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+// add category
+app.post("/category", async (req, res) => {
+  try {
+    const { category_Name } = req.body;
+    const insertEmployee = await pool.query(
+      `INSERT INTO "CATEGORIES"(category_Name)VALUES($1) RETURNING *`,
+      [category_Name]
+    );
+    res.json("Inserted data");
   } catch (error) {
     console.error(error.message);
   }
