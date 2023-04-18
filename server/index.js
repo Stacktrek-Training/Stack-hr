@@ -156,6 +156,35 @@ app.post("/salaries/", async (req, res) => {
     console.error(error.message);
   }
 });
+
+//stack-Expense
+//get category by id
+app.get("/category/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getEMP = await pool.query(
+      `SELECT * FROM "CATEGORIES" WHERE category_Id=$1`,
+      [id]
+    );
+    res.json(getEMP.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+// add category
+app.post("/category", async (req, res) => {
+  try {
+    const { category_Name } = req.body;
+    const insertEmployee = await pool.query(
+      `INSERT INTO "CATEGORIES"(category_Name)VALUES($1) RETURNING *`,
+      [category_Name]
+    );
+    res.json("Inserted data");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 app.listen(4000, () => {
   console.log("Listening to port 4000");
 });
