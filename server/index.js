@@ -162,7 +162,10 @@ app.post("/salaries/", async (req, res) => {
 
 app.get("/salaries", async (req, res) => {
   try {
-    const getSalaries = await pool.query(`SELECT * FROM "SALARIES"`);
+    const getSalaries =
+      await pool.query(`SELECT s.*, e.first_name, e.last_name, e.middle_name
+      FROM "SALARIES" s
+      JOIN "EMPLOYEES" e ON s.employee_id = e.employee_id`);
     res.json(getSalaries.rows);
   } catch (error) {
     console.error(error.message);
