@@ -171,13 +171,21 @@ app.get("/category/:id", async (req, res) => {
     console.error(error.message);
   }
 });
+app.get("/category", async (req, res) => {
+  try {
+    const getEMP = await pool.query(`SELECT * FROM "CATEGORIES"`);
+    res.json(getEMP.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 
 // add category
 app.post("/category", async (req, res) => {
   try {
     const { category_Name } = req.body;
     const insertEmployee = await pool.query(
-      `INSERT INTO "CATEGORIES"(category_Name)VALUES($1) RETURNING *`,
+      `INSERT INTO "CATEGORIES"("category_Name")VALUES($1) RETURNING *`,
       [category_Name]
     );
     res.json("Inserted data");
@@ -185,6 +193,22 @@ app.post("/category", async (req, res) => {
     console.error(error.message);
   }
 });
+
+//edit category
+app.put("/category/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { category_Name } = req.body;
+    const updateCat = await pool.query(
+      `UPDATE "CATEGORIES" SET category_Name=$1 WHERE category_Id =$2`,
+      [category_Name, category_Id]
+    );
+    res.json(updateCat.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 app.listen(4000, () => {
   console.log("Listening to port 4000");
 });
