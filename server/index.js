@@ -148,10 +148,50 @@ app.delete("/employee/:id", async (req, res) => {
 
 app.post("/salaries/", async (req, res) => {
   try {
-    const insertSalary =
-      ("INSERT INTO SALARIES (employee_id, salary, status, date_created, date_updated) VALUES($1, $2, 0, CURRENT TIMESTAMP)",
-      [employee_id, salary]);
-    res.json(insertSalary.rows);
+    const { employee_id, salary } = req.body;
+    const insertSalary = await pool.query(
+      `INSERT INTO "SALARIES" (employee_id, salary, status, date_created, date_updated) VALUES($1, $2, 1, CURRENT_TIMESTAMP, null)`,
+      [employee_id, salary]
+    );
+    res.json("Data Inserted");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//get all data in salaries
+
+app.get("/salaries", async (req, res) => {
+  try {
+    const getSalaries = await pool.query(`SELECT * FROM "SALARIES"`);
+    res.json(getSalaries.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//update data in salaries
+app.put("/salaries/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { salary } = req.body;
+    const updateSalary = await pool.query(
+      `UPDATE "SALARIES" SET salary = $1, date_updated = CURRENT_TIMESTAMP WHERE salary_id=$2`,
+      [salary, id]
+    );
+    res.json("Updated successfully");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//change status of salary
+app.put("/salaries/status/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const updateStatus = await pool.query(
+      `UPDATE "SALARIES" SET status = $1 WHERE salary_id = $2`,
+      [status, id]
+    );
+    res.json("Status Updated");
   } catch (error) {
     console.error(error.message);
   }
