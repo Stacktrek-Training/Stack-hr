@@ -118,7 +118,7 @@ const EditEmployee = ({ employee }) => {
                 Edit Employee
               </h3>
               <form
-                class="space-y flex flex-wrap gap-1 flex-col"
+                class="space-y flex flex-wrap gap-1 flex-col text-left"
                 onSubmit={editEmp(id)}
               >
                 <div>

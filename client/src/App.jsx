@@ -4,6 +4,7 @@ import Dashboard from "./components/dashboard";
 import Employee from "./components/employee";
 import Payroll from "./components/payrolls";
 import User from "./components/user_dashboard";
+import Salaries from "./components/salaries";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -22,6 +23,9 @@ function App() {
         </Route>
         <Route path="/Payroll">
           <Payroll />
+        </Route>
+        <Route path="/Salaries">
+          <Salaries />
         </Route>
       </Switch>
     </BrowserRouter>

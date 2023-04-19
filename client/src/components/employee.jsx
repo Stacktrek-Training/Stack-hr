@@ -600,7 +600,7 @@ const Employee = () => {
 
           <div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
+              <thead class="text-xs text-gray-700  text-center uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
                 <tr>
                   <th scope="col" class="px-6 py-3">
                     #
@@ -625,7 +625,7 @@ const Employee = () => {
               <tbody>
                 {employees.map((employee, index) => (
                   <tr
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     key={employee.employee_id}
                   >
                     <th
@@ -645,7 +645,7 @@ const Employee = () => {
                       {employee.baranggay} ({employee.zipcode})
                     </td>
                     <td class="px-6 py-4">{employee.mobile_number}</td>
-                    <td class=" py-4 flex gap-2">
+                    <td class=" py-4 px-2 flex gap-2">
                       <EditEmployee employee={employee} />
                       <Delete_Employee employee={employee} />
                     </td>
