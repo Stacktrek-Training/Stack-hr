@@ -1,17 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const EditSalary = () => {
+const EditSalary = ({ salaries }) => {
+  console.log(salaries);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
   const handleZipCodeChange = (event) => {
-    event.target.value = event.target.value.replace(/[^0-9]/gi, "");
+    event.target.value = event.target.value.replace(/[^0-9 .]/gi, "");
   };
 
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+
+  const [salary, setSalary] = useState(salaries.salary);
+  const [id, setId] = useState(salaries.salary_id);
+  const [employee_id, setEmpID] = useState(salaries.employee_id);
+  const emp_id = employee_id;
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/employee/${emp_id}`)
+      .then((response) => {
+        console.log(response.data);
+        setEmp(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+  const [emps, setEmp] = useState([]);
+
+  async function editSalary(id) {
+    const response = axios
+      .put(`http://localhost:4000/salaries/${id}`, {
+        salary: parseFloat(salary),
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }
+
   return (
     <>
       {/* <!-- Modal toggle --> */}
@@ -59,7 +91,10 @@ const EditSalary = () => {
               <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
                 Edit Salaries
               </h3>
-              <form class="space-y flex flex-wrap gap-1.5 flex-col text-left ">
+              <form
+                class="space-y flex flex-wrap gap-1.5 flex-col text-left "
+                onSubmit={editSalary(id)}
+              >
                 <div>
                   <label
                     for="firstname"
@@ -67,17 +102,18 @@ const EditSalary = () => {
                   >
                     Employee Name
                   </label>
-                  <input
-                    disabled
-                    list="Employe Name"
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Employee Name"
-                    required
-                  />
-                  <datalist id="Employe Name">
-                    <option value="John"></option>
-                  </datalist>
+                  {emps.map((emp) => (
+                    <input
+                      disabled
+                      type="text"
+                      value={`${emp.last_name} ${","} ${emp.first_name} ${
+                        emp.middle_name
+                      } `}
+                      key={emp.employee_id}
+                      class="bg-gray-50 border border-gray-300 capitalize text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      required
+                    />
+                  ))}
                 </div>
                 <div>
                   <label
@@ -88,6 +124,8 @@ const EditSalary = () => {
                   </label>
                   <input
                     type="text"
+                    value={salary}
+                    onChange={(e) => setSalary(e.target.value)}
                     onInput={handleZipCodeChange}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Salary Rate"

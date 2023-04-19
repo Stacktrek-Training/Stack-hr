@@ -47,7 +47,7 @@ const Salaries = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/employee")
+      .get("http://localhost:4000/employees")
       .then((response) => {
         setEmployees(response.data);
       })
@@ -71,6 +71,12 @@ const Salaries = () => {
         console.error(error.message);
       });
   };
+
+  const formatter = new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP",
+    minimumFractionDigits: 2,
+  });
 
   return (
     <div className="h-screen relative">
@@ -328,27 +334,24 @@ const Salaries = () => {
                         >
                           Employee Name
                         </label>
-                        <input
-                          list="employee-name-options"
-                          type="text"
+                        <select
                           id="employee-name"
                           name="employee-name"
+                          value={employee_id}
+                          onChange={(e) => setEmployeeId(e.target.value)}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Employee Name"
-                          onChange={(e) =>
-                            setEmployeeId(e.target.getAttribute(data - id))
-                          }
-                          required
-                        />
-                        <datalist id="employee-name-options">
+                        >
+                          <option value="" disabled selected hidden>
+                            Employee Name
+                          </option>
                           {employees.map((employee) => (
                             <option
-                              value={`${employee.first_name} ${employee.last_name}`}
-                              data-id={employee.employee_id}
+                              className="capitalize"
+                              value={employee.employee_id}
                               key={employee.employee_id}
-                            />
+                            >{`${employee.last_name} ${employee.first_name} ${employee.middle_name}`}</option>
                           ))}
-                        </datalist>
+                        </select>
                       </div>
 
                       <div>
@@ -418,13 +421,15 @@ const Salaries = () => {
                         {salary.last_name}, {salary.first_name}{" "}
                         {salary.middle_name}
                       </td>
-                      <td class="px-6 py-4"> {salary.salary} </td>
+                      <td class="px-6 py-4">
+                        {formatter.format(salary.salary)}
+                      </td>
                       <td class="px-6 py-4">
                         {" "}
-                        <StatusSalaries salary={salary} />
+                        <StatusSalaries />
                       </td>
                       <td class=" px-6 py-4">
-                        <EditSalary />
+                        <EditSalary salaries={salary} />
                       </td>
                     </tr>
                   );
