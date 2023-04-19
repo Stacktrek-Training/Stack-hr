@@ -86,18 +86,7 @@ const Employee = () => {
       });
     handleCloseModal();
   };
-  //delete employee
 
-  async function deleteEmp(id) {
-    try {
-      axios.delete(`http://localhost:4000/employee/${id}`).then((response) => {
-        console.log(response.data);
-        window.location.href = "/employee";
-      });
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
   return (
     <div className="h-screen relative">
       {" "}
@@ -423,7 +412,6 @@ const Employee = () => {
                           value={province}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="Province"
-                          required
                           onChange={(e) => setProvince(e.target.value)}
                         />
                       </div>
@@ -437,7 +425,6 @@ const Employee = () => {
                           placeholder="City"
                           value={city}
                           onChange={(e) => setCity(e.target.value)}
-                          required
                         />
                       </div>
                       <div>
@@ -613,7 +600,7 @@ const Employee = () => {
 
           <div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
+              <thead class="text-xs text-gray-700  text-center uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
                 <tr>
                   <th scope="col" class="px-6 py-3">
                     #
@@ -638,7 +625,7 @@ const Employee = () => {
               <tbody>
                 {employees.map((employee, index) => (
                   <tr
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     key={employee.employee_id}
                   >
                     <th
@@ -653,13 +640,13 @@ const Employee = () => {
                     </td>
                     <td class="px-6 py-4">{employee.job_title}</td>
                     <td class="px-6 py-4">
-                      {employee.province}, {employee.city},
-                      {employee.municipality}, {employee.baranggay} (
-                      {employee.zipcode})
+                      {employee.province}
+                      {employee.city},{employee.municipality},{" "}
+                      {employee.baranggay} ({employee.zipcode})
                     </td>
                     <td class="px-6 py-4">{employee.mobile_number}</td>
-                    <td class=" py-4 flex gap-2">
-                      {/* <EditEmployee employee={employee} /> */}
+                    <td class=" py-4 px-2 flex gap-2">
+                      <EditEmployee employee={employee} />
                       <Delete_Employee employee={employee} />
                     </td>
                   </tr>
