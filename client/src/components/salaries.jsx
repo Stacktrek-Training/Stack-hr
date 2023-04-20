@@ -21,15 +21,6 @@ const Salaries = () => {
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
-
-    const [isHovered, setIsHovered] = useState(false);
-    const handleMouseEnter = () => {
-      setIsHovered(true);
-    };
-
-    const handleMouseLeave = () => {
-      setIsHovered(false);
-    };
   };
 
   const [salaries, setSalaries] = useState([]);
