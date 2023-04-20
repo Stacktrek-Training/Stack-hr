@@ -4,12 +4,13 @@ CREATE TABLE "EMPLOYEES"(employee_id SERIAL PRIMARY KEY, first_name VARCHAR, mid
 
 CREATE TABLE "SALARIES" (salary_id SERIAL PRIMARY KEY, salary DECIMAL, status INTEGER, date_created DATE, date_updated DATE, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id));
 //For Stack-Expense
- CREATE table CATEGORIES ("category_Id" SERIAL PRIMARY KEY, "category_Name" VARCHAR (50));
+ CREATE table CATEGORIES ("category_Id" SERIAL PRIMARY KEY, "category_name" VARCHAR (50));
 
 CREATE TABLE transaction (
-    id SERIAL PRIMARY KEY,
+    transaction_Id SERIAL PRIMARY KEY,
     employee_Id INTEGER NOT NULL,
     date DATE NOT NULL,
+    category_Id,
     total_Amount NUMERIC(10, 2) NOT NULL,
     receipt_Image BYTEA,
     inserted_At TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
