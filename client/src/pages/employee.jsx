@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import image1 from "./../assets/logo.png";
 import image2 from "./../assets/th.jfif";
-import EditEmployee from "./edit_employee";
-import Delete_Employee from "./delete_employee";
+import EditEmployee from "../components/edit_employee";
+import Delete_Employee from "../components/delete_employee";
 import axios from "axios";
 import "./style.css";
-import ViewEmployee from "./view_employee";
+import ViewEmployee from "../components/view_employee";
 
 const Employee = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

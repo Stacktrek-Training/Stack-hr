@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import image1 from "./../assets/logo.png";
 import image2 from "./../assets/th.jfif";
-import "./style.css";
+import "./../components/style.css";
 import Admin from "./admin_dashboard";
 
 const Dashboard = () => {

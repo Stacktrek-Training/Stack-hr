@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import image1 from "./../assets/logo.png";
 import image2 from "./../assets/th.jfif";
-import "./style.css";
-import EditSalary from "./edit_salaries";
-import StatusSalaries from "./status_salaries";
-import axios from "axios";
+import "./../components/style.css";
 
-const Salaries = () => {
+const Deduction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -15,54 +12,13 @@ const Salaries = () => {
     setIsModalOpen(false);
   };
   const handleZipCodeChange = (event) => {
-    event.target.value = event.target.value.replace(/[^0-9 . ₱]/gi, "");
+    event.target.value = event.target.value.replace(/[^0-9 . %]/gi, "");
   };
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
-  const [salaries, setSalaries] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/salaries")
-      .then((response) => {
-        setSalaries(response.data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
-
-  const [employees, setEmployees] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/employees")
-      .then((response) => {
-        setEmployees(response.data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
-
-  const [employee_id, setEmployeeId] = useState();
-  const [salary, setSalary] = useState();
-
-  const handleSave = () => {
-    axios
-      .post("http://localhost:4000/salaries", {
-        employee_id: parseInt(employee_id),
-        salary: parseFloat(salary),
-      })
-      .then((response) => {
-        console.log(response.data);
-        window.location.href = "/salaries";
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  };
-
   const formatter = new Intl.NumberFormat("en-PH", {
     style: "currency",
     currency: "PHP",
@@ -275,7 +231,7 @@ const Salaries = () => {
                 class=" flex  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5  py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button"
               >
-                Add Salaries
+                Add Deduction
               </button>
             </div>
             {/* <!-- Main modal --> */}
@@ -312,37 +268,36 @@ const Salaries = () => {
                   </button>
                   <div class="px-6 py-6 lg:px-8">
                     <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
-                      Add Salaries
+                      Add Deduction
                     </h3>
-                    <form
-                      class="space-y flex flex-wrap gap-1.5 flex-col  "
-                      onSubmit={handleSave}
-                    >
+                    <form class="space-y flex flex-wrap gap-1.5 flex-col  ">
                       <div>
                         <label
                           for="employee-name"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Employee Name
+                          Deduction Name
                         </label>
-                        <select
-                          id="employee-name"
-                          name="employee-name"
-                          value={employee_id}
-                          onChange={(e) => setEmployeeId(e.target.value)}
+                        <input
+                          type="text"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="Deduction Name"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          for="employee-name"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          <option value="" disabled selected hidden>
-                            Employee Name
-                          </option>
-                          {employees.map((employee) => (
-                            <option
-                              className="capitalize"
-                              value={employee.employee_id}
-                              key={employee.employee_id}
-                            >{`${employee.last_name} ${employee.first_name} ${employee.middle_name}`}</option>
-                          ))}
-                        </select>
+                          Description
+                        </label>
+                        <textarea
+                          type="text"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="Description"
+                          required
+                        />
                       </div>
 
                       <div>
@@ -350,15 +305,13 @@ const Salaries = () => {
                           for="salary"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Salary Rate
+                          Reduction Ammount (%)
                         </label>
                         <input
                           type="text"
-                          value={salary}
-                          onChange={(e) => setSalary(e.target.value)}
                           onInput={handleZipCodeChange}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Salary Rate"
+                          placeholder="%"
                           required
                         />
                       </div>
@@ -382,13 +335,13 @@ const Salaries = () => {
                     #
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Employee Name
+                    Deduction Name
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Rate per day
+                    Description
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Status
+                    Reduction Amount (%)
                   </th>
                   <th scope="col" class="px-6 py-3">
                     Buttons
@@ -396,35 +349,30 @@ const Salaries = () => {
                 </tr>
               </thead>
               <tbody>
-                {salaries.map((salary, index) => {
-                  return (
-                    <tr
-                      class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={salary.salary_id}
-                    >
-                      <th
-                        scope="row"
-                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
-                        {index + 1}
-                      </th>
-                      <td class="px-6 py-4 capitalize">
-                        {salary.last_name}, {salary.first_name}{" "}
-                        {salary.middle_name}
-                      </td>
-                      <td class="px-6 py-4">
-                        {formatter.format(salary.salary)}
-                      </td>
-                      <td class="px-6 py-4">
-                        {" "}
-                        <StatusSalaries salaries={salary} />
-                      </td>
-                      <td class=" px-6 py-4">
-                        <EditSalary salaries={salary} />
-                      </td>
-                    </tr>
-                  );
-                })}
+                <tr class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <th
+                    scope="row"
+                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  ></th>
+                  <td class="px-6 py-4 capitalize"> SSS</td>
+                  <td class="px-6 py-4">
+                    {" "}
+                    The Social Security System (SSS) is a government agency in
+                    the Philippines that provides social insurance programs to
+                    workers and employees in the country. It offers benefits
+                    such as retirement, disability, and death benefits, as well
+                    as loans and other assistance programs. The SSS is a
+                    mandatory program for employees and employers, with
+                    contributions based on a percentage of the employee's
+                    salary. The agency also manages a pension fund, which
+                    provides retirement benefits to qualified members. The SSS
+                    plays a crucial role in providing social protection and
+                    financial security to workers and their families in the
+                    Philippines.
+                  </td>
+                  <td class="px-6 py-4"> 300 </td>
+                  <td class=" px-6 py-4"></td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -434,4 +382,4 @@ const Salaries = () => {
   );
 };
 
-export default Salaries;
+export default Deduction;
