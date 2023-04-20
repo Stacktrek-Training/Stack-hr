@@ -50,9 +50,12 @@ app.post("/employee", async (req, res) => {
       emergency_contact_number,
       relationship,
       job_title,
+      birthday,
+      gender,
+      marital_status,
     } = req.body;
     const insertEmployee = await pool.query(
-      `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,province,city,municipality,baranggay,zipcode,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,status)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17, CURRENT_TIMESTAMP,0) RETURNING *`,
+      `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,province,city,municipality,baranggay,zipcode,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,status,birthday,gender,marital_status)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17, CURRENT_TIMESTAMP,0,$18,$19,$20) RETURNING *`,
       [
         first_name,
         middle_name,
@@ -71,6 +74,9 @@ app.post("/employee", async (req, res) => {
         emergency_contact_number,
         relationship,
         job_title,
+        birthday,
+        gender,
+        marital_status,
       ]
     );
     res.json("Inserted data");
@@ -100,9 +106,12 @@ app.put("/employee/:id", async (req, res) => {
       emergency_contact_number,
       relationship,
       job_title,
+      birthday,
+      gender,
+      marital_status,
     } = req.body;
     const updateEmp = await pool.query(
-      `UPDATE "EMPLOYEES" SET first_name=$1,middle_name=$2,last_name=$3,province=$4,city=$5,municipality=$6,baranggay=$7,zipcode=$8,mobile_number=$9,telephone_number=$10,work_email=$11,personal_email=$12,emergency_contact_person=$13,emergency_contact_email=$14,emergency_contact_number=$15,relationship=$16,job_title=$17,date_updated=CURRENT_TIMESTAMP  WHERE employee_id =$18`,
+      `UPDATE "EMPLOYEES" SET first_name=$1,middle_name=$2,last_name=$3,province=$4,city=$5,municipality=$6,baranggay=$7,zipcode=$8,mobile_number=$9,telephone_number=$10,work_email=$11,personal_email=$12,emergency_contact_person=$13,emergency_contact_email=$14,emergency_contact_number=$15,relationship=$16,job_title=$17,date_updated=CURRENT_TIMESTAMP, birthday=$18, gender=$19, marital_status=$20  WHERE employee_id =$21`,
       [
         first_name,
         middle_name,
@@ -121,6 +130,9 @@ app.put("/employee/:id", async (req, res) => {
         emergency_contact_number,
         relationship,
         job_title,
+        birthday,
+        gender,
+        marital_status,
         id,
       ]
     );
@@ -150,6 +162,8 @@ app.delete("/employee/:id", async (req, res) => {
 //end of employee
 
 //salaries
+
+//get data in employees that are not present in salaries
 app.get("/employees", async (req, res) => {
   try {
     const getEmp = await pool.query(`SELECT e.*
@@ -162,7 +176,7 @@ WHERE s.employee_id IS NULL`);
     console.error(error.message);
   }
 });
-
+// insert all dataa in salaries
 app.post("/salaries/", async (req, res) => {
   try {
     const { employee_id, salary } = req.body;

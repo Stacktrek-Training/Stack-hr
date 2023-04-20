@@ -103,7 +103,7 @@ const User = () => {
           </div>
         )}
       </nav>
-      <div className="flex items-center ml-10 mt-10">
+      <div className="flex items-center bg-red-50 ml-10 mt-10">
         {/* Left side: profile picture and username */}
         <div className="w-1/5 mr-4 flex items-center flex-col">
           <span className="text-gray-700 font-bold mb-2">
@@ -111,7 +111,7 @@ const User = () => {
           </span>
           <div className="w-full h-full rounded-lg">
             <img
-              className="w-full object-cover rounded-lg h-auto max-w-md"
+              className="w-full object-cover rounded-lg h-auto max-w-md mx-auto"
               src={profilePicture}
               alt="Profile"
             />
@@ -119,7 +119,7 @@ const User = () => {
         </div>
 
         {/* Right side: container */}
-        <div className="flex-1 flex items-center">
+        <div className="flex-1 flex items-center mt-10">
           <div className="bg-gray-200 p-4">April</div>
         </div>
       </div>
