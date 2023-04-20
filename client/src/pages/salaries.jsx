@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import image1 from "./../assets/logo.png";
-import image2 from "./../assets/th.jfif";
+import image2 from "./../assets/User-Icon.jpg";
 import "./../components/style.css";
 import EditSalary from "../components/edit_salaries";
 import StatusSalaries from "../components/status_salaries";
