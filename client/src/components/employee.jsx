@@ -5,6 +5,7 @@ import EditEmployee from "./edit_employee";
 import Delete_Employee from "./delete_employee";
 import axios from "axios";
 import "./style.css";
+import ViewEmployee from "./view_employee";
 
 const Employee = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -659,6 +660,7 @@ const Employee = () => {
                     </td>
                     <td class="px-6 py-4">{employee.mobile_number}</td>
                     <td class=" py-4 px-2 flex gap-2">
+                      <ViewEmployee emp={employee} />
                       <EditEmployee employee={employee} />
                       <Delete_Employee employee={employee} />
                     </td>
