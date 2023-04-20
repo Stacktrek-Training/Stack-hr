@@ -426,7 +426,7 @@ const Salaries = () => {
                       </td>
                       <td class="px-6 py-4">
                         {" "}
-                        <StatusSalaries />
+                        <StatusSalaries salaries={salary} />
                       </td>
                       <td class=" px-6 py-4">
                         <EditSalary salaries={salary} />

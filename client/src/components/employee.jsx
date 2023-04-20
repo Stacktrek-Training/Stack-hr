@@ -55,6 +55,9 @@ const Employee = () => {
   const [emergency_contact_number, setEmergencyContactNumber] = useState("");
   const [relationship, setRelationship] = useState("");
   const [job_title, setJobTitle] = useState("");
+  const [birthday, setBirthday] = useState("");
+  const [gender, setGender] = useState("");
+  const [marital_status, setMAritalStatus] = useState("");
 
   const handleSave = () => {
     axios
@@ -76,6 +79,9 @@ const Employee = () => {
         emergency_contact_number: emergency_contact_number,
         relationship: relationship,
         job_title: job_title,
+        birthday: birthday,
+        gender: gender,
+        marital_status: marital_status,
       })
       .then((response) => {
         console.log(response.data);

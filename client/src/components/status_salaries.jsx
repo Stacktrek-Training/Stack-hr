@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const StatusSalaries = (salary) => {
-  console.log(salary);
+const StatusSalaries = () => {
   const [isEnable, setIsActive] = useState(true);
 
   const handleClick = () => {
     setIsActive(!isEnable);
   };
-  const [status, setStatus] = useState(salary.status);
 
   return (
     <>
