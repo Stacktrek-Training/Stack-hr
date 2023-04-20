@@ -148,10 +148,53 @@ app.delete("/employee/:id", async (req, res) => {
 
 app.post("/salaries/", async (req, res) => {
   try {
-    const insertSalary =
-      ("INSERT INTO SALARIES (employee_id, salary, status, date_created, date_updated) VALUES($1, $2, 0, CURRENT TIMESTAMP)",
-      [employee_id, salary]);
-    res.json(insertSalary.rows);
+    const { employee_id, salary } = req.body;
+    const insertSalary = await pool.query(
+      `INSERT INTO "SALARIES" (employee_id, salary, status, date_created, date_updated) VALUES($1, $2, 1, CURRENT_TIMESTAMP, null)`,
+      [employee_id, salary]
+    );
+    res.json("Data Inserted");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//get all data in salaries
+
+app.get("/salaries", async (req, res) => {
+  try {
+    const getSalaries =
+      await pool.query(`SELECT s.*, e.first_name, e.last_name, e.middle_name
+      FROM "SALARIES" s
+      JOIN "EMPLOYEES" e ON s.employee_id = e.employee_id`);
+    res.json(getSalaries.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//update data in salaries
+app.put("/salaries/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { salary } = req.body;
+    const updateSalary = await pool.query(
+      `UPDATE "SALARIES" SET salary = $1, date_updated = CURRENT_TIMESTAMP WHERE salary_id=$2`,
+      [salary, id]
+    );
+    res.json("Updated successfully");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//change status of salary
+app.put("/salaries/status/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+    const updateStatus = await pool.query(
+      `UPDATE "SALARIES" SET status = $1 WHERE salary_id = $2`,
+      [status, id]
+    );
+    res.json("Status Updated");
   } catch (error) {
     console.error(error.message);
   }
@@ -171,13 +214,21 @@ app.get("/category/:id", async (req, res) => {
     console.error(error.message);
   }
 });
+app.get("/category", async (req, res) => {
+  try {
+    const getEMP = await pool.query(`SELECT * FROM "CATEGORIES"`);
+    res.json(getEMP.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 
 // add category
 app.post("/category", async (req, res) => {
   try {
     const { category_Name } = req.body;
     const insertEmployee = await pool.query(
-      `INSERT INTO "CATEGORIES"(category_Name)VALUES($1) RETURNING *`,
+      `INSERT INTO "CATEGORIES"("category_Name")VALUES($1) RETURNING *`,
       [category_Name]
     );
     res.json("Inserted data");
@@ -185,6 +236,22 @@ app.post("/category", async (req, res) => {
     console.error(error.message);
   }
 });
+
+//edit category
+app.put("/category/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { category_Name } = req.body;
+    const updateCat = await pool.query(
+      `UPDATE "CATEGORIES" SET category_Name=$1 WHERE category_Id =$2`,
+      [category_Name, category_Id]
+    );
+    res.json(updateCat.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 app.listen(4000, () => {
   console.log("Listening to port 4000");
 });

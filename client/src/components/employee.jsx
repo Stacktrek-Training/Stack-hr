@@ -658,8 +658,8 @@ const Employee = () => {
                       {employee.zipcode})
                     </td>
                     <td class="px-6 py-4">{employee.mobile_number}</td>
-                    <td class=" py-4 flex gap-2">
-                      {/* <EditEmployee employee={employee} /> */}
+                    <td class=" py-4 px-2 flex gap-2">
+                      <EditEmployee employee={employee} />
                       <Delete_Employee employee={employee} />
                     </td>
                   </tr>
