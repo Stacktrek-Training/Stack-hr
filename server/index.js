@@ -133,10 +133,15 @@ app.put("/employee/:id", async (req, res) => {
 app.delete("/employee/:id", async (req, res) => {
   try {
     const { id } = req.params;
+    const deleteFromSalaries = await pool.query(
+      `DELETE FROM "SALARIES" WHERE employee_id=$1`,
+      [id]
+    );
     const deleteEmp = await pool.query(
       `DELETE FROM "EMPLOYEES" WHERE employee_id = $1 `,
       [id]
     );
+
     res.json("Employee deleted");
   } catch (error) {
     console.error(error.message);
@@ -145,6 +150,18 @@ app.delete("/employee/:id", async (req, res) => {
 //end of employee
 
 //salaries
+app.get("/employees", async (req, res) => {
+  try {
+    const getEmp = await pool.query(`SELECT e.*
+FROM "EMPLOYEES" e
+LEFT JOIN "SALARIES" s
+ON e.employee_id = s.employee_id
+WHERE s.employee_id IS NULL`);
+    res.json(getEmp.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 
 app.post("/salaries/", async (req, res) => {
   try {
@@ -162,7 +179,10 @@ app.post("/salaries/", async (req, res) => {
 
 app.get("/salaries", async (req, res) => {
   try {
-    const getSalaries = await pool.query(`SELECT * FROM "SALARIES"`);
+    const getSalaries =
+      await pool.query(`SELECT s.*, e.first_name, e.last_name, e.middle_name
+      FROM "SALARIES" s
+      JOIN "EMPLOYEES" e ON s.employee_id = e.employee_id`);
     res.json(getSalaries.rows);
   } catch (error) {
     console.error(error.message);

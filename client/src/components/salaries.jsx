@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import image1 from "./../assets/logo.png";
 import image2 from "./../assets/th.jfif";
 import "./style.css";
 import EditSalary from "./edit_salaries";
 import StatusSalaries from "./status_salaries";
+import axios from "axios";
 
 const Salaries = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,6 +31,53 @@ const Salaries = () => {
       setIsHovered(false);
     };
   };
+
+  const [salaries, setSalaries] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/salaries")
+      .then((response) => {
+        setSalaries(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/employees")
+      .then((response) => {
+        setEmployees(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  const [employee_id, setEmployeeId] = useState();
+  const [salary, setSalary] = useState();
+
+  const handleSave = () => {
+    axios
+      .post("http://localhost:4000/salaries", {
+        employee_id: parseInt(employee_id),
+        salary: parseFloat(salary),
+      })
+      .then((response) => {
+        console.log(response.data);
+        window.location.href = "/salaries";
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  };
+
+  const formatter = new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP",
+    minimumFractionDigits: 2,
+  });
+
   return (
     <div className="h-screen relative">
       {" "}
@@ -275,25 +323,37 @@ const Salaries = () => {
                     <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
                       Add Salaries
                     </h3>
-                    <form class="space-y flex flex-wrap gap-1.5 flex-col  ">
+                    <form
+                      class="space-y flex flex-wrap gap-1.5 flex-col  "
+                      onSubmit={handleSave}
+                    >
                       <div>
                         <label
-                          for="firstname"
+                          for="employee-name"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
                           Employee Name
                         </label>
-                        <input
-                          list="Employe Name"
-                          type="text"
+                        <select
+                          id="employee-name"
+                          name="employee-name"
+                          value={employee_id}
+                          onChange={(e) => setEmployeeId(e.target.value)}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Employee Name"
-                          required
-                        />
-                        <datalist id="Employe Name">
-                          <option value="John"></option>
-                        </datalist>
+                        >
+                          <option value="" disabled selected hidden>
+                            Employee Name
+                          </option>
+                          {employees.map((employee) => (
+                            <option
+                              className="capitalize"
+                              value={employee.employee_id}
+                              key={employee.employee_id}
+                            >{`${employee.last_name} ${employee.first_name} ${employee.middle_name}`}</option>
+                          ))}
+                        </select>
                       </div>
+
                       <div>
                         <label
                           for="salary"
@@ -303,6 +363,8 @@ const Salaries = () => {
                         </label>
                         <input
                           type="text"
+                          value={salary}
+                          onChange={(e) => setSalary(e.target.value)}
                           onInput={handleZipCodeChange}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="Salary Rate"
@@ -343,23 +405,35 @@ const Salaries = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  >
-                    1
-                  </th>
-                  <td class="px-6 py-4 capitalize"> Hello</td>
-                  <td class="px-6 py-4"> Hi </td>
-                  <td class="px-6 py-4">
-                    {" "}
-                    <StatusSalaries />
-                  </td>
-                  <td class=" px-6 py-4">
-                    <EditSalary />
-                  </td>
-                </tr>
+                {salaries.map((salary, index) => {
+                  return (
+                    <tr
+                      class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                      key={salary.salary_id}
+                    >
+                      <th
+                        scope="row"
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
+                        {index + 1}
+                      </th>
+                      <td class="px-6 py-4 capitalize">
+                        {salary.last_name}, {salary.first_name}{" "}
+                        {salary.middle_name}
+                      </td>
+                      <td class="px-6 py-4">
+                        {formatter.format(salary.salary)}
+                      </td>
+                      <td class="px-6 py-4">
+                        {" "}
+                        <StatusSalaries />
+                      </td>
+                      <td class=" px-6 py-4">
+                        <EditSalary salaries={salary} />
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
