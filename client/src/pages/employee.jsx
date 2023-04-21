@@ -756,7 +756,7 @@ const Employee = () => {
                     </td>
                     <td class="px-6 py-4">{employee.mobile_number}</td>
                     <td class=" py-4 px-2 flex gap-2">
-                      {/* <ViewEmployee emp={employee} /> */}
+                      <ViewEmployee employee={employee} />
                       <EditEmployee employee={employee} />
                       <Delete_Employee employee={employee} />
                     </td>

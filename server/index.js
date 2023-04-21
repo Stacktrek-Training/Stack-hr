@@ -106,9 +106,12 @@ app.put("/employee/:id", async (req, res) => {
       emergency_contact_number,
       relationship,
       job_title,
+      gender,
+      marital_status,
+      birthday,
     } = req.body;
     const updateEmp = await pool.query(
-      `UPDATE "EMPLOYEES" SET first_name=$1,middle_name=$2,last_name=$3,province=$4,city=$5,municipality=$6,baranggay=$7,zipcode=$8,mobile_number=$9,telephone_number=$10,work_email=$11,personal_email=$12,emergency_contact_person=$13,emergency_contact_email=$14,emergency_contact_number=$15,relationship=$16,job_title=$17,date_updated=CURRENT_TIMESTAMP WHERE employee_id =$18`,
+      `UPDATE "EMPLOYEES" SET first_name=$1,middle_name=$2,last_name=$3,province=$4,city=$5,municipality=$6,baranggay=$7,zipcode=$8,mobile_number=$9,telephone_number=$10,work_email=$11,personal_email=$12,emergency_contact_person=$13,emergency_contact_email=$14,emergency_contact_number=$15,relationship=$16,job_title=$17,date_updated=CURRENT_TIMESTAMP,gender=$18,marital_status=$19,birthday=$20 WHERE employee_id =$21`,
       [
         first_name,
         middle_name,
@@ -127,6 +130,9 @@ app.put("/employee/:id", async (req, res) => {
         emergency_contact_number,
         relationship,
         job_title,
+        gender,
+        marital_status,
+        birthday,
         id,
       ]
     );
@@ -139,10 +145,10 @@ app.put("/employee/:id", async (req, res) => {
 app.delete("/employee/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    // const deleteFromSalaries = await pool.query(
-    //   `DELETE FROM "SALARIES" WHERE employee_id=$1`,
-    //   [id]
-    // );
+    const deleteFromSalaries = await pool.query(
+      `DELETE FROM "SALARIES" WHERE employee_id=$1`,
+      [id]
+    );
     const deleteEmp = await pool.query(
       `DELETE FROM "EMPLOYEES" WHERE employee_id = $1 `,
       [id]
