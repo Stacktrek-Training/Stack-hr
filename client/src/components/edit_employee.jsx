@@ -39,6 +39,9 @@ const EditEmployee = ({ employee }) => {
   );
   const [relationship, setRelationship] = useState(employee.relationship);
   const [job_title, setJobTitle] = useState(employee.job_title);
+  const [gender, setGender] = useState(employee.gender);
+  const [marital_status, setMaritalStatus] = useState(employee.marital_status);
+  const [birthday, setBirthday] = useState(employee.birthday);
   const [id, setId] = useState(employee.employee_id);
   async function editEmp(id) {
     const response = axios
@@ -60,6 +63,9 @@ const EditEmployee = ({ employee }) => {
         emergency_contact_number: emergency_contact_number,
         relationship: relationship,
         job_title: job_title,
+        gender: gender,
+        marital_status: marital_status,
+        birthday: birthday,
       })
 
       .then((response) => {
@@ -189,6 +195,79 @@ const EditEmployee = ({ employee }) => {
                     required
                   />
                 </div>
+
+                <div>
+                  <label
+                    for="birthday"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Birthday
+                  </label>
+                  <input
+                    type="date"
+                    value={birthday}
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="birthday"
+                    required
+                    onChange={(e) => setBirthday(e.target.value)}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    for="gender"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Gender
+                  </label>
+                  <select
+                    id="gender"
+                    value={gender}
+                    onChange={(e) => setGender(e.target.value)}
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  >
+                    <option value="" disabled selected hidden>
+                      Gender
+                    </option>
+
+                    <option className="capitalize" value="Male">
+                      Male{" "}
+                    </option>
+                    <option className="capitalize" value="Female">
+                      Female
+                    </option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    for="marital_status"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Marital Status
+                  </label>
+                  <select
+                    id="marital_status"
+                    value={marital_status}
+                    onChange={(e) => setMaritalStatus(e.target.value)}
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  >
+                    <option value="" disabled selected hidden>
+                      {" "}
+                      Marital Status
+                    </option>
+                    <option className="capitalize" value="Single">
+                      Single
+                    </option>
+                    <option className="capitalize" value="Married">
+                      Married
+                    </option>
+                    <option className="capitalize" value="Widowed">
+                      Widowed
+                    </option>
+                  </select>
+                </div>
+
                 <div>
                   <label
                     for="Job roles"
