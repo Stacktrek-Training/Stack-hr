@@ -1,24 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import image1 from "./../assets/logo.png";
-import image2 from "./../assets/th.jfif";
+import image2 from "./../assets/User-Icon.jpg";
 import "./../components/style.css";
+import axios from "axios";
 
-const Deduction = () => {
+const Attendance = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [checkInTime, setCheckInTime] = useState("");
+  const [checkOutTime, setCheckOutTime] = useState("");
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  const handleZipCodeChange = (event) => {
-    event.target.value = event.target.value.replace(/[^0-9 . %]/gi, "");
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
   };
+
+  const handleCheckInTimeChange = (event) => {
+    setCheckInTime(event.target.value);
+  };
+  const handleCheckOutTimeChange = (event) => {
+    setCheckOutTime(event.target.value);
+  };
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+
+    const [isHovered, setIsHovered] = useState(false);
+    const handleMouseEnter = () => {
+      setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+      setIsHovered(false);
+    };
   };
+
+  const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/employees")
+      .then((response) => {
+        setEmployees(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
+  const [employee_id, setEmployeeId] = useState();
+  const [salary, setSalary] = useState();
+
+  const handleSave = () => {
+    axios
+      .post("http://localhost:4000/salaries", {
+        employee_id: parseInt(employee_id),
+        salary: parseFloat(salary),
+      })
+      .then((response) => {
+        console.log(response.data);
+        window.location.href = "/salaries";
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  };
+
   const formatter = new Intl.NumberFormat("en-PH", {
     style: "currency",
     currency: "PHP",
@@ -249,7 +300,7 @@ const Deduction = () => {
                 class=" flex  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5  py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button"
               >
-                Add Deduction
+                Add Attendance
               </button>
             </div>
             {/* <!-- Main modal --> */}
@@ -286,53 +337,93 @@ const Deduction = () => {
                   </button>
                   <div class="px-6 py-6 lg:px-8">
                     <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
-                      Add Deduction
+                      Add Attendance
                     </h3>
-                    <form class="space-y flex flex-wrap gap-1.5 flex-col  ">
+                    <form
+                      class="space-y flex flex-wrap gap-1.5 flex-col  "
+                      onSubmit={handleSave}
+                    >
                       <div>
                         <label
                           for="employee-name"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Deduction Name
+                          Employee Name
+                        </label>
+                        <select
+                          id="employee-name"
+                          name="employee-name"
+                          value={employee_id}
+                          onChange={(e) => setEmployeeId(e.target.value)}
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                        >
+                          <option value="" disabled selected hidden>
+                            Employee Name
+                          </option>
+                          {employees.map((employee) => (
+                            <option
+                              className="capitalize"
+                              value={employee.employee_id}
+                              key={employee.employee_id}
+                            >{`${employee.last_name} ${employee.first_name} ${employee.middle_name}`}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label
+                          for="date"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >
+                          Date
                         </label>
                         <input
-                          type="text"
+                          type="date"
+                          value={selectedDate}
+                          onChange={(e) => setSelectedDate(e.target.value)}
+                          onInput={handleDateChange}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Deduction Name"
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label
-                          for="employee-name"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                          Description
-                        </label>
-                        <textarea
-                          type="text"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Description"
+                          placeholder="Date"
                           required
                         />
                       </div>
 
                       <div>
                         <label
-                          for="salary"
+                          for="timein"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Reduction Ammount (%)
+                          Time In
                         </label>
                         <input
-                          type="text"
-                          onInput={handleZipCodeChange}
+                          type="time"
+                          value={checkInTime}
+                          onChange={(e) => setCheckInTime(e.target.value)}
+                          onInput={handleCheckInTimeChange}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="%"
+                          placeholder="Timein"
                           required
                         />
                       </div>
+
+                      <div>
+                        <label
+                          for="timeout"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >
+                          Time Out
+                        </label>
+                        <input
+                          type="time"
+                          value={checkOutTime}
+                          onChange={(e) => setCheckOutTime(e.target.value)}
+                          onInput={handleCheckOutTimeChange}
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="Timeout"
+                          required
+                        />
+                      </div>
+
                       <button
                         type="submit"
                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -353,45 +444,26 @@ const Deduction = () => {
                     #
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Deduction Name
+                    Employee Name
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Description
+                    Date
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Reduction Amount (%)
+                    Time In
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Buttons
+                    Time Out
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Status
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Action
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                <tr class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  ></th>
-                  <td class="px-6 py-4 capitalize"> SSS</td>
-                  <td class="px-6 py-4">
-                    {" "}
-                    The Social Security System (SSS) is a government agency in
-                    the Philippines that provides social insurance programs to
-                    workers and employees in the country. It offers benefits
-                    such as retirement, disability, and death benefits, as well
-                    as loans and other assistance programs. The SSS is a
-                    mandatory program for employees and employers, with
-                    contributions based on a percentage of the employee's
-                    salary. The agency also manages a pension fund, which
-                    provides retirement benefits to qualified members. The SSS
-                    plays a crucial role in providing social protection and
-                    financial security to workers and their families in the
-                    Philippines.
-                  </td>
-                  <td class="px-6 py-4"> 300 </td>
-                  <td class=" px-6 py-4"></td>
-                </tr>
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
         </div>
@@ -400,4 +472,4 @@ const Deduction = () => {
   );
 };
 
-export default Deduction;
+export default Attendance;
