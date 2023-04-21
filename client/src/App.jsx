@@ -20,11 +20,11 @@ function App() {
         <Route path="/employee">
           <Employee />
         </Route>
-        <Route path="/Attendance">
+        <Route path="/attendance">
           <Attendance />
         </Route>
         <Route path="/expense">
-          <User />            
+          <User />
         </Route>
         <Route path="/payroll">
           <Payroll />
