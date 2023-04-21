@@ -1,110 +1,81 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import image1 from "./../assets/logo.png";
 import image2 from "./../assets/User-Icon.jpg";
 import "./../components/style.css";
-import EditEmployee from "../components/edit_employee";
-import Delete_Employee from "../components/delete_employee";
 import axios from "axios";
-import ViewEmployee from "../components/view_employee";
 
-const Employee = () => {
+const Attendance = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [checkInTime, setCheckInTime] = useState("");
+  const [checkOutTime, setCheckOutTime] = useState("");
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
-  const handleZipCodeChange = (event) => {
-    event.target.value = event.target.value.replace(/[^0-9]/gi, "");
-  };
-
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+  const handleDateChange = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
+  const handleCheckInTimeChange = (event) => {
+    setCheckInTime(event.target.value);
+  };
+  const handleCheckOutTimeChange = (event) => {
+    setCheckOutTime(event.target.value);
+  };
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
+
+    const [isHovered, setIsHovered] = useState(false);
+    const handleMouseEnter = () => {
+      setIsHovered(true);
+    };
+
+    const handleMouseLeave = () => {
+      setIsHovered(false);
+    };
   };
 
-  // for getting all employees
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
     axios
-      .get("http://localhost:4000/employee")
+      .get("http://localhost:4000/employees")
       .then((response) => {
         setEmployees(response.data);
       })
       .catch((error) => console.error(error));
   }, []);
 
-  //add employee
-
-  const [first_name, setFirstName] = useState("");
-  const [middle_name, setMiddleName] = useState("");
-  const [last_name, setlastName] = useState("");
-  const [province, setProvince] = useState("");
-  const [city, setCity] = useState("");
-  const [municipality, setMunicipality] = useState("");
-  const [baranggay, setBaranggay] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [mobile_number, setMobileNumber] = useState("");
-  const [telephone_number, setTelephoneNumber] = useState("");
-  const [work_email, setWorkEmail] = useState("");
-  const [personal_email, setPersonalEmail] = useState("");
-  const [emergency_contact_person, setEmergencyContactPerson] = useState("");
-  const [emergency_contact_email, setEmergencyContactEmail] = useState("");
-  const [emergency_contact_number, setEmergencyContactNumber] = useState("");
-  const [relationship, setRelationship] = useState("");
-  const [job_title, setJobTitle] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [gender, setGender] = useState("");
-  const [marital_status, setMAritalStatus] = useState("");
+  const [employee_id, setEmployeeId] = useState();
+  const [salary, setSalary] = useState();
 
   const handleSave = () => {
     axios
-      .post("http://localhost:4000/employee", {
-        first_name: first_name,
-        middle_name: middle_name,
-        last_name: last_name,
-        province: province,
-        city: city,
-        municipality: municipality,
-        baranggay: baranggay,
-        zipcode: zipcode,
-        mobile_number: mobile_number,
-        telephone_number: telephone_number,
-        work_email: work_email,
-        personal_email: personal_email,
-        emergency_contact_person: emergency_contact_person,
-        emergency_contact_email: emergency_contact_email,
-        emergency_contact_number: emergency_contact_number,
-        relationship: relationship,
-        job_title: job_title,
-        birthday: birthday,
-        gender: gender,
-        marital_status: marital_status,
+      .post("http://localhost:4000/salaries", {
+        employee_id: parseInt(employee_id),
+        salary: parseFloat(salary),
       })
       .then((response) => {
         console.log(response.data);
-        window.location.href = "/employee";
+        window.location.href = "/salaries";
       })
       .catch((error) => {
         console.error(error.message);
       });
-    handleCloseModal();
   };
-  //delete employee
 
-  async function deleteEmp(id) {
-    try {
-      axios.delete(`http://localhost:4000/employee/${id}`).then((response) => {
-        console.log(response.data);
-        window.location.href = "/employee";
-      });
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
+  const formatter = new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP",
+    minimumFractionDigits: 2,
+  });
+
   return (
     <div className="h-screen relative">
       {" "}
@@ -131,7 +102,7 @@ const Employee = () => {
             <div
               className={`${
                 isDropdownOpen ? "" : "hidden "
-              } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-10 text-center`}
+              } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-10 text-center Form`}
             >
               <h1 className=" px-4 py-2 text-sm text-gray-700 cursor-default hover:text-gray-900 border-b border-solid border-gray-200">
                 Sunny Virgo
@@ -184,7 +155,7 @@ const Employee = () => {
               <img src={image1} alt="logo" />
             </div>
             <a href="/">
-              <li className="py-3 mt-10 pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
+              <li className="py-3 mt-10 pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg Active ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -290,7 +261,6 @@ const Employee = () => {
           </ul>
         </div>
         <div className="flex-1 p-12 mt-20">
-          {/* Modal */}
           <div className="mb-5 flex ">
             <div className="flex w-full justify-between">
               <div class="flex items-center">
@@ -330,7 +300,7 @@ const Employee = () => {
                 class=" flex  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5  py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button"
               >
-                Add Employee
+                Add Attendance
               </button>
             </div>
             {/* <!-- Main modal --> */}
@@ -342,7 +312,7 @@ const Employee = () => {
                 isModalOpen ? "" : "hidden"
               } flex items-center justify-center`}
             >
-              <div class="relative w-full max-w-2xl max-h-full">
+              <div class="relative w-full max-w-md  max-h-full">
                 {/* <!-- Modal content --> */}
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                   <button
@@ -367,7 +337,7 @@ const Employee = () => {
                   </button>
                   <div class="px-6 py-6 lg:px-8">
                     <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
-                      Add Employee
+                      Add Attendance
                     </h3>
                     <form
                       class="space-y flex flex-wrap gap-1.5 flex-col  "
@@ -375,253 +345,85 @@ const Employee = () => {
                     >
                       <div>
                         <label
-                          for="firstname"
+                          for="employee-name"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          First Name
+                          Employee Name
                         </label>
-                        <input
-                          type="text"
-                          value={first_name}
+                        <select
+                          id="employee-name"
+                          name="employee-name"
+                          value={employee_id}
+                          onChange={(e) => setEmployeeId(e.target.value)}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="First Name"
-                          onChange={(e) => setFirstName(e.target.value)}
-                          required
-                        />
+                        >
+                          <option value="" disabled selected hidden>
+                            Employee Name
+                          </option>
+                          {employees.map((employee) => (
+                            <option
+                              className="capitalize"
+                              value={employee.employee_id}
+                              key={employee.employee_id}
+                            >{`${employee.last_name} ${employee.first_name} ${employee.middle_name}`}</option>
+                          ))}
+                        </select>
                       </div>
+
                       <div>
                         <label
-                          for="middlename"
+                          for="date"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          Middle Name
+                          Date
                         </label>
                         <input
-                          type="text"
-                          value={middle_name}
+                          type="date"
+                          value={selectedDate}
+                          onChange={(e) => setSelectedDate(e.target.value)}
+                          onInput={handleDateChange}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Middle Name"
-                          onChange={(e) => setMiddleName(e.target.value)}
+                          placeholder="Date"
                           required
-                        />
-                      </div>
-                      <div>
-                        <label
-                          for="lastname"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                        >
-                          Last Name
-                        </label>
-                        <input
-                          type="text"
-                          value={last_name}
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Last Name"
-                          required
-                          onChange={(e) => setlastName(e.target.value)}
                         />
                       </div>
 
                       <div>
                         <label
-                          for="Job roles"
+                          for="timein"
                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                         >
-                          {" "}
-                          Job Roles
+                          Time In
                         </label>
                         <input
-                          type="text"
-                          value={job_title}
-                          placeholder=" Job roles"
+                          type="time"
+                          value={checkInTime}
+                          onChange={(e) => setCheckInTime(e.target.value)}
+                          onInput={handleCheckInTimeChange}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                          placeholder="Timein"
                           required
-                          onChange={(e) => setJobTitle(e.target.value)}
                         />
                       </div>
+
                       <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Province
+                        <label
+                          for="timeout"
+                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >
+                          Time Out
                         </label>
                         <input
-                          type="text"
-                          value={province}
+                          type="time"
+                          value={checkOutTime}
+                          onChange={(e) => setCheckOutTime(e.target.value)}
+                          onInput={handleCheckOutTimeChange}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Province"
-                          required
-                          onChange={(e) => setProvince(e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          City
-                        </label>
-                        <input
-                          type="text"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="City"
-                          value={city}
-                          onChange={(e) => setCity(e.target.value)}
+                          placeholder="Timeout"
                           required
                         />
                       </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Municipality
-                        </label>
-                        <input
-                          type="text"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Municipality"
-                          value={municipality}
-                          onChange={(e) => setMunicipality(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Baranggay
-                        </label>
-                        <input
-                          type="text"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Baranggay"
-                          value={baranggay}
-                          onChange={(e) => setBaranggay(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Zip Code
-                        </label>
-                        <input
-                          type="text"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="  Zip Code"
-                          onInput={handleZipCodeChange}
-                          maxLength={4}
-                          value={zipcode}
-                          onChange={(e) => setZipcode(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Mobile no.
-                        </label>
-                        <input
-                          type="text"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder=" Mobile no."
-                          onInput={handleZipCodeChange}
-                          maxLength={11}
-                          required
-                          value={mobile_number}
-                          onChange={(e) => setMobileNumber(e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Telephone no.
-                        </label>
-                        <input
-                          type="text"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder=" Telephone no."
-                          onInput={handleZipCodeChange}
-                          maxLength={15}
-                          value={telephone_number}
-                          onChange={(e) => setTelephoneNumber(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Work Email
-                        </label>
-                        <input
-                          type="email"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder=" Work Email"
-                          value={work_email}
-                          onChange={(e) => setWorkEmail(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Personal Email
-                        </label>
-                        <input
-                          type="email"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder=" Personal Email"
-                          value={personal_email}
-                          onChange={(e) => setPersonalEmail(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Emergency Contact Person
-                        </label>
-                        <input
-                          type="text"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Emergency Contact Person"
-                          value={emergency_contact_person}
-                          onChange={(e) =>
-                            setEmergencyContactPerson(e.target.value)
-                          }
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Relationship
-                        </label>
-                        <input
-                          type="text"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Relationship"
-                          value={relationship}
-                          onChange={(e) => setRelationship(e.target.value)}
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Emergency Contact Email
-                        </label>
-                        <input
-                          type="email"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Emergency Contact Email"
-                          value={emergency_contact_email}
-                          onChange={(e) =>
-                            setEmergencyContactEmail(e.target.value)
-                          }
-                          required
-                        />
-                      </div>
-                      <div>
-                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                          Emergency Contact No
-                        </label>
-                        <input
-                          type="text"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                          placeholder="Emergency Contact No"
-                          maxLength={11}
-                          onInput={handleZipCodeChange}
-                          value={emergency_contact_number}
-                          onChange={(e) =>
-                            setEmergencyContactNumber(e.target.value)
-                          }
-                          required
-                        />
-                      </div>
+
                       <button
                         type="submit"
                         class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -634,11 +436,9 @@ const Employee = () => {
               </div>
             </div>
           </div>
-          {/* Tables For employee */}
-
           <div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
+              <thead class="text-xs text-gray-700 text-center uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
                 <tr>
                   <th scope="col" class="px-6 py-3">
                     #
@@ -647,50 +447,23 @@ const Employee = () => {
                     Employee Name
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Job Roles
+                    Date
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Address
+                    Time In
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Contact
+                    Time Out
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Buttons
+                    Status
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Action
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                {employees.map((employee, index) => (
-                  <tr
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    key={employee.employee_id}
-                  >
-                    <th
-                      scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
-                      {index + 1}
-                    </th>
-                    <td class="px-6 py-4 capitalize">
-                      {employee.last_name}, {employee.first_name}{" "}
-                      {employee.middle_name}
-                    </td>
-                    <td class="px-6 py-4">{employee.job_title}</td>
-                    <td class="px-6 py-4">
-                      {employee.province}, {employee.city},
-                      {employee.municipality}, {employee.baranggay} (
-                      {employee.zipcode})
-                    </td>
-                    <td class="px-6 py-4">{employee.mobile_number}</td>
-                    <td class=" py-4 px-2 flex gap-2">
-                      <ViewEmployee emp={employee} />
-                      <EditEmployee employee={employee} />
-                      <Delete_Employee employee={employee} />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              <tbody></tbody>
             </table>
           </div>
         </div>
@@ -699,4 +472,4 @@ const Employee = () => {
   );
 };
 
-export default Employee;
+export default Attendance;

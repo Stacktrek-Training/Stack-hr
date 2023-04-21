@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Dashboard from "./pages/dashboard";
 import Employee from "./pages/employee";
+import Attendance from "./pages/attendance";
 import Payroll from "./pages/payrolls";
 import User from "./pages/user_dashboard";
 import Salaries from "./pages/salaries";
@@ -19,8 +20,11 @@ function App() {
         <Route path="/employee">
           <Employee />
         </Route>
+        <Route path="/Attendance">
+          <Attendance />
+        </Route>
         <Route path="/expense">
-          <User />
+          <User />            
         </Route>
         <Route path="/payroll">
           <Payroll />
