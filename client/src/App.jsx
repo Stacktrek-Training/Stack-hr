@@ -25,7 +25,7 @@ function App() {
         <Route path="/payroll">
           <Payroll />
         </Route>
-        <Route path="/palaries">
+        <Route path="/salaries">
           <Salaries />
         </Route>
         <Route path="/deduction">
