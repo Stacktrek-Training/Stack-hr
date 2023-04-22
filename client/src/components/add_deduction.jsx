@@ -62,7 +62,7 @@ const AddDeduction = () => {
           isModalOpen ? "" : "hidden"
         } flex items-center justify-center`}
       >
-        <div class="relative w-full max-w-md  max-h-full">
+        <div class="relative w-full max-w-md  max-h-full Modal">
           {/* <!-- Modal content --> */}
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button
