@@ -4,6 +4,7 @@
   font-family: Montserrat;
 }
 .Table {
+  z-index: 0;
   max-height: 65vh;
   overflow-y: auto;
 }

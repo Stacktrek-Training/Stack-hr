@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import image1 from "./../assets/logo.png";
 import image2 from "./../assets/th.jfif";
 import "./../components/style.css";
+import ShowDescription from "../components/hide_desc";
+import EditDeduction from "../components/edit_deduction";
 
 const Deduction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -104,7 +106,7 @@ const Deduction = () => {
               <img src={image1} alt="logo" />
             </div>
             <a href="/">
-              <li className="py-3 mt-10 pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg Active ">
+              <li className="py-3 mt-5 pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg Active ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -371,11 +373,15 @@ const Deduction = () => {
                   <th
                     scope="row"
                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                  ></th>
-                  <td class="px-6 py-4 capitalize"> SSS</td>
-                  <td class="px-6 py-4">
+                  >
                     {" "}
-                    The Social Security System (SSS) is a government agency in
+                    1
+                  </th>
+                  <td class="px-6 py-4 capitalize"> SSS</td>
+                  <td class="description px-6 py-4 text-left">
+                    {" "}
+                    <ShowDescription
+                      text="The Social Security System (SSS) is a government agency in
                     the Philippines that provides social insurance programs to
                     workers and employees in the country. It offers benefits
                     such as retirement, disability, and death benefits, as well
@@ -386,10 +392,20 @@ const Deduction = () => {
                     provides retirement benefits to qualified members. The SSS
                     plays a crucial role in providing social protection and
                     financial security to workers and their families in the
-                    Philippines.
+                    Philippines."
+                      maxWordCount={50}
+                    />
                   </td>
-                  <td class="px-6 py-4"> 300 </td>
-                  <td class=" px-6 py-4"></td>
+
+                  <td class="px-6 py-4">
+                    {" "}
+                    {formatter.format(300)}
+                    {""} {"(3%)"}
+                  </td>
+                  <td class=" px-6 py-4">
+                    {" "}
+                    <EditDeduction />
+                  </td>
                 </tr>
               </tbody>
             </table>

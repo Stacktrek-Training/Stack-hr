@@ -7,7 +7,7 @@ const EditEmployee = ({ employee }) => {
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
-  const handleZipCodeChange = (event) => {
+  const OnlyNumber = (event) => {
     event.target.value = event.target.value.replace(/[^0-9]/gi, "");
   };
 
@@ -343,7 +343,7 @@ const EditEmployee = ({ employee }) => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="  Zip Code"
-                    onInput={handleZipCodeChange}
+                    onInput={OnlyNumber}
                     maxLength={4}
                     value={zipcode}
                     onChange={(e) => setZipcode(e.target.value)}
@@ -359,7 +359,7 @@ const EditEmployee = ({ employee }) => {
                     value={mobile_number}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder=" Mobile no."
-                    onInput={handleZipCodeChange}
+                    onInput={OnlyNumber}
                     maxLength={11}
                     required
                     onChange={(e) => setMobileNumber(e.target.value)}
@@ -373,7 +373,7 @@ const EditEmployee = ({ employee }) => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder=" Telephone no."
-                    onInput={handleZipCodeChange}
+                    onInput={OnlyNumber}
                     maxLength={15}
                     value={telephone_number}
                     onChange={(e) => setTelephoneNumber(e.target.value)}
@@ -454,7 +454,7 @@ const EditEmployee = ({ employee }) => {
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Emergency Contact No"
                     maxLength={11}
-                    onInput={handleZipCodeChange}
+                    onInput={OnlyNumber}
                     value={emergency_contact_number}
                     onChange={(e) => setEmergencyContactNumber(e.target.value)}
                     required

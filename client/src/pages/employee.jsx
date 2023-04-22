@@ -12,7 +12,7 @@ const Employee = () => {
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
-  const handleZipCodeChange = (event) => {
+  const OnlyNumber = (event) => {
     event.target.value = event.target.value.replace(/[^0-9]/gi, "");
   };
 
@@ -177,14 +177,14 @@ const Employee = () => {
           </div>
         </div>
       </nav>
-      <div className="flex h-screen bg-gray-200 m-0">
-        <div className="side bg-orange-500 w-64 text-white">
+      <div className="flex h-screen bg-gray-200 m-0 screen:h-screen overflow-auto screen:max-w-screen">
+        <div className="side bg-orange-500  text-white w-64">
           <ul className="ul">
             <div className="image p-6 ">
               <img src={image1} alt="logo" />
             </div>
             <a href="/">
-              <li className="py-3 mt-10 pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
+              <li className="py-3 mt-5 pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -289,7 +289,8 @@ const Employee = () => {
             </a>
           </ul>
         </div>
-        <div className="flex-1 p-12 mt-20">
+
+        <div className="flex-1 p-12 mt-20 ">
           {/* Modal */}
           <div className="mb-5 flex ">
             <div className="flex w-full justify-between">
@@ -571,7 +572,7 @@ const Employee = () => {
                           type="text"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="  Zip Code"
-                          onInput={handleZipCodeChange}
+                          onInput={OnlyNumber}
                           maxLength={4}
                           value={zipcode}
                           onChange={(e) => setZipcode(e.target.value)}
@@ -586,7 +587,7 @@ const Employee = () => {
                           type="text"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder=" Mobile no."
-                          onInput={handleZipCodeChange}
+                          onInput={OnlyNumber}
                           maxLength={11}
                           required
                           value={mobile_number}
@@ -601,7 +602,7 @@ const Employee = () => {
                           type="text"
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder=" Telephone no."
-                          onInput={handleZipCodeChange}
+                          onInput={OnlyNumber}
                           maxLength={15}
                           value={telephone_number}
                           onChange={(e) => setTelephoneNumber(e.target.value)}
@@ -686,7 +687,7 @@ const Employee = () => {
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="Emergency Contact No"
                           maxLength={11}
-                          onInput={handleZipCodeChange}
+                          onInput={OnlyNumber}
                           value={emergency_contact_number}
                           onChange={(e) =>
                             setEmergencyContactNumber(e.target.value)

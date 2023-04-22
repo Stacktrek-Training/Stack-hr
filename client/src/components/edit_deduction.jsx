@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 
-const EditSalary = ({ salaries }) => {
-  console.log(salaries);
+const EditDeduction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -14,36 +12,6 @@ const EditSalary = ({ salaries }) => {
   const OnlyNumber = (event) => {
     event.target.value = event.target.value.replace(/[^0-9 .]/gi, "");
   };
-
-  const [salary, setSalary] = useState(salaries.salary);
-  const [id, setId] = useState(salaries.salary_id);
-  const [employee_id, setEmpID] = useState(salaries.employee_id);
-  const emp_id = employee_id;
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/employee/${emp_id}`)
-      .then((response) => {
-        console.log(response.data);
-        setEmp(response.data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
-  const [emps, setEmp] = useState([]);
-
-  async function editSalary(id) {
-    const response = axios
-      .put(`http://localhost:4000/salaries/${id}`, {
-        salary: parseFloat(salary),
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error(error.message);
-      });
-  }
-
   return (
     <>
       {/* <!-- Modal toggle --> */}
@@ -109,44 +77,48 @@ const EditSalary = ({ salaries }) => {
                 </svg>{" "}
                 Edit Salaries
               </h3>
-              <form
-                class="space-y flex flex-wrap gap-1.5 flex-col text-left "
-                onSubmit={editSalary(id)}
-              >
+              <form class="space-y text-left flex flex-wrap gap-1.5 flex-col  ">
                 <div>
                   <label
-                    for="firstname"
+                    for="employee-name"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Employee Name
+                    Deduction Name
                   </label>
-                  {emps.map((emp) => (
-                    <input
-                      disabled
-                      type="text"
-                      value={`${emp.last_name} ${","} ${emp.first_name} ${
-                        emp.middle_name
-                      } `}
-                      key={emp.employee_id}
-                      class="bg-gray-50 border border-gray-300 capitalize text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      required
-                    />
-                  ))}
+                  <input
+                    type="text"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Deduction Name"
+                    required
+                  />
                 </div>
+                <div>
+                  <label
+                    for="employee-name"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    type="text"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Description"
+                    required
+                  />
+                </div>
+
                 <div>
                   <label
                     for="salary"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Salary Rate
+                    Reduction Ammount (%)
                   </label>
                   <input
                     type="text"
-                    value={salary}
-                    onChange={(e) => setSalary(e.target.value)}
                     onInput={OnlyNumber}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Salary Rate"
+                    placeholder="%"
                     required
                   />
                 </div>
@@ -154,7 +126,7 @@ const EditSalary = ({ salaries }) => {
                   type="submit"
                   class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  Update
+                  Save
                 </button>
               </form>
             </div>
@@ -165,4 +137,4 @@ const EditSalary = ({ salaries }) => {
   );
 };
 
-export default EditSalary;
+export default EditDeduction;

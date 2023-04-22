@@ -14,7 +14,7 @@ const Salaries = () => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  const handleZipCodeChange = (event) => {
+  const OnlyNumber = (event) => {
     event.target.value = event.target.value.replace(/[^0-9 . ₱]/gi, "");
   };
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -95,7 +95,7 @@ const Salaries = () => {
             <div
               className={`${
                 isDropdownOpen ? "" : "hidden "
-              } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-10 text-center Form`}
+              } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-99 text-center Form`}
             >
               <h1 className=" px-4 py-2 text-sm text-gray-700 cursor-default hover:text-gray-900 border-b border-solid border-gray-200">
                 Sunny Virgo
@@ -148,7 +148,7 @@ const Salaries = () => {
               <img src={image1} alt="logo" />
             </div>
             <a href="/">
-              <li className="py-3 mt-10 pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg Active ">
+              <li className="py-3 mt-5 pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg Active ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -374,7 +374,7 @@ const Salaries = () => {
                           type="text"
                           value={salary}
                           onChange={(e) => setSalary(e.target.value)}
-                          onInput={handleZipCodeChange}
+                          onInput={OnlyNumber}
                           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                           placeholder="Salary Rate"
                           required
@@ -394,7 +394,7 @@ const Salaries = () => {
           </div>
           <div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-              <thead class="text-xs text-gray-700 text-center uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
+              <thead class="text-xs text-gray-700 text-center uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                   <th scope="col" class="px-6 py-3">
                     #
@@ -435,7 +435,7 @@ const Salaries = () => {
                       </td>
                       <td class="px-6 py-4">
                         {" "}
-                        {/* <StatusSalaries salaries={salary} /> */}
+                        <StatusSalaries salaries={salary} />
                       </td>
                       <td class=" px-6 py-4">
                         <EditSalary salaries={salary} />
