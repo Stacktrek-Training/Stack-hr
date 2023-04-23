@@ -230,7 +230,16 @@ app.put("/salaries/status/:id", async (req, res) => {
     console.error(error.message);
   }
 });
+//get all deductions
 
+app.get("/deductions/", async (req, res) => {
+  try {
+    const getDeductions = await pool.query(`SELECT * FROM "DEDUCTIONS"`);
+    res.json(getDeductions.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 //stack-Expense
 //get category by id
 app.get("/category/:id", async (req, res) => {

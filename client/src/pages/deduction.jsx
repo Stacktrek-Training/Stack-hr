@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./../components/style.css";
 import ShowDescription from "../components/hide_desc";
 import EditDeduction from "../components/edit_deduction";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
 import AddDeduction from "../components/add_deduction";
+import axios from "axios";
 
 const Deduction = () => {
   const formatter = new Intl.NumberFormat("en-PH", {
@@ -12,6 +13,15 @@ const Deduction = () => {
     currency: "PHP",
     minimumFractionDigits: 2,
   });
+  const [deductions, setDeductions] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/deductions`)
+      .then((response) => {
+        setDeductions(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <div className="h-screen relative">
@@ -47,44 +57,39 @@ const Deduction = () => {
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                {deductions.map((deduction, index) => (
+                  <tr
+                    key={deduction.deduction_id}
+                    class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                   >
-                    {" "}
-                    1
-                  </th>
-                  <td class="px-6 py-4 capitalize"> SSS</td>
-                  <td class="description px-6 py-4 text-left">
-                    {" "}
-                    <ShowDescription
-                      text="The Social Security System (SSS) is a government agency in
-                    the Philippines that provides social insurance programs to
-                    workers and employees in the country. It offers benefits
-                    such as retirement, disability, and death benefits, as well
-                    as loans and other assistance programs. The SSS is a
-                    mandatory program for employees and employers, with
-                    contributions based on a percentage of the employee's
-                    salary. The agency also manages a pension fund, which
-                    provides retirement benefits to qualified members. The SSS
-                    plays a crucial role in providing social protection and
-                    financial security to workers and their families in the
-                    Philippines."
-                      maxWordCount={50}
-                    />
-                  </td>
+                    <th
+                      scope="row"
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {" "}
+                      1
+                    </th>
+                    <td class="px-6 py-4 capitalize">
+                      {" "}
+                      {deduction.deduction_name}
+                    </td>
+                    <td class="description px-6 py-4 text-left">
+                      {" "}
+                      <ShowDescription
+                        text={deduction.description}
+                        maxWordCount={50}
+                      />
+                    </td>
 
-                  <td class="px-6 py-4">
-                    {" "}
-                    {formatter.format(300)}
-                    {""} {"(3%)"}
-                  </td>
-                  <td class=" px-6 py-4">
-                    {" "}
-                    <EditDeduction />
-                  </td>
-                </tr>
+                    <td class="px-6 py-4">
+                      {""} {`${deduction.amount}${"%"}`}
+                    </td>
+                    <td class=" px-6 py-4">
+                      {" "}
+                      <EditDeduction />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
