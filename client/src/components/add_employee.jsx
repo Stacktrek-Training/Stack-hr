@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 const AddEmployee = () => {
@@ -20,17 +20,6 @@ const AddEmployee = () => {
   };
 
   // for getting all employees
-  const [employees, setEmployees] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/employee")
-      .then((response) => {
-        setEmployees(response.data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
-
   //add employee
 
   const [first_name, setFirstName] = useState("");

@@ -13,17 +13,6 @@ const AddSalaries = () => {
     event.target.value = event.target.value.replace(/[^0-9 . ₱]/gi, "");
   };
 
-  const [salaries, setSalaries] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/salaries")
-      .then((response) => {
-        setSalaries(response.data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
-
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 
 const AddDeduction = () => {
@@ -11,6 +12,31 @@ const AddDeduction = () => {
   const OnlyNumber = (event) => {
     event.target.value = event.target.value.replace(/[^0-9 . %]/gi, "");
   };
+  const [deduction_name, setDeductionName] = useState("");
+  const [description, setDescription] = useState("");
+  const [amount, setAmount] = useState("");
+
+  const [deductions, setDeductions] = useState([]);
+  const handleSave = () => {
+    try {
+      axios
+        .post(`http://localhost:4000/deductions`, {
+          deduction_name: deduction_name,
+          description: description,
+          amount: amount,
+        })
+        .then((response) => {
+          setDeductions(response.data);
+          window.location.href = "/deduction";
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   return (
     <div className="flex w-full justify-between">
       <div class="flex items-center">
@@ -89,7 +115,10 @@ const AddDeduction = () => {
               <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
                 Add Deduction
               </h3>
-              <form class="space-y flex flex-wrap gap-1.5 flex-col  ">
+              <form
+                onSubmit={handleSave}
+                class="space-y flex flex-wrap gap-1.5 flex-col  "
+              >
                 <div>
                   <label
                     for="employee-name"
@@ -101,6 +130,8 @@ const AddDeduction = () => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Deduction Name"
+                    value={deduction_name}
+                    onChange={(e) => setDeductionName(e.target.value)}
                     required
                   />
                 </div>
@@ -115,6 +146,8 @@ const AddDeduction = () => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     required
                   />
                 </div>
@@ -131,6 +164,8 @@ const AddDeduction = () => {
                     onInput={OnlyNumber}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="%"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
                     required
                   />
                 </div>

@@ -181,7 +181,7 @@ app.post("/salaries/", async (req, res) => {
   try {
     const { employee_id, salary } = req.body;
     const insertSalary = await pool.query(
-      `INSERT INTO "SALARIES" (employee_id, salary, status, date_created, date_updated) VALUES($1, $2, 1, CURRENT_TIMESTAMP, null)`,
+      `INSERT INTO "SALARIES" (employee_id, salary, status, date_created, date_updated) VALUES($1, $2, 1, CURRENT_TIMESTAMP, null) RETURNING*`,
       [employee_id, salary]
     );
     res.json("Data Inserted");
@@ -236,6 +236,20 @@ app.get("/deductions/", async (req, res) => {
   try {
     const getDeductions = await pool.query(`SELECT * FROM "DEDUCTIONS"`);
     res.json(getDeductions.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//insert deduction
+
+app.post("/deductions/", async (req, res) => {
+  try {
+    const { deduction_name, description, amount } = req.body;
+    const insertDeduction = await pool.query(
+      `INSERT INTO "DEDUCTIONS" (deduction_name, description, amount, date_created)VALUES($1,$2,$3,CURRENT_TIMESTAMP) RETURNING*`,
+      [deduction_name, description, amount]
+    );
+    res.json("data inserted");
   } catch (error) {
     console.error(error.message);
   }
