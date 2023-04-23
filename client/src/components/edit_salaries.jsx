@@ -31,8 +31,8 @@ const EditSalary = ({ salaries }) => {
   }, []);
   const [emps, setEmp] = useState([]);
 
-  async function editSalary(id) {
-    const response = axios
+  const editSalary = async () => {
+    const response = await axios
       .put(`http://localhost:4000/salaries/${id}`, {
         salary: parseFloat(salary),
       })
@@ -42,7 +42,7 @@ const EditSalary = ({ salaries }) => {
       .catch((error) => {
         console.error(error.message);
       });
-  }
+  };
 
   return (
     <>
@@ -111,7 +111,7 @@ const EditSalary = ({ salaries }) => {
               </h3>
               <form
                 class="space-y flex flex-wrap gap-1.5 flex-col text-left "
-                onSubmit={editSalary(id)}
+                onSubmit={editSalary}
               >
                 <div>
                   <label

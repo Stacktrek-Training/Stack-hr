@@ -43,8 +43,8 @@ const EditEmployee = ({ employee }) => {
   const [marital_status, setMaritalStatus] = useState(employee.marital_status);
   const [birthday, setBirthday] = useState(employee.birthday);
   const [id, setId] = useState(employee.employee_id);
-  async function editEmp(id) {
-    const response = axios
+  const editEmp = async () => {
+    const response = await axios
       .put(`http://localhost:4000/employee/${id}`, {
         first_name: first_name,
         middle_name: middle_name,
@@ -74,7 +74,7 @@ const EditEmployee = ({ employee }) => {
       .catch((error) => {
         console.error(error.message);
       });
-  }
+  };
 
   return (
     <>
@@ -143,7 +143,7 @@ const EditEmployee = ({ employee }) => {
               </h3>
               <form
                 class="space-y flex flex-wrap gap-1 flex-col text-left"
-                onSubmit={editEmp(id)}
+                onSubmit={editEmp}
               >
                 <div>
                   <label

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-const EditDeduction = () => {
+const EditDeduction = ({ deduction }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -11,6 +12,30 @@ const EditDeduction = () => {
   };
   const OnlyNumber = (event) => {
     event.target.value = event.target.value.replace(/[^0-9 .]/gi, "");
+  };
+  const [deduction_name, setDeductionName] = useState(deduction.deduction_name);
+  const [description, setDescription] = useState(deduction.description);
+  const [amount, setAmount] = useState(deduction.amount);
+  const [id, setId] = useState(deduction.deduction_id);
+  const handleSave = async () => {
+    try {
+      await axios
+        .put(`http://localhost:4000/deductions/${id}`, {
+          deduction_name: deduction_name,
+          description: description,
+          amount: parseFloat(amount),
+        })
+
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error(error.message);
+        });
+      setId(deduction.deduction_id);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
   return (
     <>
@@ -77,7 +102,10 @@ const EditDeduction = () => {
                 </svg>{" "}
                 Edit Salaries
               </h3>
-              <form class="space-y text-left flex flex-wrap gap-1.5 flex-col  ">
+              <form
+                onSubmit={handleSave}
+                class="space-y text-left flex flex-wrap gap-1.5 flex-col  "
+              >
                 <div>
                   <label
                     for="employee-name"
@@ -89,6 +117,8 @@ const EditDeduction = () => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Deduction Name"
+                    value={deduction_name}
+                    onChange={(e) => setDeductionName(e.target.value)}
                     required
                   />
                 </div>
@@ -103,6 +133,8 @@ const EditDeduction = () => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
                     required
                   />
                 </div>
@@ -119,6 +151,8 @@ const EditDeduction = () => {
                     onInput={OnlyNumber}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="%"
+                    value={amount}
+                    onChange={(e) => setAmount(e.target.value)}
                     required
                   />
                 </div>

@@ -86,7 +86,7 @@ const Deduction = () => {
                     </td>
                     <td class=" px-6 py-4">
                       {" "}
-                      <EditDeduction />
+                      <EditDeduction deduction={deduction} />
                     </td>
                   </tr>
                 ))}

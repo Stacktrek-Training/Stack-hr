@@ -181,7 +181,7 @@ app.post("/salaries/", async (req, res) => {
   try {
     const { employee_id, salary } = req.body;
     const insertSalary = await pool.query(
-      `INSERT INTO "SALARIES" (employee_id, salary, status, date_created, date_updated) VALUES($1, $2, 1, CURRENT_TIMESTAMP, null) RETURNING*`,
+      `INSERT INTO "SALARIES" (employee_id, salary, status, date_created) VALUES($1, $2, 1, CURRENT_TIMESTAMP) RETURNING *`,
       [employee_id, salary]
     );
     res.json("Data Inserted");
@@ -246,10 +246,24 @@ app.post("/deductions/", async (req, res) => {
   try {
     const { deduction_name, description, amount } = req.body;
     const insertDeduction = await pool.query(
-      `INSERT INTO "DEDUCTIONS" (deduction_name, description, amount, date_created)VALUES($1,$2,$3,CURRENT_TIMESTAMP) RETURNING*`,
+      `INSERT INTO "DEDUCTIONS" (deduction_name, description, amount, date_created)VALUES($1,$2,$3,CURRENT_TIMESTAMP) RETURNING *`,
       [deduction_name, description, amount]
     );
     res.json("data inserted");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+// update deductions
+app.put("/deductions/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { deduction_name, description, amount } = req.body;
+    const updateDeductions = await pool.query(
+      `UPDATE "DEDUCTIONS" SET deduction_name =$1, description =$2, amount=$3, date_updated = CURRENT_TIMESTAMP WHERE deduction_id=$4`,
+      [deduction_name, description, amount, id]
+    );
+    res.json("data updated");
   } catch (error) {
     console.error(error.message);
   }
