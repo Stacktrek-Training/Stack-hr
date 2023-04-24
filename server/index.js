@@ -484,6 +484,20 @@ app.put("/reports/:id", async (req, res) => {
     console.error(error.message);
   }
 });
+// edit reports
+app.put("/reports/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { transaction_Id, date, category_Id, description, amount } = req.body;
+    const updateReport = await pool.query(
+      `UPDATE "REPORTS" SET transaction_Id=$1,date=CURRENT_TIMESTAMP,category_Id=$2,description=$3,amount=$4 WHERE report_Id =$5`,
+      [transaction_Id, date, category_Id, description, amount, id]
+    );
+    res.json(updateReport.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 
 app.listen(4000, () => {
   console.log("Listening to port 4000");
