@@ -1,69 +1,94 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const EditSalary = ({ salaries }) => {
-  console.log(salaries);
+const AddSalaries = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
-
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
   const OnlyNumber = (event) => {
-    event.target.value = event.target.value.replace(/[^0-9 .]/gi, "");
+    event.target.value = event.target.value.replace(/[^0-9 . ₱]/gi, "");
   };
 
-  const [salary, setSalary] = useState(salaries.salary);
-  const [id, setId] = useState(salaries.salary_id);
-  const [employee_id, setEmpID] = useState(salaries.employee_id);
-  const emp_id = employee_id;
+  const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/employee/${emp_id}`)
+      .get("http://localhost:4000/employees")
       .then((response) => {
-        console.log(response.data);
-        setEmp(response.data);
+        setEmployees(response.data);
       })
       .catch((error) => console.error(error));
   }, []);
-  const [emps, setEmp] = useState([]);
 
-  const editSalary = async () => {
-    const response = await axios
-      .put(`http://localhost:4000/salaries/${id}`, {
+  const [employee_id, setEmployeeId] = useState();
+  const [salary, setSalary] = useState();
+
+  const handleSave = () => {
+    axios
+      .post("http://localhost:4000/salaries", {
+        employee_id: parseInt(employee_id),
         salary: parseFloat(salary),
       })
       .then((response) => {
         console.log(response.data);
+        window.location.href = "/salaries";
       })
       .catch((error) => {
         console.error(error.message);
       });
   };
 
+  const formatter = new Intl.NumberFormat("en-PH", {
+    style: "currency",
+    currency: "PHP",
+    minimumFractionDigits: 2,
+  });
   return (
-    <>
+    <div className="flex w-full justify-between">
+      <div class="flex items-center">
+        <label for="simple-search" class="sr-only">
+          Search
+        </label>
+        <div class="relative w-full search ">
+          <div class="search_icon  inset-y-0  flex items-center  ">
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5 text-gray-500 dark:text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+
+          <input
+            type="text"
+            id="simple-search"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30  pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Search"
+            required
+            autoComplete="off"
+          />
+        </div>
+      </div>
       {/* <!-- Modal toggle --> */}
       <button
         onClick={handleModalOpen}
-        class=" border-none bg-blue-800 px-2 py-1 rounded-md text-white
-  hover:bg-blue-700  font-semibold"
+        class=" flex  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5  py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         type="button"
-        title="Edit"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          class="w-6 h-6"
-        >
-          <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-          <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-        </svg>
+        Add Salaries
       </button>
+
       {/* <!-- Main modal --> */}
       <div
         id="modal"
@@ -73,7 +98,7 @@ const EditSalary = ({ salaries }) => {
           isModalOpen ? "" : "hidden"
         } flex items-center justify-center`}
       >
-        <div class="relative w-full max-w-md max-h-full">
+        <div class="relative w-full max-w-md  max-h-full Modal">
           {/* <!-- Modal content --> */}
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button
@@ -97,42 +122,40 @@ const EditSalary = ({ salaries }) => {
               <span class="sr-only">Close modal</span>
             </button>
             <div class="px-6 py-6 lg:px-8">
-              <h3 class="mb-4 text-xl text-left flex  font-bold text-gray-900 dark:text-white">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-                  <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-                </svg>{" "}
-                Edit Salaries
+              <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
+                Add Salaries
               </h3>
               <form
-                class="space-y flex flex-wrap gap-1.5 flex-col text-left "
-                onSubmit={editSalary}
+                class="space-y flex flex-wrap gap-1.5 flex-col  "
+                onSubmit={handleSave}
               >
                 <div>
                   <label
-                    for="firstname"
+                    for="employee-name"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Employee Name
                   </label>
-                  {emps.map((emp) => (
-                    <input
-                      disabled
-                      type="text"
-                      value={`${emp.last_name} ${","} ${emp.first_name} ${
-                        emp.middle_name
-                      } `}
-                      key={emp.employee_id}
-                      class="bg-gray-50 border border-gray-300 capitalize text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      required
-                    />
-                  ))}
+                  <select
+                    id="employee-name"
+                    name="employee-name"
+                    value={employee_id}
+                    onChange={(e) => setEmployeeId(e.target.value)}
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  >
+                    <option value="" disabled selected hidden>
+                      Employee Name
+                    </option>
+                    {employees.map((employee) => (
+                      <option
+                        className="capitalize"
+                        value={employee.employee_id}
+                        key={employee.employee_id}
+                      >{`${employee.last_name} ${employee.first_name} ${employee.middle_name}`}</option>
+                    ))}
+                  </select>
                 </div>
+
                 <div>
                   <label
                     for="salary"
@@ -154,15 +177,15 @@ const EditSalary = ({ salaries }) => {
                   type="submit"
                   class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  Update
+                  Save
                 </button>
               </form>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default EditSalary;
+export default AddSalaries;

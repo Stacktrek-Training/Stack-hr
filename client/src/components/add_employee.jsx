@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const EditEmployee = ({ employee }) => {
-  console.log(employee);
+const AddEmployee = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -14,38 +13,39 @@ const EditEmployee = ({ employee }) => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  const [first_name, setFirstName] = useState(employee.first_name);
-  const [middle_name, setMiddleName] = useState(employee.middle_name);
-  const [last_name, setLastName] = useState(employee.last_name);
-  const [province, setProvince] = useState(employee.province);
-  const [city, setCity] = useState(employee.city);
-  const [municipality, setMunicipality] = useState(employee.municipality);
-  const [baranggay, setBaranggay] = useState(employee.baranggay);
-  const [zipcode, setZipcode] = useState(employee.zipcode);
-  const [mobile_number, setMobileNumber] = useState(employee.mobile_number);
-  const [telephone_number, setTelephoneNumber] = useState(
-    employee.telephone_number
-  );
-  const [work_email, setWorkEmail] = useState(employee.work_email);
-  const [personal_email, setPersonalEmail] = useState(employee.personal_email);
-  const [emergency_contact_person, setEmergencyContactPerson] = useState(
-    employee.emergency_contact_person
-  );
-  const [emergency_contact_email, setEmergencyContactEmail] = useState(
-    employee.emergency_contact_email
-  );
-  const [emergency_contact_number, setEmergencyContactNumber] = useState(
-    employee.emergency_contact_number
-  );
-  const [relationship, setRelationship] = useState(employee.relationship);
-  const [job_title, setJobTitle] = useState(employee.job_title);
-  const [gender, setGender] = useState(employee.gender);
-  const [marital_status, setMaritalStatus] = useState(employee.marital_status);
-  const [birthday, setBirthday] = useState(employee.birthday);
-  const [id, setId] = useState(employee.employee_id);
-  const editEmp = async () => {
-    const response = await axios
-      .put(`http://localhost:4000/employee/${id}`, {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  // for getting all employees
+  //add employee
+
+  const [first_name, setFirstName] = useState("");
+  const [middle_name, setMiddleName] = useState("");
+  const [last_name, setlastName] = useState("");
+  const [province, setProvince] = useState("");
+  const [city, setCity] = useState("");
+  const [municipality, setMunicipality] = useState("");
+  const [baranggay, setBaranggay] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [mobile_number, setMobileNumber] = useState("");
+  const [telephone_number, setTelephoneNumber] = useState("");
+  const [work_email, setWorkEmail] = useState("");
+  const [personal_email, setPersonalEmail] = useState("");
+  const [emergency_contact_person, setEmergencyContactPerson] = useState("");
+  const [emergency_contact_email, setEmergencyContactEmail] = useState("");
+  const [emergency_contact_number, setEmergencyContactNumber] = useState("");
+  const [relationship, setRelationship] = useState("");
+  const [job_title, setJobTitle] = useState("");
+  const [gender, setGender] = useState("");
+  const [marital_status, setMaritalStatus] = useState("");
+  const [birthday, setBirthday] = useState("");
+
+  const handleSave = () => {
+    axios
+      .post("http://localhost:4000/employee", {
         first_name: first_name,
         middle_name: middle_name,
         last_name: last_name,
@@ -67,36 +67,70 @@ const EditEmployee = ({ employee }) => {
         marital_status: marital_status,
         birthday: birthday,
       })
-
       .then((response) => {
         console.log(response.data);
+        window.location.href = "/employee";
       })
       .catch((error) => {
         console.error(error.message);
       });
+    handleCloseModal();
   };
+  //delete employee
+
+  async function deleteEmp(id) {
+    try {
+      axios.delete(`http://localhost:4000/employee/${id}`).then((response) => {
+        console.log(response.data);
+        window.location.href = "/employee";
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
 
   return (
-    <>
-      {/* <!-- Modal toggle --> */}
+    <div className="flex w-full justify-between">
+      <div class="flex items-center">
+        <label for="simple-search" class="sr-only">
+          Search
+        </label>
+        <div class="relative w-full search ">
+          <div class="search_icon  inset-y-0  flex items-center  ">
+            <svg
+              aria-hidden="true"
+              class="w-5 h-5 text-gray-500 dark:text-gray-400"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </div>
+
+          <input
+            type="text"
+            id="simple-search"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30  pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Search"
+            required
+            autoComplete="off"
+          />
+        </div>
+      </div>
+
       <button
         onClick={handleModalOpen}
-        class=" border-none bg-blue-800 px-2 py-1 rounded-md text-white
-  hover:bg-blue-700  font-semibold"
+        class=" flex  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5  py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         type="button"
-        title="Edit"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          class="w-6 h-6"
-        >
-          <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-          <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-        </svg>
+        Add Employee
       </button>
-      {/* <!-- Main modal --> */}
+
       <div
         id="modal"
         tabindex="-1"
@@ -105,7 +139,7 @@ const EditEmployee = ({ employee }) => {
           isModalOpen ? "" : "hidden"
         } flex items-center justify-center`}
       >
-        <div class="relative w-full max-w-2xl max-h-full">
+        <div class="relative w-full max-w-2xl max-h-full Modal ">
           {/* <!-- Modal content --> */}
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button
@@ -129,21 +163,12 @@ const EditEmployee = ({ employee }) => {
               <span class="sr-only">Close modal</span>
             </button>
             <div class="px-6 py-6 lg:px-8">
-              <h3 class="mb-4 text-xl inline-flex  font-bold text-gray-900 dark:text-white">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  class="w-6 h-6"
-                >
-                  <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
-                  <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
-                </svg>
-                Edit Employee
+              <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
+                Add Employee
               </h3>
               <form
-                class="space-y flex flex-wrap gap-1 flex-col text-left"
-                onSubmit={editEmp}
+                class="space-y flex flex-wrap gap-1.5 flex-col  "
+                onSubmit={handleSave}
               >
                 <div>
                   <label
@@ -154,9 +179,9 @@ const EditEmployee = ({ employee }) => {
                   </label>
                   <input
                     type="text"
+                    value={first_name}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="First Name"
-                    value={first_name}
                     onChange={(e) => setFirstName(e.target.value)}
                     required
                   />
@@ -166,15 +191,14 @@ const EditEmployee = ({ employee }) => {
                     for="middlename"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    {" "}
                     Middle Name
                   </label>
                   <input
                     type="text"
-                    placeholder="Middle Name"
                     value={middle_name}
-                    onChange={(e) => setMiddleName(e.target.value)}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Middle Name"
+                    onChange={(e) => setMiddleName(e.target.value)}
                     required
                   />
                 </div>
@@ -183,16 +207,15 @@ const EditEmployee = ({ employee }) => {
                     for="lastname"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    {" "}
                     Last Name
                   </label>
                   <input
                     type="text"
-                    placeholder="Last Name "
                     value={last_name}
-                    onChange={(e) => setLastName(e.target.value)}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Last Name"
                     required
+                    onChange={(e) => setlastName(e.target.value)}
                   />
                 </div>
 
@@ -274,15 +297,15 @@ const EditEmployee = ({ employee }) => {
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     {" "}
-                    Job roles
+                    Job Roles
                   </label>
                   <input
                     type="text"
                     value={job_title}
-                    onChange={(e) => setJobTitle(e.target.value)}
-                    placeholder="Job roles "
+                    placeholder=" Job roles"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
+                    onChange={(e) => setJobTitle(e.target.value)}
                   />
                 </div>
                 <div>
@@ -294,6 +317,7 @@ const EditEmployee = ({ employee }) => {
                     value={province}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Province"
+                    required
                     onChange={(e) => setProvince(e.target.value)}
                   />
                 </div>
@@ -307,6 +331,7 @@ const EditEmployee = ({ employee }) => {
                     placeholder="City"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
+                    required
                   />
                 </div>
                 <div>
@@ -356,12 +381,12 @@ const EditEmployee = ({ employee }) => {
                   </label>
                   <input
                     type="text"
-                    value={mobile_number}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder=" Mobile no."
                     onInput={OnlyNumber}
                     maxLength={11}
                     required
+                    value={mobile_number}
                     onChange={(e) => setMobileNumber(e.target.value)}
                   />
                 </div>
@@ -464,15 +489,15 @@ const EditEmployee = ({ employee }) => {
                   type="submit"
                   class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  Update
+                  Save
                 </button>
               </form>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default EditEmployee;
+export default AddEmployee;

@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 
-const ViewEmployee = (emp) => {
+const ViewEmployee = ({ employee }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -10,18 +9,18 @@ const ViewEmployee = (emp) => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  //get all the data in Employee Tables
-  const [employees, setEmployees] = useState([]);
-  const [employee, setEmployee] = useState(emp.employee_id);
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/employee/${employee}`)
-      .then((response) => {
-        setEmployees(response.data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
+  const dateString = employee.birthday;
+  const date = new Date(dateString);
+  const formattedDate = date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+  const bday = employee.birthday;
+  const birthday = new Date(bday);
+  const ageDifMs = Date.now() - birthday.getTime();
+  const ageDate = new Date(ageDifMs); // miliseconds from epoch
+  const age = Math.abs(ageDate.getUTCFullYear() - 1970);
 
   return (
     <>
@@ -82,7 +81,7 @@ const ViewEmployee = (emp) => {
               <h3 class="mb-4 text-xl text-center mt-2  font-bold text-gray-900 dark:text-white">
                 Employee Profile
               </h3>
-              <form class="space-y text-left flex ">
+              <div class="space-y text-left flex ">
                 <div className="flex-1 flex-wrap  flex-col ">
                   <div className="mb-1">
                     <label
@@ -91,7 +90,7 @@ const ViewEmployee = (emp) => {
                     >
                       Employee Name
                     </label>
-                    <span className="capitalize"> Sunny Virgo</span>
+                    <span className="capitalize">{`${employee.last_name} ,${employee.first_name} ${employee.middle_name} `}</span>
                   </div>
                   <div className="mb-1">
                     <label
@@ -100,8 +99,19 @@ const ViewEmployee = (emp) => {
                     >
                       Gender
                     </label>
-                    <span> Male</span>
+                    <span> {employee.gender}</span>
                   </div>
+                  <div className="mb-1">
+                    <label
+                      for="birthday"
+                      class="block text-sm font-semibold text-gray-900 dark:text-white"
+                    >
+                      Birthday
+                    </label>
+                    <span>{formattedDate}</span>
+                  </div>
+                  <div className="mb-1"></div>
+
                   <div className="mb-1">
                     <label
                       for=" age"
@@ -109,7 +119,7 @@ const ViewEmployee = (emp) => {
                     >
                       Age
                     </label>
-                    <span> 16 yrs old</span>
+                    <span> {age} yrs old</span>
                   </div>
                   <div className="mb-1">
                     <label
@@ -118,7 +128,7 @@ const ViewEmployee = (emp) => {
                     >
                       Marital Status
                     </label>
-                    <span> Married </span>
+                    <span> {employee.marital_status} </span>
                   </div>
                   <div className="mb-1">
                     <label
@@ -127,7 +137,7 @@ const ViewEmployee = (emp) => {
                     >
                       Job Roles
                     </label>
-                    <span> Front-End</span>
+                    <span> {employee.job_title}</span>
                   </div>
                   <div className="mb-1">
                     <label
@@ -136,7 +146,19 @@ const ViewEmployee = (emp) => {
                     >
                       Address
                     </label>
-                    <span> Antique</span>
+                    <span>
+                      {" "}
+                      {`${employee.baranggay} ${employee.municipality}, ${employee.city} ${employee.province}`}
+                    </span>
+                  </div>
+                  <div className="mb-1">
+                    <label
+                      for="zipcode"
+                      class="block  text-sm font-semibold text-gray-900 dark:text-white"
+                    >
+                      Zipcode
+                    </label>
+                    <span> {employee.zipcode}</span>
                   </div>
                   <div className="mb-1">
                     <label
@@ -145,7 +167,7 @@ const ViewEmployee = (emp) => {
                     >
                       Mobile Number
                     </label>
-                    <span> 09090909090</span>
+                    <span> {employee.mobile_number}</span>
                   </div>
                 </div>
                 <div>
@@ -156,7 +178,7 @@ const ViewEmployee = (emp) => {
                     >
                       Telephone Number
                     </label>
-                    <span> 09090909090</span>
+                    <span> {employee.telephone_number}</span>
                   </div>
                   <div className="mb-1">
                     <label
@@ -165,7 +187,7 @@ const ViewEmployee = (emp) => {
                     >
                       Work Email
                     </label>
-                    <span> adada@dadad</span>
+                    <span> {employee.work_email}</span>
                   </div>
                   <div className="mb-1">
                     <label
@@ -174,7 +196,7 @@ const ViewEmployee = (emp) => {
                     >
                       Personal Email
                     </label>
-                    <span> adada@dadad</span>
+                    <span> {employee.personal_email}</span>
                   </div>
 
                   <div className="mb-1">
@@ -184,7 +206,7 @@ const ViewEmployee = (emp) => {
                     >
                       Emergency Contact Person
                     </label>
-                    <span> Crespo</span>
+                    <span> {employee.emergency_contact_person}</span>
                   </div>
                   <div className="mb-1">
                     <label
@@ -193,7 +215,7 @@ const ViewEmployee = (emp) => {
                     >
                       Relationship
                     </label>
-                    <span> Wife</span>
+                    <span> {employee.relationship}</span>
                   </div>
                   <div className="mb-1">
                     <label
@@ -202,7 +224,7 @@ const ViewEmployee = (emp) => {
                     >
                       Emergency Contact Email
                     </label>
-                    <span> adada@dadad</span>
+                    <span> {employee.emergency_contact_email}</span>
                   </div>
                   <div>
                     <label
@@ -211,10 +233,10 @@ const ViewEmployee = (emp) => {
                     >
                       Emergency Contact Number
                     </label>
-                    <span> 129719287</span>
+                    <span> {employee.emergency_contact_number}</span>
                   </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>
