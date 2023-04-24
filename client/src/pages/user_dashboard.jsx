@@ -103,24 +103,38 @@ const User = () => {
           </div>
         )}
       </nav>
-      <div className="flex items-center bg-red-50 ml-10 mt-10">
+      <div className="flex  bg-red-50 mx-10 mt-40">
         {/* Left side: profile picture and username */}
-        <div className="w-1/5 mr-4 flex items-center flex-col">
-          <span className="text-gray-700 font-bold mb-2">
-            Gil Benedict Chiu
-          </span>
-          <div className="w-full h-full rounded-lg">
+        <div className="w-1/5 flex flex-col mx-auto">
+          <div className="w-full h-full rounded-lg mx-auto">
             <img
-              className="w-full object-cover rounded-lg h-auto max-w-md mx-auto"
+              className="object-cover rounded-lg"
               src={profilePicture}
               alt="Profile"
             />
           </div>
         </div>
-
         {/* Right side: container */}
-        <div className="flex-1 flex items-center mt-10">
-          <div className="bg-gray-200 p-4">April</div>
+        <div className="flex-1 flex m-1 md:m-2 bg-red-500">
+          <div class="grid grid-rows-3 grid-flow-col gap-4">
+            <div class="row-span-3 ...">
+              01{" "}
+              <div class="progress-bar">
+                <svg class="progress-bar__bg" viewBox="0 0 100 10" fill="none">
+                  <rect x="0" y="0" width="100" height="10" fill="#e0e0de" />
+                </svg>
+                <svg
+                  class="progress-bar__fill"
+                  viewBox="0 0 100 10"
+                  fill="none"
+                >
+                  <rect x="0" y="0" width="0" height="10" fill="#0070f3" />
+                </svg>
+              </div>
+            </div>
+            <div class="col-span-2 ...">April</div>
+            <div class="row-span-2 col-span-2 ...">03</div>
+          </div>
         </div>
       </div>
     </div>
