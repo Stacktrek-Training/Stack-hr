@@ -27,7 +27,7 @@ const Navbar = () => {
           <div
             className={`${
               isDropdownOpen ? "" : "hidden "
-            } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-10 text-center Form`}
+            } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-999 text-center Form`}
           >
             <h1 className=" px-4 py-2 text-sm text-gray-700 cursor-default hover:text-gray-900 border-b border-solid border-gray-200">
               Sunny Virgo

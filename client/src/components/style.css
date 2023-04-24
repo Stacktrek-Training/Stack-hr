@@ -8,7 +8,10 @@
   max-height: 60vh;
   overflow-y: auto;
 }
-
+.Form {
+  z-index: auto;
+  position: relative;
+}
 .search_icon {
   position: absolute;
   right: 180px;
@@ -32,7 +35,7 @@
 .Modal {
   opacity: 0;
   transform: translateY(50%);
-  animation: scroll-in 1s ease-out forwards;
+  animation: scroll-in 0.5s ease-out forwards;
   scroll-behavior: smooth;
 }
 
