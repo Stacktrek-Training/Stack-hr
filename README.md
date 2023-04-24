@@ -39,7 +39,7 @@ To get started with Stack-hr & Stack-expense, follow these steps:
 💠Create a new branch  (`git checkout -b feature/your-feature-name`)</br>
 💠Make your changes and commit them: </br>
     --git add . </br>
-    --git commit -m "Add you message"</br>
+    --git commit -m "Add your message"</br>
 
 💠Push to the branch</br>
     --git push origin feature/your-feature-name</br>
