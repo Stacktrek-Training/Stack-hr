@@ -4,7 +4,7 @@ import ShowDescription from "../components/hide_desc";
 import EditDeduction from "../components/edit_deduction";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
-import AddDeduction from "../components/add_deduction";
+import AddDeduction from "../components/select_employee";
 import axios from "axios";
 
 const Deduction = () => {
@@ -43,16 +43,16 @@ const Deduction = () => {
                     #
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Deduction Name
+                    Employee Name
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Description
+                    SSS
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Reduction Amount (%)
+                    PhilHealth
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Buttons
+                    PAG-IBIG
                   </th>
                 </tr>
               </thead>
@@ -69,25 +69,11 @@ const Deduction = () => {
                       {" "}
                       {index + 1}
                     </th>
-                    <td class="px-6 py-4 capitalize">
-                      {" "}
-                      {deduction.deduction_name}
-                    </td>
-                    <td class="description px-6 py-4 text-left">
-                      {" "}
-                      <ShowDescription
-                        text={deduction.description}
-                        maxWordCount={50}
-                      />
-                    </td>
+                    <td class="px-6 py-4 capitalize">Sunny Virgo</td>
+                    <td class="px-6 py-4">3000</td>
 
-                    <td class="px-6 py-4">
-                      {""} {`${deduction.amount}${"%"}`}
-                    </td>
-                    <td class=" px-6 py-4">
-                      {" "}
-                      <EditDeduction deduction={deduction} />
-                    </td>
+                    <td class="px-6 py-4">100</td>
+                    <td class=" px-6 py-4">1000</td>
                   </tr>
                 ))}
               </tbody>
