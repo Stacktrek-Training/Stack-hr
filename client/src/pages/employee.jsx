@@ -35,7 +35,7 @@ const Employee = () => {
           </div>
           {/* Tables For employee */}
 
-          <div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
+          <div className="relative Table overflow-x-auto shadow-md ">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
                 <tr>

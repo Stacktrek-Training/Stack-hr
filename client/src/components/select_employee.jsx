@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 
 const AddDeduction = () => {
@@ -8,33 +7,6 @@ const AddDeduction = () => {
   };
   const handleModalClose = () => {
     setIsModalOpen(false);
-  };
-  const OnlyNumber = (event) => {
-    event.target.value = event.target.value.replace(/[^0-9 . %]/gi, "");
-  };
-  const [deduction_name, setDeductionName] = useState("");
-  const [description, setDescription] = useState("");
-  const [amount, setAmount] = useState("");
-
-  const [deductions, setDeductions] = useState([]);
-  const handleSave = () => {
-    try {
-      axios
-        .post(`http://localhost:4000/deductions`, {
-          deduction_name: deduction_name,
-          description: description,
-          amount: amount,
-        })
-        .then((response) => {
-          setDeductions(response.data);
-          window.location.href = "/deduction";
-        })
-        .catch((error) => {
-          console.error(error.message);
-        });
-    } catch (error) {
-      console.error(error.message);
-    }
   };
 
   return (
@@ -113,62 +85,31 @@ const AddDeduction = () => {
             </button>
             <div class="px-6 py-6 lg:px-8">
               <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
-                Add Deduction
+                Select Employee
               </h3>
-              <form
-                onSubmit={handleSave}
-                class="space-y flex flex-wrap gap-1.5 flex-col  "
-              >
+              <form class="space-y flex flex-wrap gap-1.5 flex-col  ">
                 <div>
                   <label
-                    for="employee-name"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    htmlFor="employee-name"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Deduction Name
+                    Employee Name
                   </label>
-                  <input
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Deduction Name"
-                    value={deduction_name}
-                    onChange={(e) => setDeductionName(e.target.value)}
+                  <select
+                    id="employee-name"
+                    name="employee-name"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
-                  />
-                </div>
-                <div>
-                  <label
-                    for="employee-name"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Description
-                  </label>
-                  <textarea
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Description"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    required
-                  />
+                    <option value="" disabled selected hidden>
+                      Select Employee
+                    </option>
+                    <option value="employee1">Employee 1</option>
+                    <option value="employee2">Employee 2</option>
+                    <option value="employee3">Employee 3</option>
+                  </select>
                 </div>
 
-                <div>
-                  <label
-                    for="salary"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Reduction Ammount (%)
-                  </label>
-                  <input
-                    type="text"
-                    onInput={OnlyNumber}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="%"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    required
-                  />
-                </div>
                 <button
                   type="submit"
                   class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"

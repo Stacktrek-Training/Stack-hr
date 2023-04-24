@@ -1,11 +1,24 @@
 import React, { useState } from "react";
 import image2 from "./../assets/User-Icon.jpg";
 import "./../components/style.css";
+import classNames from "classnames";
 
 const Navbar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+  const navbarClasses = classNames({
+    "dark-mode": darkMode,
+  });
+
   return (
-    <nav className="bg-gray-200 border-b-slate-300 border-b-2 dark:bg- dark:border-gray-700 fixed w-full ">
+    <nav
+      className={`bg-gray-200 border-b-slate-300 border-b-2 dark:bg- dark:border-gray-700 fixed w-full ${navbarClasses}`}
+    >
       {" "}
       {/* Use absolute position for the navbar */}
       <div className="p-2 px-2 flex justify-end items-center pr-10 mx-auto">
@@ -33,6 +46,7 @@ const Navbar = () => {
               Sunny Virgo
               <p className="pt-2"> Admin</p>
             </h1>
+
             <a
               href="#"
               className=" px-4 py-2 text-sm flex text-gray-700 hover:bg-gray-100 hover:text-gray-900"

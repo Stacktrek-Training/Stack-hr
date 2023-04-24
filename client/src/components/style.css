@@ -3,6 +3,15 @@
   padding: 0;
   font-family: Montserrat;
 }
+:root {
+  --background-color: #a89494;
+  --text-color: #110101;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
 .Table {
   z-index: 0;
   max-height: 60vh;

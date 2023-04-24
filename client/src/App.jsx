@@ -9,8 +9,6 @@ import Salaries from "./pages/salaries";
 import Deduction from "./pages/deduction";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <BrowserRouter>
       <Switch>
