@@ -29,14 +29,14 @@ To get started with Stack-hr & Stack-expense, follow these steps:
 
 <strong> Usage </strong>
 
-✳️ Employee Management: Add,edit and delete employees, view employee details and search employees</br>
-✳️ Expense Management: Add, edit and delete expenses, view expense details and search for expenses</br>
-✳️ Report Generation: Generate reports on employee data and expenses 
+✳️ <strong><i>Employee Management:</i></strong>Add,edit and delete employees, view employee details and search employees</br>
+✳️ <strong><i>Expense Management:</i></strong> Add, edit and delete expenses, view expense details and search for expenses</br>
+✳️ <strong><i>Report Generation:</i></strong> Generate reports on employee data and expenses 
 
 <strong> ✍️ Contributing </strong>
 
-💠Fork this repository
-💠Create a new branch  (`git checkout -b feature/your-feature-name`)</br>
+💠Fork this repository</br>
+💠Create a new branch  (git checkout -b feature/your-feature-name)</br>
 💠Make your changes and commit them: </br>
     --git add . </br>
     --git commit -m "Add your message"</br>
