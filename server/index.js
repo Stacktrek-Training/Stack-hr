@@ -343,29 +343,30 @@ app.get("/category", async (req, res) => {
 });
 
 // add category
-app.post("/category/", async (req, res) => {
+app.post("/categories/", async (req, res) => {
   try {
-    const { category_name } = req.body;
+    const { category_Id, category_name } = req.body;
     const insertCategory = await pool.query(
-      `INSERT INTO "CATEGORIES" (category_name)VALUES($1)`,
-      [category_name]
+      `INSERT INTO "CATEGORIES" (category_Id, category_name) VALUES($1, $2) RETURNING *`,
+      [category_Id, category_name]
     );
-    res.json("Inserted data");
+    res.json("Data Inserted");
   } catch (error) {
     console.error(error.message);
   }
 });
 
+
 //edit category
-app.put("/category/:id", async (req, res) => {
+app.put("/categories/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { category_name } = req.body;
-    const updateCat = await pool.query(
-      `UPDATE "CATEGORIES" SET category_Name=$1 WHERE category_Id =$2`,
-      [category_name, category_Id]
+    const updateCategory = await pool.query(
+      `UPDATE "CATEGORIES" SET category_name = $1 WHERE category_Id=$2`,
+      [category_name, id]
     );
-    res.json(updateCat.rows);
+    res.json("Updated successfully");
   } catch (error) {
     console.error(error.message);
   }
@@ -406,7 +407,7 @@ app.post("/transaction", async (req, res) => {
       inserted_At,
       updated_At,
     } = req.body;
-    const insertETransaction = await pool.query(
+    const insertTransaction = await pool.query(
       `INSERT INTO "TRANSACTIONS"(date,employee_id,category_Id,total_Amount,receipt_Image,inserted_At,updated_At)VALUES(CURRENT_TIMESTAMP, $1, $2, $3,$4, CURRENT_TIMESTAMP, NULL) RETURNING *`,
       [employee_id, category_Id, total_Amount, receipt_Image]
     );
@@ -456,7 +457,7 @@ app.get("/report/:id", async (req, res) => {
 app.post("/reports", async (req, res) => {
   try {
     const { transaction_Id, date, category_Id, description, amount } = req.body;
-    const insertETransaction = await pool.query(
+    const insertReports = await pool.query(
       `INSERT INTO "REPORTS"(transaction_Id,date,category_Id,description,amount)VALUES($1,CURRENT_TIMESTAMP,$2,$3,$4) RETURNING *`,
       [transaction_Id, date, category_Id, description, amount]
     );
@@ -471,7 +472,21 @@ app.put("/reports/:id", async (req, res) => {
     const { id } = req.params;
     const { transaction_Id, date, category_Id, description, amount } = req.body;
     const updateReport = await pool.query(
-      `UPDATE "TRANSACTIONS" SET transaction_Id=$1,date=CURRENT_TIMESTAMP,category_Id=$2,description=$3,amount=$4 WHERE report_Id =$5`,
+      `UPDATE "REPORTS" SET transaction_Id=$1,date=CURRENT_TIMESTAMP,category_Id=$2,description=$3,amount=$4 WHERE report_Id =$5`,
+      [transaction_Id, date, category_Id, description, amount, id]
+    );
+    res.json(updateReport.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+// edit reports
+app.put("/reports/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { transaction_Id, date, category_Id, description, amount } = req.body;
+    const updateReport = await pool.query(
+      `UPDATE "REPORTS" SET transaction_Id=$1,date=CURRENT_TIMESTAMP,category_Id=$2,description=$3,amount=$4 WHERE report_Id =$5`,
       [transaction_Id, date, category_Id, description, amount, id]
     );
     res.json(updateReport.rows);
