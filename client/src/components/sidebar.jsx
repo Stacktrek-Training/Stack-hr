@@ -22,7 +22,7 @@ const Sidebar = () => {
             <p className="block font-semibold text-xl pl-7">Dashboard</p>
           </li>
         </a>
-        <a href="/Employee">
+        <a href="/employee">
           <li className="py-3 mt-5  pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +40,7 @@ const Sidebar = () => {
             <p className="block font-semibold text-xl pl-7"> Employee </p>
           </li>
         </a>
-        <a href="/Attendance">
+        <a href="/attendance">
           <li className="py-3 mt-5  pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +58,7 @@ const Sidebar = () => {
             <p className="block font-semibold text-xl pl-7"> Attendance </p>
           </li>
         </a>
-        <a href="/Payroll">
+        <a href="/payroll">
           <li className="py-3 mt-5 pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +76,7 @@ const Sidebar = () => {
             <p className="block font-semibold text-xl pl-7"> Payrolls</p>
           </li>
         </a>
-        <a href="/Salaries">
+        <a href="/salaries">
           <li className="py-3 mt-5  pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +94,7 @@ const Sidebar = () => {
             <p className="block font-semibold text-xl pl-7"> Salaries </p>
           </li>
         </a>
-        <a href="/Deduction">
+        <a href="/deduction">
           <li className="py-3 mt-5  pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
