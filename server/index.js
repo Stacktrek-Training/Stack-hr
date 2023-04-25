@@ -272,12 +272,8 @@ app.put("/deductions/:id", async (req, res) => {
 //add
 app.post("/philhealth/", async (req, res) => {
   try {
-    const {
-      salary_range_1,
-      salary_range_2,
-      monthly_total_contribution,
-      date_created,
-    } = req.body;
+    const { salary_range_1, salary_range_2, monthly_total_contribution } =
+      req.body;
     const employee_contribution = monthly_total_contribution * 0.5;
     const employer_contribution = monthly_total_contribution * 0.5;
 
