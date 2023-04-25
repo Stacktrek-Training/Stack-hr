@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "./../components/style.css";
-import ShowDescription from "../components/hide_desc";
-import EditDeduction from "../components/edit_deduction";
+// import ShowDescription from "../components/hide_desc";
+// import EditDeduction from "../components/edit_deduction";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
 import AddDeduction from "../components/select_employee";
+import ShowTable from "../components/show_table";
 import axios from "axios";
 
 const Deduction = () => {
@@ -32,6 +33,10 @@ const Deduction = () => {
         {/* Sidebar */}
         <Sidebar />
         <div className="flex-1 p-12 mt-20">
+          <div className=" flex justify-start mb-2">
+            {" "}
+            <ShowTable />
+          </div>
           <div className="mb-5 flex ">
             <AddDeduction />
           </div>
@@ -69,11 +74,11 @@ const Deduction = () => {
                       {" "}
                       {index + 1}
                     </th>
-                    <td class="px-6 py-4 capitalize">Sunny Virgo</td>
-                    <td class="px-6 py-4">3000</td>
+                    <td class="px-6 py-4 capitalize"> Sunny </td>
+                    <td class="px-6 py-4"> 300</td>
 
-                    <td class="px-6 py-4">100</td>
-                    <td class=" px-6 py-4">1000</td>
+                    <td class="px-6 py-4">400</td>
+                    <td class=" px-6 py-4">500</td>
                   </tr>
                 ))}
               </tbody>

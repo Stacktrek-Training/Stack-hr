@@ -25,6 +25,9 @@ body {
   position: absolute;
   right: 180px;
 }
+.Data {
+  font-size: 10px;
+}
 .side {
   z-index: 10;
 }
