@@ -5,6 +5,7 @@ import "./../components/style.css";
 import Sidebar from "./sidebar";
 import Navbar from "./navbar";
 import ShowTable from "./show_table";
+import AddDeduction from "./add_deduction_sss";
 
 const SSS = () => {
   const formatter = new Intl.NumberFormat("en-PH", {
@@ -14,7 +15,7 @@ const SSS = () => {
   });
 
   return (
-    <div className="h-screen relative Data">
+    <div className="h-screen relative ">
       {" "}
       {/* Navbar */}
       <Navbar />
@@ -26,9 +27,11 @@ const SSS = () => {
             {" "}
             <ShowTable />
           </div>
-          <div className="mb-5  "></div>
-          <div class="relative Table  shadow-md rounded-lg">
-            <table class="sticky top-0 text-center">
+          <div className="mb-5  ">
+            <AddDeduction />
+          </div>
+          <div class="relative Table  shadow-md rounded-lg ">
+            <table class="sticky top-0 text-center  Data">
               <colgroup class="bg-gray-100"></colgroup>
               <colgroup class="bg-gray-100"></colgroup>
               <colgroup class="bg-gray-100"></colgroup>
@@ -42,8 +45,15 @@ const SSS = () => {
               <colgroup class="bg-gray-100"></colgroup>
               <colgroup class="bg-gray-100"></colgroup>
               <colgroup class="bg-gray-100"></colgroup>
-              <thead>
+              <colgroup class="bg-gray-100"></colgroup>
+              <thead className=" text-gray-700 font-semibold uppercase">
                 <tr>
+                  <th
+                    rowspan="3"
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
+                  >
+                    #
+                  </th>
                   <th
                     rowspan="3"
                     class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
@@ -128,8 +138,9 @@ const SSS = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody>
-                <tr className="border border-gray-300">
+              <tbody className="text-gray-900">
+                <tr className="border border-gray-300 ">
+                  <td className="border border-gray-300">1</td>
                   <td className="border border-gray-300">Below 4,250</td>
 
                   <td class="w-1/12 px-6 py-4 capitalize border border-gray-300">

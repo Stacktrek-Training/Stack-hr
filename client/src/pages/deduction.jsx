@@ -4,7 +4,7 @@ import "./../components/style.css";
 // import EditDeduction from "../components/edit_deduction";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
-import AddDeduction from "../components/select_employee";
+import SelectEmployee from "../components/select_employee";
 import ShowTable from "../components/show_table";
 import axios from "axios";
 
@@ -38,7 +38,7 @@ const Deduction = () => {
             <ShowTable />
           </div>
           <div className="mb-5 flex ">
-            <AddDeduction />
+            <SelectEmployee />
           </div>
           <div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
