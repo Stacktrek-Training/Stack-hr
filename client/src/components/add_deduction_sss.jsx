@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const AddDeduction = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -9,7 +10,36 @@ const AddDeduction = () => {
     setIsModalOpen(false);
   };
   const OnlyNumber = (event) => {
-    event.target.value = event.target.value.replace(/[^0-9]/gi, "");
+    event.target.value = event.target.value.replace(/[^0-9.]/gi, "");
+  };
+  const [salary_range_1, setRange1] = useState("");
+  const [salary_range_2, setRange2] = useState("");
+  const [employee_contribution_sss, setEployeeSSS] = useState("");
+  const [employer_contribution_sss, setEployerSSS] = useState("");
+  const [employee_contribution_ec, setEployeeEC] = useState("");
+  const [employer_contribution_ec, setEployerEC] = useState("");
+  const [employee_contribution_mpf, setEployeeMPF] = useState("");
+  const [employeer_contribution_mpf, setEployerMPF] = useState("");
+
+  const handleSave = () => {
+    axios
+      .post(`http://localhost:4000/sss`, {
+        salary_range_1: salary_range_1,
+        salary_range_2: salary_range_2,
+        employee_contribution_sss: employee_contribution_sss,
+        employer_contribution_sss: employer_contribution_sss,
+        employee_contribution_ec: employee_contribution_ec,
+        employer_contribution_ec: employer_contribution_ec,
+        employee_contribution_mpf: employee_contribution_mpf,
+        employer_contribution_mpf: employeer_contribution_mpf,
+      })
+      .then((response) => {
+        console.log(response.data);
+        window.location.href = "/sss";
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
   };
   return (
     <div className="flex w-full justify-between">
@@ -66,7 +96,10 @@ const AddDeduction = () => {
               <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
                 Social Security System
               </h3>
-              <form class="space-y flex flex-wrap gap-1.5 flex-col  ">
+              <form
+                class="space-y flex flex-wrap gap-1.5 flex-col  "
+                onSubmit={handleSave}
+              >
                 <div>
                   <label
                     htmlFor="employee-name"
@@ -79,6 +112,8 @@ const AddDeduction = () => {
                     onInput={OnlyNumber}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Range 1"
+                    value={salary_range_1}
+                    onChange={(e) => setRange1(e.target.value)}
                     required
                   />
                 </div>
@@ -88,6 +123,8 @@ const AddDeduction = () => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Range 2"
+                    value={salary_range_2}
+                    onChange={(e) => setRange2(e.target.value)}
                     required
                   />
                 </div>
@@ -103,6 +140,8 @@ const AddDeduction = () => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
+                    value={employee_contribution_sss}
+                    onChange={(e) => setEployeeSSS(e.target.value)}
                     required
                   />
                 </div>
@@ -112,6 +151,8 @@ const AddDeduction = () => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employer"
+                    value={employer_contribution_sss}
+                    onChange={(e) => setEployerSSS(e.target.value)}
                     required
                   />
                 </div>
@@ -127,6 +168,8 @@ const AddDeduction = () => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
+                    value={employee_contribution_ec}
+                    onChange={(e) => setEployeeEC(e.target.value)}
                     required
                   />
                 </div>
@@ -136,6 +179,8 @@ const AddDeduction = () => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employeer"
+                    value={employer_contribution_ec}
+                    onChange={(e) => setEployerEC(e.target.value)}
                     required
                   />
                 </div>
@@ -151,6 +196,8 @@ const AddDeduction = () => {
                     onInput={OnlyNumber}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
+                    value={employee_contribution_mpf}
+                    onChange={(e) => setEployeeMPF(e.target.value)}
                     required
                   />
                 </div>
@@ -160,6 +207,8 @@ const AddDeduction = () => {
                     onInput={OnlyNumber}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employeer"
+                    value={employeer_contribution_mpf}
+                    onChange={(e) => setEployerMPF(e.target.value)}
                     required
                   />
                 </div>

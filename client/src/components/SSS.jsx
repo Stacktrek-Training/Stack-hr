@@ -6,6 +6,7 @@ import Sidebar from "./sidebar";
 import Navbar from "./navbar";
 import ShowTable from "./show_table";
 import AddDeduction from "./add_deduction_sss";
+import axios from "axios";
 
 const SSS = () => {
   const formatter = new Intl.NumberFormat("en-PH", {
@@ -13,6 +14,19 @@ const SSS = () => {
     currency: "PHP",
     minimumFractionDigits: 2,
   });
+
+  const [SSS, setSSS] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/sss`)
+      .then((response) => {
+        setSSS(response.data);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }, []);
 
   return (
     <div className="h-screen relative ">
@@ -99,6 +113,7 @@ const SSS = () => {
                     Total Contribution
                   </th>
                 </tr>
+
                 <tr>
                   <th scope="col" class="w-1/12 border border-gray-300">
                     ER
@@ -139,25 +154,56 @@ const SSS = () => {
                 </tr>
               </thead>
               <tbody className="text-gray-900">
-                <tr className="border border-gray-300 ">
-                  <td className="border border-gray-300">1</td>
-                  <td className="border border-gray-300">Below 4,250</td>
+                {SSS.map((sss, index) => (
+                  <tr
+                    className="border border-gray-300 "
+                    key={sss.deduction_id}
+                  >
+                    <td className="border border-gray-300">{index + 1}</td>
+                    <td className="border border-gray-300">
+                      {" "}
+                      {`${formatter.format(
+                        sss.salary_range_1
+                      )} ${"-"} ${formatter.format(sss.salary_range_2)} `}
+                    </td>
 
-                  <td class="w-1/12 px-6 py-4 capitalize border border-gray-300">
-                    380
-                  </td>
-                  <td class="w-1/12 border border-gray-300">180</td>
-                  <td class="w-1/12 border border-gray-300">560</td>
-                  <td class="w-1/12 border border-gray-300">10</td>
-                  <td class="w-1/12 border border-gray-300">-</td>
-                  <td class="w-1/12 border border-gray-300">10</td>
-                  <td class="w-1/12 border border-gray-300">-</td>
-                  <td class="w-1/12 border border-gray-300">-</td>
-                  <td class="w-1/12 border border-gray-300">-</td>
-                  <td class="w-1/12 border border-gray-300">390</td>
-                  <td class="w-1/12 border border-gray-300">180</td>
-                  <td class="w-1/12 border border-gray-300">570</td>
-                </tr>
+                    <td class="w-1/12 px-6 py-4 capitalize border border-gray-300">{`${
+                      sss.employer_contribution_sss
+                    }${"%"}`}</td>
+                    <td class="w-1/12 border border-gray-300">{`${
+                      sss.employee_contribution_sss
+                    }${"%"}`}</td>
+                    <td class="w-1/12 border border-gray-300">
+                      {`${
+                        parseFloat(sss.employee_contribution_sss) +
+                        parseFloat(sss.employer_contribution_sss)
+                      }${"%"}`}
+                    </td>
+                    <td class="w-1/12 border border-gray-300">{`${formatter.format(
+                      sss.employer_contribution_ec
+                    )}`}</td>
+                    <td class="w-1/12 border border-gray-300">
+                      {formatter.format(sss.employee_contribution_ec)}
+                    </td>
+                    <td class="w-1/12 border border-gray-300">{`${formatter.format(
+                      parseFloat(sss.employer_contribution_ec) +
+                        parseFloat(sss.employee_contribution_ec)
+                    )}`}</td>
+                    <td class="w-1/12 border border-gray-300">{`${
+                      sss.employer_contribution_mpf
+                    }${"%"}`}</td>
+                    <td class="w-1/12 border border-gray-300">{`${
+                      sss.employee_contribution_mpf
+                    }${"%"}`}</td>
+                    <td class="w-1/12 border border-gray-300">{`${
+                      parseFloat(sss.employer_contribution_mpf) +
+                      parseFloat(sss.employee_contribution_mpf)
+                    }${"%"}`}</td>
+                    <td class="w-1/12 border border-gray-300">390</td>
+                    <td class="w-1/12 border border-gray-300">180</td>
+                    <td class="w-1/12 border border-gray-300">570</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
