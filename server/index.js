@@ -505,6 +505,7 @@ app.post("/categories", async (req, res) => {
     console.error(error.message);
   }
 });
+
 app.post("/category/", async (req, res) => {
   try {
     const { category_name } = req.body;
@@ -661,8 +662,8 @@ app.put("/reports/:id", async (req, res) => {
     const { id } = req.params;
     const { transaction_id, date, category_id, description, amount } = req.body;
     const updateReport = await pool.query(
-      `UPDATE "REPORTS" SET transaction_id=$1,date=CURRENT_TIMESTAMP,category_id=$2,description=$3,amount=$4 WHERE report_id =$5`,
-      [transaction_id, date, category_id, description, amount, id]
+      `UPDATE "TRANSACTIONS" SET transaction_Id=$1,date=CURRENT_TIMESTAMP,category_Id=$2,description=$3,amount=$4 WHERE report_Id =$5`,
+      [transaction_Id, date, category_Id, description, amount, id]
     );
     res.json(updateReport.rows);
   } catch (error) {

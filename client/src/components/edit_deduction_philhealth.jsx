@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-const EditDeductionPhilHealth = () => {
+import axios from "axios";
+const EditDeductionPhilHealth = ({ philhealth }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -9,6 +10,29 @@ const EditDeductionPhilHealth = () => {
   };
   const OnlyNumber = (event) => {
     event.target.value = event.target.value.replace(/[^0-9.]/gi, "");
+  };
+
+  const [salary_range_1, setRange1] = useState(philhealth.salary_range_1);
+  const [salary_range_2, setRange2] = useState(philhealth.salary_range_2);
+  const [monthly_total_contribution, setTotal] = useState(
+    philhealth.monthly_total_contribution
+  );
+  const [id, setId] = useState(philhealth.deduction_id);
+
+  const editPhilhealth = async () => {
+    await axios
+      .put(`http://localhost:4000/philhealth/${id}`, {
+        salary_range_1: salary_range_1,
+        salary_range_2: salary_range_2,
+        monthly_total_contribution: monthly_total_contribution,
+      })
+      .then((response) => {
+        console.log(response.data);
+        window.location.href = "/philhealth";
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
   };
 
   return (
@@ -68,7 +92,10 @@ const EditDeductionPhilHealth = () => {
               <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
                 PhilHealth
               </h3>
-              <form class="space-y flex flex-wrap gap-1.5 flex-col  ">
+              <form
+                onSubmit={editPhilhealth}
+                class="space-y flex flex-wrap gap-1.5 flex-col  "
+              >
                 <div>
                   <label
                     htmlFor="employee-name"
@@ -81,6 +108,8 @@ const EditDeductionPhilHealth = () => {
                     onInput={OnlyNumber}
                     class="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Range 1"
+                    value={salary_range_1}
+                    onChange={(e) => setRange1(e.target.value)}
                     required
                   />
                   <div>
@@ -89,6 +118,8 @@ const EditDeductionPhilHealth = () => {
                       onInput={OnlyNumber}
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       placeholder="Range 2"
+                      value={salary_range_2}
+                      onChange={(e) => setRange2(e.target.value)}
                       required
                     />
                   </div>
@@ -102,36 +133,8 @@ const EditDeductionPhilHealth = () => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Monthly Prenium"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Employee Share (%)
-                  </label>
-                  <input
-                    onInput={OnlyNumber}
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Employee Share"
-                    disabled
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="employee-name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Employer Share (%)
-                  </label>
-                  <input
-                    type="text"
-                    onInput={OnlyNumber}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Employer Share"
-                    disabled
+                    value={monthly_total_contribution}
+                    onChange={(e) => setTotal(e.target.value)}
                     required
                   />
                 </div>
