@@ -44,6 +44,7 @@ body {
 .Font {
   font-size: 50px;
 }
+/* Modal Styles */
 .Modal {
   opacity: 0;
   transform: translateY(50%);

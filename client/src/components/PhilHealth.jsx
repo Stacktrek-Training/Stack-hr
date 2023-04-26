@@ -5,6 +5,8 @@ import "./../components/style.css";
 import Sidebar from "./sidebar";
 import Navbar from "./navbar";
 import ShowTable from "./show_table";
+import AddDeductionPhilHealth from "./add_deduction_philhealth";
+import EditDeductionPhilHealth from "./edit_deduction_philhealth";
 
 const PhilHealth = () => {
   const formatter = new Intl.NumberFormat("en-PH", {
@@ -26,7 +28,9 @@ const PhilHealth = () => {
             {" "}
             <ShowTable />
           </div>
-          <div className="mb-5 flex "></div>
+          <div className="mb-5 flex ">
+            <AddDeductionPhilHealth />
+          </div>
           <div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 text-center uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
@@ -46,6 +50,9 @@ const PhilHealth = () => {
                   <th scope="col" class="px-6 py-3">
                     Employer Share (%)
                   </th>
+                  <th scope="col" class="px-6 py-3">
+                    Button
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -61,6 +68,9 @@ const PhilHealth = () => {
 
                   <td class="px-6 py-4">100</td>
                   <td class=" px-6 py-4">1000</td>
+                  <td class=" px-6 py-4">
+                    <EditDeductionPhilHealth />
+                  </td>
                 </tr>
               </tbody>
             </table>
