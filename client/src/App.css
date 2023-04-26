@@ -40,3 +40,17 @@
 .read-the-docs {
   color: #888;
 }
+
+.progressBody {
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill {
+  width: 160px;
+  height: 160px;
+  position: relative;
+  background: blue;
+}
