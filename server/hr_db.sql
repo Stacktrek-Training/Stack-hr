@@ -6,28 +6,11 @@ CREATE TABLE "SALARIES" (salary_id SERIAL PRIMARY KEY, salary DECIMAL, status IN
 
 CREATE TABLE "DEDUCTIONS" (deduction_id SERIAL PRIMARY KEY, deduction_name VARCHAR, description VARCHAR, amount DECIMAL, date_created DATE, date_updated DATE);
 
-//For Stack-Expense
- CREATE table CATEGORIES ("category_Id" SERIAL PRIMARY KEY, "category_name" VARCHAR (50));
+ CREATE table "CATEGORIES" (category_id SERIAL PRIMARY KEY, category_name VARCHAR);
 
-CREATE TABLE transaction (
-    transaction_Id SERIAL PRIMARY KEY,
-    employee_Id INTEGER NOT NULL,
-    date DATE NOT NULL,
-    category_Id,
-    total_Amount NUMERIC(10, 2) NOT NULL,
-    receipt_Image BYTEA,
-    inserted_At TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    updated_At TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
+ CREATE TABLE "TRANSACTIONS" (transaction_id SERIAL PRIMARY KEY, date DATE, employee_id INTEGER UNIQUE REFERENCES "employees"(employee_id), category_id INTEGER REFERENCES "CATEGORIES"(category_id), total_amount NUMERIC(10,2), receipt_image BYTEA, date_inserted DATE, date_updated DATE);
 
-CREATE TABLE reports (
-    report_id SERIAL PRIMARY KEY,
-    transaction_Id INTEGER NOT NULL,
-    date DATE NOT NULL,
-    category_Id INTEGER NOT NULL,
-    description TEXT,
-    amount NUMERIC(10, 2) NOT NULL
-);
+CREATE TABLE "REPORTS" (report_id SERIAL PRIMARY KEY,transaction_Id INTEGER UNIQUE REFERENCES "TRANSACTIONS" (transaction_id),date DATE, category_Id INTEGER REFERENCES "CATEGORIES"(category_id), description VARCHAR, amount NUMERIC(10, 2);
 
 
 
