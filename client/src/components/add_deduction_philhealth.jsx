@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-
-const SelectEmployee = () => {
+const AddDeductionPhilHealth = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -8,39 +7,14 @@ const SelectEmployee = () => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+  const OnlyNumber = (event) => {
+    event.target.value = event.target.value.replace(/[^0-9.]/gi, "");
+  };
 
   return (
     <div className="flex w-full justify-between">
       <div class="flex items-center">
-        <label for="simple-search" class="sr-only">
-          Search
-        </label>
-        <div class="relative w-full search ">
-          <div class="search_icon  inset-y-0  flex items-center  ">
-            <svg
-              aria-hidden="true"
-              class="w-5 h-5 text-gray-500 dark:text-gray-400"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                clip-rule="evenodd"
-              ></path>
-            </svg>
-          </div>
-
-          <input
-            type="text"
-            id="simple-search"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30  pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Search"
-            required
-            autoComplete="off"
-          />
-        </div>
+        <span className="text-3xl font-bold text-gray-700"> PhilHealth</span>{" "}
       </div>
       {/* <!-- Modal toggle --> */}
 
@@ -50,7 +24,7 @@ const SelectEmployee = () => {
         class=" flex  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5  py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         type="button"
       >
-        Select Employee
+        Add Deduction
       </button>
 
       {/* <!-- Main modal --> */}
@@ -87,29 +61,42 @@ const SelectEmployee = () => {
             </button>
             <div class="px-6 py-6 lg:px-8">
               <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
-                Select Employee
+                PhilHealth
               </h3>
               <form class="space-y flex flex-wrap gap-1.5 flex-col  ">
                 <div>
-                  <label
-                    htmlFor="employee-name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Employee Name
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Monthly Salary
                   </label>
-                  <select
-                    id="employee-name"
-                    name="employee-name"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  <input
+                    type="text"
+                    onInput={OnlyNumber}
+                    class="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Range 1"
                     required
-                  >
-                    <option value="" disabled selected hidden>
-                      Select Employee
-                    </option>
-                    <option value="employee1">Employee 1</option>
-                    <option value="employee2">Employee 2</option>
-                    <option value="employee3">Employee 3</option>
-                  </select>
+                  />
+                  <div>
+                    {" "}
+                    <input
+                      type="text"
+                      onInput={OnlyNumber}
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                      placeholder="Range 2"
+                      required
+                    />{" "}
+                  </div>
+                </div>
+                <div>
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Monthly Prenium
+                  </label>
+                  <input
+                    onInput={OnlyNumber}
+                    type="text"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Monthly Prenium"
+                    required
+                  />
                 </div>
 
                 <button
@@ -127,4 +114,4 @@ const SelectEmployee = () => {
   );
 };
 
-export default SelectEmployee;
+export default AddDeductionPhilHealth;

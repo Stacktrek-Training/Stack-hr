@@ -4,7 +4,9 @@ CREATE TABLE "EMPLOYEES"(employee_id SERIAL PRIMARY KEY, first_name VARCHAR, mid
 
 CREATE TABLE "SALARIES" (salary_id SERIAL PRIMARY KEY, salary DECIMAL, status INTEGER, date_created DATE, date_updated DATE, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id));
 
-CREATE TABLE "DEDUCTIONS" (deduction_id SERIAL PRIMARY KEY, deduction_name VARCHAR, description VARCHAR, amount DECIMAL, date_created DATE, date_updated DATE);
+create table "SSS_DEDUCTIONS" (deduction_id SERIAL PRIMARY KEY, salary_range_1 DECIMAL, salary_range_2 DECIMAL, employee_contribution_sss DECIMAL, employer_contribution_sss DECIMAL, employee_contribution_ec DECIMAL, employer_contribution_ec DECIMAL, employee_contribution_mpf DECIMAL, employer_contribution_mpf DECIMAL,date_created DATE, date_updated DATE);
+
+-- CREATE TABLE "DEDUCTIONS" (deduction_id SERIAL PRIMARY KEY, deduction_name VARCHAR, description VARCHAR, amount DECIMAL, date_created DATE, date_updated DATE);
 
  CREATE table "CATEGORIES" (category_id SERIAL PRIMARY KEY, category_name VARCHAR);
 

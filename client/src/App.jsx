@@ -7,6 +7,9 @@ import Payroll from "./pages/payrolls";
 import User from "./pages/user_dashboard";
 import Salaries from "./pages/salaries";
 import Deduction from "./pages/deduction";
+import Table from "./components/Table";
+import PhilHealth from "./components/PhilHealth";
+import SSS from "./components/SSS";
 
 function App() {
   return (
@@ -30,8 +33,17 @@ function App() {
         <Route path="/salaries">
           <Salaries />
         </Route>
+        <Route path="/table">
+          <Table />
+        </Route>
         <Route path="/deduction">
           <Deduction />
+        </Route>
+        <Route path="/philhealth">
+          <PhilHealth />
+        </Route>
+        <Route path="/sss">
+          <SSS />
         </Route>
       </Switch>
     </BrowserRouter>
