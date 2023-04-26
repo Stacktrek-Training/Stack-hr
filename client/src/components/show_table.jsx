@@ -12,7 +12,7 @@ const ShowTable = () => {
     } else if (selectedValue === "philhealth") {
       url = "http://localhost:5173/philhealth";
     } else if (selectedValue === "pagibig") {
-      url = "https://example.com/pagibig";
+      url = "http://localhost:5173/pag-ibig";
     } else if (selectedValue === "deduction") {
       url = "http://localhost:5173/Deduction";
     } else if (selectedValue === "default") {
