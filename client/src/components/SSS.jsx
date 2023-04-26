@@ -7,6 +7,7 @@ import Navbar from "./navbar";
 import ShowTable from "./show_table";
 import AddDeduction from "./add_deduction_sss";
 import axios from "axios";
+import EditDeductionSSS from "./edit_deduction_sss";
 
 const SSS = () => {
   const formatter = new Intl.NumberFormat("en-PH", {
@@ -60,6 +61,7 @@ const SSS = () => {
               <colgroup class="bg-gray-100"></colgroup>
               <colgroup class="bg-gray-100"></colgroup>
               <colgroup class="bg-gray-100"></colgroup>
+              <colgroup class="bg-gray-100"></colgroup>
               <thead className=" text-gray-700 font-semibold uppercase">
                 <tr>
                   <th
@@ -81,6 +83,12 @@ const SSS = () => {
                     class="w-2/4 border border-gray-300"
                   >
                     Employer - Employee
+                  </th>
+                  <th
+                    rowspan="3"
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
+                  >
+                    Button
                   </th>
                 </tr>
                 <tr>
@@ -222,6 +230,9 @@ const SSS = () => {
                     <td class="w-1/12 border border-gray-300">390</td>
                     <td class="w-1/12 border border-gray-300">180</td>
                     <td class="w-1/12 border border-gray-300">570</td>
+                    <td class="w-1/12 border border-gray-300 px-4">
+                      <EditDeductionSSS />
+                    </td>
                   </tr>
                 ))}
               </tbody>
