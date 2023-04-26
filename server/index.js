@@ -427,7 +427,9 @@ app.post("/sss", async (req, res) => {
 //read
 app.get("/sss", async (req, res) => {
   try {
-    const getAll = await pool.query(`SELECT * FROM "SSS_DEDUCTIONS"`);
+    const getAll = await pool.query(
+      `SELECT * FROM "SSS_DEDUCTIONS" ORDER BY salary_range_1`
+    );
     res.json(getAll.rows);
   } catch (error) {
     console.error(error.message);
