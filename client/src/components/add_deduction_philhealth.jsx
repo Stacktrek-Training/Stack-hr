@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 const AddDeductionPhilHealth = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
@@ -9,6 +10,25 @@ const AddDeductionPhilHealth = () => {
   };
   const OnlyNumber = (event) => {
     event.target.value = event.target.value.replace(/[^0-9.]/gi, "");
+  };
+  const [salary_range_1, setRange1] = useState("");
+  const [salary_range_2, setRange2] = useState("");
+  const [monthly_total_contribution, setTotal] = useState("");
+
+  const addPhilhealth = async () => {
+    await axios
+      .post("http://localhost:4000/philhealth", {
+        salary_range_1: salary_range_1,
+        salary_range_2: salary_range_2,
+        monthly_total_contribution: monthly_total_contribution,
+      })
+      .then((response) => {
+        console.log(response.data);
+        window.location.href = "/sss";
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
   };
 
   return (
@@ -63,7 +83,10 @@ const AddDeductionPhilHealth = () => {
               <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
                 PhilHealth
               </h3>
-              <form class="space-y flex flex-wrap gap-1.5 flex-col  ">
+              <form
+                onSubmit={addPhilhealth}
+                class="space-y flex flex-wrap gap-1.5 flex-col  "
+              >
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Monthly Salary
@@ -73,6 +96,8 @@ const AddDeductionPhilHealth = () => {
                     onInput={OnlyNumber}
                     class="bg-gray-50 mb-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Range 1"
+                    value={salary_range_1}
+                    onChange={(e) => setRange1(e.target.value)}
                     required
                   />
                   <div>
@@ -82,6 +107,8 @@ const AddDeductionPhilHealth = () => {
                       onInput={OnlyNumber}
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                       placeholder="Range 2"
+                      value={salary_range_2}
+                      onChange={(e) => setRange2(e.target.value)}
                       required
                     />{" "}
                   </div>
@@ -95,6 +122,8 @@ const AddDeductionPhilHealth = () => {
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Monthly Prenium"
+                    value={monthly_total_contribution}
+                    onChange={(e) => setTotal(e.target.value)}
                     required
                   />
                 </div>

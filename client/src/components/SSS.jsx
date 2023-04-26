@@ -231,7 +231,7 @@ const SSS = () => {
                     <td class="w-1/12 border border-gray-300">180</td>
                     <td class="w-1/12 border border-gray-300">570</td>
                     <td class="w-1/12 border border-gray-300 px-4">
-                      <EditDeductionSSS />
+                      <EditDeductionSSS sss={sss} />
                     </td>
                   </tr>
                 ))}

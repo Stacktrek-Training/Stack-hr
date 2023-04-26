@@ -274,18 +274,10 @@ app.post("/philhealth/", async (req, res) => {
   try {
     const { salary_range_1, salary_range_2, monthly_total_contribution } =
       req.body;
-    const employee_contribution = monthly_total_contribution * 0.5;
-    const employer_contribution = monthly_total_contribution * 0.5;
 
     const insertPhilheath = await pool.query(
-      `INSERT INTO "PHILHEALTH_DEDUCTIONS" (salary_range_1, salary_range_2, employee_contribution, employer_contribution, monthly_total_contribution, date_created)VALUES($1,$2,$3,$4,$5,CURRENT_TIMESTAMP) RETURNING *`,
-      [
-        salary_range_1,
-        salary_range_2,
-        employee_contribution,
-        employer_contribution,
-        monthly_total_contribution,
-      ]
+      `INSERT INTO "PHILHEALTH_DEDUCTIONS" (salary_range_1, salary_range_2, monthly_total_contribution, date_created)VALUES($1,$2,$3,CURRENT_TIMESTAMP) RETURNING *`,
+      [salary_range_1, salary_range_2, monthly_total_contribution]
     );
     res.json(insertPhilheath.rows);
   } catch (error) {
@@ -295,7 +287,9 @@ app.post("/philhealth/", async (req, res) => {
 //read
 app.get("/philhealth", async (req, res) => {
   try {
-    const getAll = await pool.query(`SELECT * FROM "PHILHEALTH_DEDUCTIONS"`);
+    const getAll = await pool.query(
+      `SELECT * FROM "PHILHEALTH_DEDUCTIONS" ORDER BY salary_range_1`
+    );
     res.json(getAll.rows);
   } catch (error) {
     console.error(error.message);
@@ -308,18 +302,9 @@ app.put("/philhealth/:id", async (req, res) => {
     const { id } = req.params;
     const { salary_range_1, salary_range_2, monthly_total_contribution } =
       req.body;
-    const employee_contribution = monthly_total_contribution * 0.5;
-    const employer_contribution = monthly_total_contribution * 0.5;
     const updatePhilhealth = await pool.query(
-      `UPDATE "PHILHEALTH_DEDUCTIONS" SET salary_range_1 = $1, salary_range_2 = $2, monthly_total_contribution =$3, employee_contribution =$4, employer_contribution = $5, date_updated = CURRENT_TIMESTAMP WHERE deduction_id = $6`,
-      [
-        salary_range_1,
-        salary_range_2,
-        monthly_total_contribution,
-        employee_contribution,
-        employer_contribution,
-        id,
-      ]
+      `UPDATE "PHILHEALTH_DEDUCTIONS" SET salary_range_1 = $1, salary_range_2 = $2, monthly_total_contribution =$3, date_updated = CURRENT_TIMESTAMP WHERE deduction_id = $4`,
+      [salary_range_1, salary_range_2, monthly_total_contribution, id]
     );
     res.json("updated");
   } catch (error) {
