@@ -493,7 +493,6 @@ app.get("/categories", async (req, res) => {
 });
 
 // add category
-<<<<<<< HEAD
 app.post("/categories", async (req, res) => {
   try {
     const { category_name } = req.body;
@@ -502,7 +501,10 @@ app.post("/categories", async (req, res) => {
       [category_name]
     );
     res.json(insertCategory.rows[0]);
-=======
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 app.post("/category/", async (req, res) => {
   try {
     const { category_name } = req.body;
@@ -511,31 +513,19 @@ app.post("/category/", async (req, res) => {
       [category_name]
     );
     res.json("Inserted data");
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
   } catch (error) {
     console.error(error.message);
   }
 });
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
 //edit category
 app.put("/category/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { category_name } = req.body;
-<<<<<<< HEAD
-    const updateCategory = await pool.query(
-      `UPDATE "CATEGORIES" SET category_name = $1 WHERE category_id=$2`,
-      [category_name, id]
-=======
     const updateCat = await pool.query(
       `UPDATE "CATEGORIES" SET category_Name=$1 WHERE category_Id =$2`,
       [category_name, category_Id]
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
     );
     res.json(updateCat.rows);
   } catch (error) {
@@ -594,15 +584,9 @@ app.post("/transaction", async (req, res) => {
       date_inserted,
       date_updated,
     } = req.body;
-<<<<<<< HEAD
-    const insertTransaction = await pool.query(
-      `INSERT INTO "TRANSACTIONS"(date,employee_id,category_id,total_amount,receipt_image,date_inserted,date_updated)VALUES(CURRENT_TIMESTAMP, $1, $2, $3,$4, CURRENT_TIMESTAMP, NULL) RETURNING *`,
-      [employee_id, category_id, total_amount, receipt_image]
-=======
     const insertETransaction = await pool.query(
       `INSERT INTO "TRANSACTIONS"(date,employee_id,category_Id,total_Amount,receipt_Image,inserted_At,updated_At)VALUES(CURRENT_TIMESTAMP, $1, $2, $3,$4, CURRENT_TIMESTAMP, NULL) RETURNING *`,
       [employee_id, category_Id, total_Amount, receipt_Image]
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
     );
     res.json("Inserted data");
   } catch (error) {
@@ -661,17 +645,10 @@ app.get("/report/:id", async (req, res) => {
 //add reports
 app.post("/reports", async (req, res) => {
   try {
-<<<<<<< HEAD
-    const { transaction_id, date, category_id, description, amount } = req.body;
-    const insertReports = await pool.query(
-      `INSERT INTO "REPORTS"(transaction_id,date,category_id,description,amount)VALUES($1,CURRENT_TIMESTAMP,$2,$3,$4) RETURNING *`,
-      [transaction_id, date, category_id, description, amount]
-=======
     const { transaction_Id, date, category_Id, description, amount } = req.body;
     const insertETransaction = await pool.query(
       `INSERT INTO "REPORTS"(transaction_Id,date,category_Id,description,amount)VALUES($1,CURRENT_TIMESTAMP,$2,$3,$4) RETURNING *`,
       [transaction_Id, date, category_Id, description, amount]
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
     );
     res.json("Inserted data");
   } catch (error) {
@@ -684,20 +661,14 @@ app.put("/reports/:id", async (req, res) => {
     const { id } = req.params;
     const { transaction_id, date, category_id, description, amount } = req.body;
     const updateReport = await pool.query(
-<<<<<<< HEAD
       `UPDATE "REPORTS" SET transaction_id=$1,date=CURRENT_TIMESTAMP,category_id=$2,description=$3,amount=$4 WHERE report_id =$5`,
       [transaction_id, date, category_id, description, amount, id]
-=======
-      `UPDATE "TRANSACTIONS" SET transaction_Id=$1,date=CURRENT_TIMESTAMP,category_Id=$2,description=$3,amount=$4 WHERE report_Id =$5`,
-      [transaction_Id, date, category_Id, description, amount, id]
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
     );
     res.json(updateReport.rows);
   } catch (error) {
     console.error(error.message);
   }
 });
-
 
 app.listen(4000, () => {
   console.log("Listening to port 4000");
