@@ -427,7 +427,9 @@ app.post("/sss", async (req, res) => {
 //read
 app.get("/sss", async (req, res) => {
   try {
-    const getAll = await pool.query(`SELECT * FROM "SSS_DEDUCTIONS"`);
+    const getAll = await pool.query(
+      `SELECT * FROM "SSS_DEDUCTIONS" ORDER BY salary_range_1`
+    );
     res.json(getAll.rows);
   } catch (error) {
     console.error(error.message);
@@ -469,11 +471,11 @@ app.put("/sss/:id", async (req, res) => {
 });
 //stack-Expense
 //get category by id
-app.get("/category/:id", async (req, res) => {
+app.get("/categories/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const getCAT = await pool.query(
-      `SELECT * FROM "CATEGORIES" WHERE category_Id=$1`,
+      `SELECT * FROM "CATEGORIES" WHERE category_id=$1`,
       [id]
     );
     res.json(getCAT.rows);
@@ -481,7 +483,7 @@ app.get("/category/:id", async (req, res) => {
     console.error(error.message);
   }
 });
-app.get("/category", async (req, res) => {
+app.get("/categories", async (req, res) => {
   try {
     const getCAT = await pool.query(`SELECT * FROM "CATEGORIES"`);
     res.json(getCAT.rows);
@@ -491,6 +493,16 @@ app.get("/category", async (req, res) => {
 });
 
 // add category
+<<<<<<< HEAD
+app.post("/categories", async (req, res) => {
+  try {
+    const { category_name } = req.body;
+    const insertCategory = await pool.query(
+      `INSERT INTO "CATEGORIES" (category_name)VALUES($1) RETURNING *`,
+      [category_name]
+    );
+    res.json(insertCategory.rows[0]);
+=======
 app.post("/category/", async (req, res) => {
   try {
     const { category_name } = req.body;
@@ -499,85 +511,131 @@ app.post("/category/", async (req, res) => {
       [category_name]
     );
     res.json("Inserted data");
+>>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
   } catch (error) {
     console.error(error.message);
   }
 });
 
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
 //edit category
 app.put("/category/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { category_name } = req.body;
+<<<<<<< HEAD
+    const updateCategory = await pool.query(
+      `UPDATE "CATEGORIES" SET category_name = $1 WHERE category_id=$2`,
+      [category_name, id]
+=======
     const updateCat = await pool.query(
       `UPDATE "CATEGORIES" SET category_Name=$1 WHERE category_Id =$2`,
       [category_name, category_Id]
+>>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
     );
     res.json(updateCat.rows);
   } catch (error) {
     console.error(error.message);
   }
 });
-
-// get transaction
-app.get("/transaction", async (req, res) => {
-  try {
-    const getTransaction = await pool.query(`SELECT * FROM "TRANSACTIONS"`);
-    res.json(getTransaction.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//get transaction by id
-app.get("/transaction/:id", async (req, res) => {
+//delete categories
+app.delete("/categories/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const getTransaction = await pool.query(
-      `SELECT * FROM "TRANSACTIONS" WHERE transaction_Id=$1`,
+    const deleteFromCategories = await pool.query(
+      `DELETE FROM "CATEGORIES" WHERE category_id=$1`,
       [id]
     );
-    res.json(getTransaction.rows);
+    const deleteCat = await pool.query(
+      `DELETE FROM "CATEGORIES" WHERE category_id = $1 `,
+      [id]
+    );
+
+    res.json("Category deleted");
   } catch (error) {
     console.error(error.message);
   }
 });
 
+//get transaction by id
+app.get("/transactions/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getTrans = await pool.query(
+      `SELECT * FROM "TRANSACTION" WHERE transaction_id=$1`,
+      [id]
+    );
+    res.json(getTrans.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+app.get("/transactions", async (req, res) => {
+  try {
+    const getTrans = await pool.query(`SELECT * FROM "TRANSACTIONS"`);
+    res.json(getTrans.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
 //add transaction
 app.post("/transaction", async (req, res) => {
   try {
     const {
       date,
       employee_id,
-      category_Id,
-      total_Amount,
-      receipt_Image,
-      inserted_At,
-      updated_At,
+      category_id,
+      total_amount,
+      receipt_image,
+      date_inserted,
+      date_updated,
     } = req.body;
+<<<<<<< HEAD
+    const insertTransaction = await pool.query(
+      `INSERT INTO "TRANSACTIONS"(date,employee_id,category_id,total_amount,receipt_image,date_inserted,date_updated)VALUES(CURRENT_TIMESTAMP, $1, $2, $3,$4, CURRENT_TIMESTAMP, NULL) RETURNING *`,
+      [employee_id, category_id, total_amount, receipt_image]
+=======
     const insertETransaction = await pool.query(
       `INSERT INTO "TRANSACTIONS"(date,employee_id,category_Id,total_Amount,receipt_Image,inserted_At,updated_At)VALUES(CURRENT_TIMESTAMP, $1, $2, $3,$4, CURRENT_TIMESTAMP, NULL) RETURNING *`,
       [employee_id, category_Id, total_Amount, receipt_Image]
+>>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
     );
     res.json("Inserted data");
   } catch (error) {
     console.error(error.message);
   }
 });
-// edit tranaction
+// edit transaction
 app.put("/transaction/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { category_Id, total_Amount, receipt_Image } = req.body;
+    const { category_id, total_amount, receipt_image } = req.body;
     const updateTrans = await pool.query(
-      `UPDATE "TRANSACTIONS" SET category_Id=$1,total_Amount=$2,receipt_Image=$3,updated_At=CURRENT_TIMESTAMP  WHERE transaction_Id =$4`,
-      [category_Id, total_Amount, receipt_Image, id]
+      `UPDATE "TRANSACTIONS" SET category_id=$1,total_amount=$2,receipt_image=$3,date_updated=CURRENT_TIMESTAMP  WHERE transaction_id =$4`,
+      [category_id, total_amount, receipt_image, id]
     );
     res.json(updateTrans.rows);
   } catch (error) {
     console.error(error.message);
   }
 });
+//get all data in transactions
 
+/*app.get("/transaction", async (req, res) => {
+  try {
+    const getTransaction =
+      await pool.query(`SELECT t.*, e.first_name, e.last_name, e.middle_name
+      FROM "TRANSACTIONS" t
+      JOIN "EMPLOYEES" e ON t.employee_id = e.employee_id`);
+    res.json(getTransaction.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});*/
 //get reports
 app.get("/reports", async (req, res) => {
   try {
@@ -592,7 +650,7 @@ app.get("/report/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const getReports = await pool.query(
-      `SELECT * FROM "REPORTS" WHERE report_Id=$1`,
+      `SELECT * FROM "REPORTS" WHERE report_id=$1`,
       [id]
     );
     res.json(getReports.rows);
@@ -603,10 +661,17 @@ app.get("/report/:id", async (req, res) => {
 //add reports
 app.post("/reports", async (req, res) => {
   try {
+<<<<<<< HEAD
+    const { transaction_id, date, category_id, description, amount } = req.body;
+    const insertReports = await pool.query(
+      `INSERT INTO "REPORTS"(transaction_id,date,category_id,description,amount)VALUES($1,CURRENT_TIMESTAMP,$2,$3,$4) RETURNING *`,
+      [transaction_id, date, category_id, description, amount]
+=======
     const { transaction_Id, date, category_Id, description, amount } = req.body;
     const insertETransaction = await pool.query(
       `INSERT INTO "REPORTS"(transaction_Id,date,category_Id,description,amount)VALUES($1,CURRENT_TIMESTAMP,$2,$3,$4) RETURNING *`,
       [transaction_Id, date, category_Id, description, amount]
+>>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
     );
     res.json("Inserted data");
   } catch (error) {
@@ -617,16 +682,22 @@ app.post("/reports", async (req, res) => {
 app.put("/reports/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { transaction_Id, date, category_Id, description, amount } = req.body;
+    const { transaction_id, date, category_id, description, amount } = req.body;
     const updateReport = await pool.query(
+<<<<<<< HEAD
+      `UPDATE "REPORTS" SET transaction_id=$1,date=CURRENT_TIMESTAMP,category_id=$2,description=$3,amount=$4 WHERE report_id =$5`,
+      [transaction_id, date, category_id, description, amount, id]
+=======
       `UPDATE "TRANSACTIONS" SET transaction_Id=$1,date=CURRENT_TIMESTAMP,category_Id=$2,description=$3,amount=$4 WHERE report_Id =$5`,
       [transaction_Id, date, category_Id, description, amount, id]
+>>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
     );
     res.json(updateReport.rows);
   } catch (error) {
     console.error(error.message);
   }
 });
+
 
 app.listen(4000, () => {
   console.log("Listening to port 4000");

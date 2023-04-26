@@ -168,11 +168,13 @@ const SSS = () => {
                     key={sss.deduction_id}
                   >
                     <td className="border border-gray-300">{index + 1}</td>
+
                     <td className="border border-gray-300">
-                      {" "}
-                      {`${formatter.format(
-                        sss.salary_range_1
-                      )} ${"-"} ${formatter.format(sss.salary_range_2)} `}
+                      {`${formatter.format(sss.salary_range_1)} - ${
+                        sss.salary_range_2 > 29750
+                          ? "Above"
+                          : formatter.format(sss.salary_range_2)
+                      }`}
                     </td>
 
                     <td class="w-1/12 px-6 py-4 capitalize border border-gray-300">{`${
@@ -187,26 +189,44 @@ const SSS = () => {
                         parseFloat(sss.employer_contribution_sss)
                       }${"%"}`}
                     </td>
-                    <td class="w-1/12 border border-gray-300">{`${formatter.format(
-                      sss.employer_contribution_ec
-                    )}`}</td>
+                    <td class="w-1/12 border border-gray-300">{`${
+                      sss.employer_contribution_ec == 0
+                        ? "_"
+                        : formatter.format(sss.employer_contribution_ec)
+                    }`}</td>
                     <td class="w-1/12 border border-gray-300">
-                      {formatter.format(sss.employee_contribution_ec)}
+                      {sss.employee_contribution_ec == 0
+                        ? "_"
+                        : formatter.format(sss.employee_contribution_ec)}
                     </td>
-                    <td class="w-1/12 border border-gray-300">{`${formatter.format(
-                      parseFloat(sss.employer_contribution_ec) +
-                        parseFloat(sss.employee_contribution_ec)
-                    )}`}</td>
                     <td class="w-1/12 border border-gray-300">{`${
-                      sss.employer_contribution_mpf
-                    }${"%"}`}</td>
-                    <td class="w-1/12 border border-gray-300">{`${
-                      sss.employee_contribution_mpf
-                    }${"%"}`}</td>
-                    <td class="w-1/12 border border-gray-300">{`${
-                      parseFloat(sss.employer_contribution_mpf) +
-                      parseFloat(sss.employee_contribution_mpf)
-                    }${"%"}`}</td>
+                      sss.employer_contribution_ec &&
+                      sss.employer_contribution_ec == 0
+                        ? "_"
+                        : formatter.format(
+                            parseFloat(sss.employer_contribution_ec) +
+                              parseFloat(sss.employee_contribution_ec)
+                          )
+                    }`}</td>
+                    <td class="w-1/12 border border-gray-300">
+                      {sss.employer_contribution_mpf == 0
+                        ? "_"
+                        : `${sss.employer_contribution_mpf}${"%"}`}
+                    </td>
+                    <td class="w-1/12 border border-gray-300">
+                      {sss.employee_contribution_mpf == 0
+                        ? "_"
+                        : `${sss.employee_contribution_mpf}${"%"}`}
+                    </td>
+                    <td class="w-1/12 border border-gray-300">
+                      {sss.employer_contribution_mpf &&
+                      sss.employee_contribution_mpf == 0
+                        ? "_"
+                        : `${
+                            parseFloat(sss.employer_contribution_mpf) +
+                            parseFloat(sss.employee_contribution_mpf)
+                          }${"%"}`}
+                    </td>
                     <td class="w-1/12 border border-gray-300">390</td>
                     <td class="w-1/12 border border-gray-300">180</td>
                     <td class="w-1/12 border border-gray-300">570</td>
