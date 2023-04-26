@@ -46,7 +46,7 @@ const AddDeduction = () => {
       <div class="flex items-center">
         <span className="text-3xl font-bold text-gray-700">
           {" "}
-          Social Security System
+          Social Security System Contribution
         </span>{" "}
       </div>
       {/* <!-- Modal toggle --> */}

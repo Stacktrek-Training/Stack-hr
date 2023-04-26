@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-const AddDeductionPhilHealth = () => {
+const AddDeductionPagIbig = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -16,7 +16,7 @@ const AddDeductionPhilHealth = () => {
       <div class="flex items-center">
         <span className="text-3xl font-bold text-gray-700">
           {" "}
-          PhilHealth Contribution{" "}
+          Pag-IBIG Contribution
         </span>{" "}
       </div>
       {/* <!-- Modal toggle --> */}
@@ -64,12 +64,12 @@ const AddDeductionPhilHealth = () => {
             </button>
             <div class="px-6 py-6 lg:px-8">
               <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
-                PhilHealth
+                Pag-IBIG
               </h3>
               <form class="space-y flex flex-wrap gap-1.5 flex-col  ">
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Monthly Salary
+                    Monthly Compensation
                   </label>
                   <input
                     type="text"
@@ -91,13 +91,22 @@ const AddDeductionPhilHealth = () => {
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Monthly Prenium
+                    Membership Savings (Contribution)
                   </label>
                   <input
                     onInput={OnlyNumber}
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Monthly Prenium"
+                    placeholder="Employee"
+                    required
+                  />
+                </div>
+                <div>
+                  <input
+                    onInput={OnlyNumber}
+                    type="text"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Employer"
                     required
                   />
                 </div>
@@ -117,4 +126,4 @@ const AddDeductionPhilHealth = () => {
   );
 };
 
-export default AddDeductionPhilHealth;
+export default AddDeductionPagIbig;

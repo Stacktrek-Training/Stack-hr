@@ -10,6 +10,7 @@ import Deduction from "./pages/deduction";
 import Table from "./components/Table";
 import PhilHealth from "./components/PhilHealth";
 import SSS from "./components/SSS";
+import PAGIBIG from "./components/PAG-IBIG";
 
 function App() {
   return (
@@ -44,6 +45,9 @@ function App() {
         </Route>
         <Route path="/sss">
           <SSS />
+        </Route>
+        <Route path="/pag-ibig">
+          <PAGIBIG />
         </Route>
       </Switch>
     </BrowserRouter>

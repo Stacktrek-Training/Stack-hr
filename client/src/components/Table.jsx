@@ -5,7 +5,6 @@ import "./../components/style.css";
 import Sidebar from "./sidebar";
 import Navbar from "./navbar";
 import ShowTable from "./show_table";
-import axios from "axios";
 
 const Table = () => {
   const formatter = new Intl.NumberFormat("en-PH", {
