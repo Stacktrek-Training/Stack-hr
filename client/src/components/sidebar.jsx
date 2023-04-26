@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import image1 from "./../assets/logo.png";
 import "./../components/style.css";
 const Sidebar = () => {
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  useEffect(() => {
+    // show the sidebar once the page is loaded
+    setShowSidebar(true);
+  }, []);
+
   return (
     <div className="side bg-orange-500  text-white w-64">
       <ul className="ul">
