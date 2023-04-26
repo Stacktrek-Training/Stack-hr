@@ -272,8 +272,12 @@ app.put("/deductions/:id", async (req, res) => {
 //add
 app.post("/philhealth/", async (req, res) => {
   try {
-    const { salary_range_1, salary_range_2, monthly_total_contribution } =
-      req.body;
+    const {
+      salary_range_1,
+      salary_range_2,
+      monthly_total_contribution,
+      date_created,
+    } = req.body;
     const employee_contribution = monthly_total_contribution * 0.5;
     const employer_contribution = monthly_total_contribution * 0.5;
 
@@ -292,15 +296,7 @@ app.post("/philhealth/", async (req, res) => {
     console.error(error.message);
   }
 });
-//read
-app.get("/philhealth", async (req, res) => {
-  try {
-    const getAll = await pool.query(`SELECT * FROM "PHILHEALTH_DEDUCTIONS"`);
-    res.json(getAll.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
+
 //update
 
 app.put("/philhealth/:id", async (req, res) => {
@@ -327,148 +323,6 @@ app.put("/philhealth/:id", async (req, res) => {
   }
 });
 
-//ang pag ibig
-//Create
-app.post("/pag-ibig", async (req, res) => {
-  try {
-    const {
-      salary_range_1,
-      salary_range_2,
-      employee_contribution,
-      employer_contribution,
-    } = req.body;
-    const monthly_total_contribution =
-      employee_contribution + employer_contribution;
-    const insertRange = await pool.query(
-      `INSERT INTO "PAGIBIG_DEDUCTIONS" (salary_range_1, salary_range_2, employee_contribution, employer_contribution,monthly_total_contribution, date_created)VALUES($1, $2, $3, $4,$5, CURRENT_TIMESTAMP) RETURNING *`,
-      [
-        salary_range_1,
-        salary_range_2,
-        employee_contribution,
-        employer_contribution,
-        monthly_total_contribution,
-      ]
-    );
-    res.json(insertRange.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//read
-app.get("/pag-ibig", async (req, res) => {
-  try {
-    const getPagibig = await pool.query(`SELECT * FROM "PAGIBIG_DEDUCTIONS"`);
-    res.json(getPagibig.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//update
-app.put("/pag-ibig/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const {
-      salary_range_1,
-      salary_range_2,
-      employee_contribution,
-      employer_contribution,
-    } = req.body;
-    const monthly_total_contribution =
-      employee_contribution + employer_contribution;
-    await pool.query(
-      `UPDATE "PAGIBIG_DEDUCTIONS" SET salary_range_1 = $1, salary_range_2 = $2, employee_contribution = $3, employer_contribution =$4, monthly_total_contribution = $5, date_updated = CURRENT_TIMESTAMP WHERE deduction_id = $6`,
-      [
-        salary_range_1,
-        salary_range_2,
-        employee_contribution,
-        employer_contribution,
-        monthly_total_contribution,
-        id,
-      ]
-    );
-    res.json("data updated");
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-
-//sss
-//add
-app.post("/sss", async (req, res) => {
-  try {
-    const {
-      salary_range_1,
-      salary_range_2,
-      employee_contribution_sss,
-      employer_contribution_sss,
-      employee_contribution_ec,
-      employer_contribution_ec,
-      employee_contribution_mpf,
-      employer_contribution_mpf,
-    } = req.body;
-    const insertData = await pool.query(
-      `INSERT INTO "SSS_DEDUCTIONS" (salary_range_1, salary_range_2, employee_contribution_sss, employer_contribution_sss, employee_contribution_ec, employer_contribution_ec, employee_contribution_mpf, employer_contribution_mpf,date_created)VALUES($1,$2,$3,$4,$5,$6,$7,$8,CURRENT_TIMESTAMP) RETURNING *`,
-      [
-        salary_range_1,
-        salary_range_2,
-        employee_contribution_sss,
-        employer_contribution_sss,
-        employee_contribution_ec,
-        employer_contribution_ec,
-        employee_contribution_mpf,
-        employer_contribution_mpf,
-      ]
-    );
-    res.json(insertData.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//read
-app.get("/sss", async (req, res) => {
-  try {
-    const getAll = await pool.query(
-      `SELECT * FROM "SSS_DEDUCTIONS" ORDER BY salary_range_1`
-    );
-    res.json(getAll.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//update
-app.put("/sss/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const {
-      salary_range_1,
-      salary_range_2,
-      employee_contribution_sss,
-      employer_contribution_sss,
-      employee_contribution_ec,
-      employer_contribution_ec,
-      employee_contribution_mpf,
-      employer_contribution_mpf,
-    } = req.body;
-
-    const updateData = await pool.query(
-      `UPDATE "SSS_DEDUCTIONS" SET salary_range_1=$1,salary_range_2=$2,employee_contribution_sss=$3, employer_contribution_sss=$4, employee_contribution_ec=$5, employer_contribution_ec=$6,employee_contribution_mpf=$7,employer_contribution_mpf=$8,date_updated=CURRENT_TIMESTAMP WHERE deduction_id = $9`,
-      [
-        salary_range_1,
-        salary_range_2,
-        employee_contribution_sss,
-        employer_contribution_sss,
-        employee_contribution_ec,
-        employer_contribution_ec,
-        employee_contribution_mpf,
-        employer_contribution_mpf,
-        id,
-      ]
-    );
-    res.json("data updated");
-  } catch (error) {
-    console.error(error.message);
-  }
-});
 //stack-Expense
 //get category by id
 app.get("/categories/:id", async (req, res) => {
@@ -493,7 +347,6 @@ app.get("/categories", async (req, res) => {
 });
 
 // add category
-<<<<<<< HEAD
 app.post("/categories", async (req, res) => {
   try {
     const { category_name } = req.body;
@@ -502,42 +355,22 @@ app.post("/categories", async (req, res) => {
       [category_name]
     );
     res.json(insertCategory.rows[0]);
-=======
-app.post("/category/", async (req, res) => {
-  try {
-    const { category_name } = req.body;
-    const insertCategory = await pool.query(
-      `INSERT INTO "CATEGORIES" (category_name)VALUES($1)`,
-      [category_name]
-    );
-    res.json("Inserted data");
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
   } catch (error) {
     console.error(error.message);
   }
 });
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
 //edit category
-app.put("/category/:id", async (req, res) => {
+app.put("/categories/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { category_name } = req.body;
-<<<<<<< HEAD
     const updateCategory = await pool.query(
       `UPDATE "CATEGORIES" SET category_name = $1 WHERE category_id=$2`,
       [category_name, id]
-=======
-    const updateCat = await pool.query(
-      `UPDATE "CATEGORIES" SET category_Name=$1 WHERE category_Id =$2`,
-      [category_name, category_Id]
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
     );
-    res.json(updateCat.rows);
+    res.json("Updated successfully");
   } catch (error) {
     console.error(error.message);
   }
@@ -594,15 +427,9 @@ app.post("/transaction", async (req, res) => {
       date_inserted,
       date_updated,
     } = req.body;
-<<<<<<< HEAD
     const insertTransaction = await pool.query(
       `INSERT INTO "TRANSACTIONS"(date,employee_id,category_id,total_amount,receipt_image,date_inserted,date_updated)VALUES(CURRENT_TIMESTAMP, $1, $2, $3,$4, CURRENT_TIMESTAMP, NULL) RETURNING *`,
       [employee_id, category_id, total_amount, receipt_image]
-=======
-    const insertETransaction = await pool.query(
-      `INSERT INTO "TRANSACTIONS"(date,employee_id,category_Id,total_Amount,receipt_Image,inserted_At,updated_At)VALUES(CURRENT_TIMESTAMP, $1, $2, $3,$4, CURRENT_TIMESTAMP, NULL) RETURNING *`,
-      [employee_id, category_Id, total_Amount, receipt_Image]
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
     );
     res.json("Inserted data");
   } catch (error) {
@@ -661,37 +488,26 @@ app.get("/report/:id", async (req, res) => {
 //add reports
 app.post("/reports", async (req, res) => {
   try {
-<<<<<<< HEAD
     const { transaction_id, date, category_id, description, amount } = req.body;
     const insertReports = await pool.query(
       `INSERT INTO "REPORTS"(transaction_id,date,category_id,description,amount)VALUES($1,CURRENT_TIMESTAMP,$2,$3,$4) RETURNING *`,
       [transaction_id, date, category_id, description, amount]
-=======
-    const { transaction_Id, date, category_Id, description, amount } = req.body;
-    const insertETransaction = await pool.query(
-      `INSERT INTO "REPORTS"(transaction_Id,date,category_Id,description,amount)VALUES($1,CURRENT_TIMESTAMP,$2,$3,$4) RETURNING *`,
-      [transaction_Id, date, category_Id, description, amount]
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
     );
     res.json("Inserted data");
   } catch (error) {
     console.error(error.message);
   }
 });
+
 // edit reports
 app.put("/reports/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { transaction_id, date, category_id, description, amount } = req.body;
     const updateReport = await pool.query(
-<<<<<<< HEAD
       `UPDATE "REPORTS" SET transaction_id=$1,date=CURRENT_TIMESTAMP,category_id=$2,description=$3,amount=$4 WHERE report_id =$5`,
       [transaction_id, date, category_id, description, amount, id]
-=======
-      `UPDATE "TRANSACTIONS" SET transaction_Id=$1,date=CURRENT_TIMESTAMP,category_Id=$2,description=$3,amount=$4 WHERE report_Id =$5`,
-      [transaction_Id, date, category_Id, description, amount, id]
->>>>>>> 4183df2164da5904510d8a47c116eacff7ac83d2
-    );
+);
     res.json(updateReport.rows);
   } catch (error) {
     console.error(error.message);
