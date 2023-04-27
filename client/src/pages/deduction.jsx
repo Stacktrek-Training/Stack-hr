@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./../components/style.css";
 // import ShowDescription from "../components/hide_desc";
 // import EditDeduction from "../components/edit_deduction";
@@ -6,7 +7,6 @@ import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
 import SelectEmployee from "../components/select_employee";
 import ShowTable from "../components/show_table";
-import axios from "axios";
 
 const Deduction = () => {
   const formatter = new Intl.NumberFormat("en-PH", {
@@ -23,7 +23,18 @@ const Deduction = () => {
   //     })
   //     .catch((error) => console.error(error));
   // }, []);
+  const [deductions, setDeduction] = useState([]);
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/deductions`)
+      .then((response) => {
+        setDeduction(response.data);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }, []);
   return (
     <div className="h-screen relative">
       {" "}
@@ -62,23 +73,50 @@ const Deduction = () => {
                   <th scope="col" class="px-6 py-3">
                     PAG-IBIG
                   </th>
+                  <th scope="col" class="px-6 py-3">
+                    Total
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                {deductions.map((deduction, index) => (
+                  <tr
+                    key={deduction.deduction_id}
+                    class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                   >
-                    {" "}
-                    1
-                  </th>
-                  <td class="px-6 py-4 capitalize"> Sunny </td>
-                  <td class="px-6 py-4 capitalize"> 45634 </td>
-                  <td class="px-6 py-4"> 300</td>
-                  <td class="px-6 py-4">400</td>
-                  <td class=" px-6 py-4">500</td>
-                </tr>
+                    <th
+                      scope="row"
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {" "}
+                      {index + 1}
+                    </th>
+                    <td class="px-6 py-4 capitalize">
+                      {`${deduction.last_name}${","} ${deduction.first_name} ${
+                        deduction.middle_name
+                      }`}{" "}
+                    </td>
+                    <td class="px-6 py-4 capitalize">
+                      {formatter.format(deduction.monthly_salary)}
+                    </td>
+                    <td class="px-6 py-4">
+                      {formatter.format(deduction.sss_deduction)}
+                    </td>
+                    <td class="px-6 py-4">
+                      {formatter.format(deduction.philhealth_deduction)}
+                    </td>
+                    <td class=" px-6 py-4">
+                      {formatter.format(deduction.pagibig_deduction)}
+                    </td>
+                    <td class=" px-6 py-4">
+                      {formatter.format(
+                        parseFloat(deduction.pagibig_deduction) +
+                          parseFloat(deduction.philhealth_deduction) +
+                          parseFloat(deduction.sss_deduction)
+                      )}
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

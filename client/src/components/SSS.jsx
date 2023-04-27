@@ -201,7 +201,7 @@ const SSS = () => {
                     </td>
                     <td class="w-1/12 border border-gray-300">{`${
                       sss.employer_contribution_ec &&
-                      sss.employer_contribution_ec == 0
+                      sss.employer_contribution_ec === 0
                         ? "_"
                         : formatter.format(
                             parseFloat(sss.employer_contribution_ec) +
@@ -220,7 +220,7 @@ const SSS = () => {
                     </td>
                     <td class="w-1/12 border border-gray-300">
                       {sss.employer_contribution_mpf &&
-                      sss.employee_contribution_mpf == 0
+                      sss.employee_contribution_mpf === 0
                         ? "_"
                         : `${
                             parseFloat(sss.employer_contribution_mpf) +
