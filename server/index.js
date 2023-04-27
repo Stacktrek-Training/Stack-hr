@@ -664,6 +664,21 @@ app.put("/reports/:id", async (req, res) => {
   }
 });
 
+//insert attendance
+
+app.post("/attendance/", async (req, res) => {
+  try {
+    const { employee_id, time_in, time_out, working_hours } = req.body;
+    const insertAttendance = await pool.query(
+      `INSERT INTO "ATTENDANCE" (employee_id, time_in, time_out, working_hours)VALUES($1, $2, $3, $4) RETURNING *`,
+      [employee_id, time_in, time_out, working_hours]
+    );
+    res.json("data inserted");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 app.listen(4000, () => {
   console.log("Listening to port 4000");
 });
