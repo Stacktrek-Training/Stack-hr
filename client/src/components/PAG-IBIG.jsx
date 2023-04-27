@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./../components/style.css";
+import axios from "axios";
 // import ShowDescription from "../components/hide_desc";
 // import EditDeduction from "../components/edit_deduction";
 import Sidebar from "./sidebar";
@@ -14,7 +15,17 @@ const PAGIBIG = () => {
     currency: "PHP",
     minimumFractionDigits: 2,
   });
-
+  const [PAGIBIG, setPagibig] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/pag-ibig`)
+      .then((response) => {
+        setPagibig(response.data);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }, []);
   return (
     <div className="h-screen relative ">
       {" "}
@@ -85,21 +96,35 @@ const PAGIBIG = () => {
                 </tr>
               </thead>
               <tbody className="text-gray-900">
-                <tr className="border border-gray-300 ">
-                  <td className="border border-gray-300">1</td>
-                  <td className="w-1/5 px-6 py-4 capitalize border border-gray-300">
-                    ₱1,500 and below
-                  </td>
+                {PAGIBIG.map((pagibig, index) => (
+                  <tr
+                    key={pagibig.deduction_id}
+                    className="border border-gray-300 "
+                  >
+                    <td className="border border-gray-300">{index + 1}</td>
+                    <td className="w-1/5 px-6 py-4 capitalize border border-gray-300">
+                      {`${formatter.format(pagibig.salary_range_1)} ${"-"} ${
+                        pagibig.salary_range_2 > 1500
+                          ? "Above"
+                          : formatter.format(pagibig.salary_range_2)
+                      }`}
+                    </td>
 
-                  <td class="w-1/5 px-6 py-4 capitalize border border-gray-300">
-                    1%
-                  </td>
-                  <td class="w-1/5 border border-gray-300">1%</td>
-                  <td class="w-1/5 border border-gray-300 px-4">2%</td>
-                  <td class="w-1/5 border border-gray-300 px-4">
-                    <EditDeductionPagIbig />
-                  </td>
-                </tr>
+                    <td class="w-1/5 px-6 py-4 capitalize border border-gray-300">
+                      {`${pagibig.employee_contribution}${"%"}`}
+                    </td>
+                    <td class="w-1/5 border border-gray-300">{`${
+                      pagibig.employer_contribution
+                    }${"%"}`}</td>
+                    <td class="w-1/5 border border-gray-300 px-4">{`${
+                      parseFloat(pagibig.employee_contribution) +
+                      parseFloat(pagibig.employer_contribution)
+                    }${"%"}`}</td>
+                    <td class="w-1/5 border border-gray-300 px-4">
+                      <EditDeductionPagIbig pagibig={pagibig} />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

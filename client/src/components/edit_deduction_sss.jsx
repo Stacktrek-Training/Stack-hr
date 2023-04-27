@@ -41,10 +41,10 @@ const EditDeductionSSS = ({ sss }) => {
         salary_range_2: salary_range_2,
         employee_contribution_sss: employee_contribution_sss,
         employer_contribution_sss: employer_contribution_sss,
-        employee_contribution_ec,
-        employer_contribution_ec,
-        employee_contribution_mpf,
-        employer_contribution_mpf,
+        employee_contribution_ec: employee_contribution_ec,
+        employer_contribution_ec: employer_contribution_ec,
+        employee_contribution_mpf: employee_contribution_mpf,
+        employer_contribution_mpf: employer_contribution_mpf,
       })
       .then((response) => {
         editSSS(response.data);
@@ -223,7 +223,7 @@ const EditDeductionSSS = ({ sss }) => {
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
                     value={employee_contribution_mpf}
-                    onCanPlay={(e) => setEMployeeMPF(e.target.value)}
+                    onChange={(e) => setEMployeeMPF(e.target.value)}
                     required
                   />
                 </div>
