@@ -41,10 +41,10 @@ const EditDeductionSSS = ({ sss }) => {
         salary_range_2: salary_range_2,
         employee_contribution_sss: employee_contribution_sss,
         employer_contribution_sss: employer_contribution_sss,
-        employee_contribution_ec,
-        employer_contribution_ec,
-        employee_contribution_mpf,
-        employer_contribution_mpf,
+        employee_contribution_ec: employee_contribution_ec,
+        employer_contribution_ec: employer_contribution_ec,
+        employee_contribution_mpf: employee_contribution_mpf,
+        employer_contribution_mpf: employer_contribution_mpf,
       })
       .then((response) => {
         editSSS(response.data);
