@@ -2,21 +2,18 @@ import React, { useState } from "react";
 import axios from "axios";
 
 const AddEmployee = () => {
+  // Open the modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
-  const OnlyNumber = (event) => {
-    event.target.value = event.target.value.replace(/[^0-9]/gi, "");
-  };
-
+  // Close the Modal
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setIsDropdownOpen(!isDropdownOpen);
+  // Input only number
+  const OnlyNumber = (event) => {
+    event.target.value = event.target.value.replace(/[^0-9]/gi, "");
   };
 
   // for getting all employees
@@ -76,19 +73,6 @@ const AddEmployee = () => {
       });
     handleCloseModal();
   };
-  //delete employee
-
-  async function deleteEmp(id) {
-    try {
-      axios.delete(`http://localhost:4000/employee/${id}`).then((response) => {
-        console.log(response.data);
-        window.location.href = "/employee";
-      });
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
-
   return (
     <div className="flex w-full justify-between">
       <div class="flex items-center">

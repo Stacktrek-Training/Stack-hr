@@ -45,13 +45,13 @@ const PAGIBIG = () => {
               <thead className=" text-gray-700 font-semibold  uppercase">
                 <tr>
                   <th
-                    rowspan="3"
+                    rowspan="2  "
                     class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
                   >
                     #
                   </th>
                   <th
-                    rowspan="3"
+                    rowspan="2"
                     class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
                   >
                     Monthly Compensation
@@ -65,7 +65,7 @@ const PAGIBIG = () => {
                     Membership Savings (Contribution)
                   </th>
                   <th
-                    rowspan="3"
+                    rowspan="2"
                     class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
                   >
                     Button

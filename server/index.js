@@ -55,6 +55,7 @@ app.post("/employee", async (req, res) => {
       birthday,
     } = req.body;
     const insertEmployee = await pool.query(
+      // DATABASE COLUMN NAME
       `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,province,city,municipality,baranggay,zipcode,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,date_updated,gender,marital_status,birthday)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17, CURRENT_TIMESTAMP,null,$18,$19,$20) RETURNING *`,
       [
         first_name,
@@ -274,18 +275,10 @@ app.post("/philhealth/", async (req, res) => {
   try {
     const { salary_range_1, salary_range_2, monthly_total_contribution } =
       req.body;
-    const employee_contribution = monthly_total_contribution * 0.5;
-    const employer_contribution = monthly_total_contribution * 0.5;
 
     const insertPhilheath = await pool.query(
-      `INSERT INTO "PHILHEALTH_DEDUCTIONS" (salary_range_1, salary_range_2, employee_contribution, employer_contribution, monthly_total_contribution, date_created)VALUES($1,$2,$3,$4,$5,CURRENT_TIMESTAMP) RETURNING *`,
-      [
-        salary_range_1,
-        salary_range_2,
-        employee_contribution,
-        employer_contribution,
-        monthly_total_contribution,
-      ]
+      `INSERT INTO "PHILHEALTH_DEDUCTIONS" (salary_range_1, salary_range_2, monthly_total_contribution, date_created)VALUES($1,$2,$3,CURRENT_TIMESTAMP) RETURNING *`,
+      [salary_range_1, salary_range_2, monthly_total_contribution]
     );
     res.json(insertPhilheath.rows);
   } catch (error) {
@@ -308,18 +301,9 @@ app.put("/philhealth/:id", async (req, res) => {
     const { id } = req.params;
     const { salary_range_1, salary_range_2, monthly_total_contribution } =
       req.body;
-    const employee_contribution = monthly_total_contribution * 0.5;
-    const employer_contribution = monthly_total_contribution * 0.5;
     const updatePhilhealth = await pool.query(
-      `UPDATE "PHILHEALTH_DEDUCTIONS" SET salary_range_1 = $1, salary_range_2 = $2, monthly_total_contribution =$3, employee_contribution =$4, employer_contribution = $5, date_updated = CURRENT_TIMESTAMP WHERE deduction_id = $6`,
-      [
-        salary_range_1,
-        salary_range_2,
-        monthly_total_contribution,
-        employee_contribution,
-        employer_contribution,
-        id,
-      ]
+      `UPDATE "PHILHEALTH_DEDUCTIONS" SET salary_range_1 = $1, salary_range_2 = $2, monthly_total_contribution =$3, date_updated = CURRENT_TIMESTAMP WHERE deduction_id = $4`,
+      [salary_range_1, salary_range_2, monthly_total_contribution, id]
     );
     res.json("updated");
   } catch (error) {

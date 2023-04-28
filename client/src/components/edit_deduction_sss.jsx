@@ -159,10 +159,11 @@ const EditDeductionSSS = ({ sss }) => {
                     htmlFor="employee-name"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Social Security
+                    Social Security (%)
                   </label>
                   <input
                     onInput={OnlyNumber}
+                    maxLength={5}
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
@@ -174,6 +175,7 @@ const EditDeductionSSS = ({ sss }) => {
                 <div>
                   <input
                     onInput={OnlyNumber}
+                    maxLength={5}
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employer"
@@ -211,25 +213,24 @@ const EditDeductionSSS = ({ sss }) => {
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="employee-name"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Mandatory Provident Fund
+                  <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                    Mandatory Provident Fund (%)
                   </label>
                   <input
                     type="text"
                     onInput={OnlyNumber}
+                    maxLength={5}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
                     value={employee_contribution_mpf}
-                    onCanPlay={(e) => setEMployeeMPF(e.target.value)}
+                    onChange={(e) => setEMployeeMPF(e.target.value)}
                     required
                   />
                 </div>
                 <div>
                   <input
                     type="text"
+                    maxLength={5}
                     onInput={OnlyNumber}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employeer"
