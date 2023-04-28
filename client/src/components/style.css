@@ -103,7 +103,7 @@ body {
   color: #555;
 }
 
-/* circle {
+.user_circle {
   fill: none;
   stroke: url(#GradientColor);
   stroke-width: 20px;
@@ -112,11 +112,11 @@ body {
   animation: circleAnim 2s linear forwards;
 }
 
-svg {
+.user_svg {
   position: absolute;
   top: 0;
   left: 0;
-} */
+}
 
 @keyframes circleAnim {
   100% {

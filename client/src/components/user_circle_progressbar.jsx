@@ -12,6 +12,7 @@ function CircleProgressbar() {
         </div>
 
         <svg
+          class="user_svg"
           xmlns="http://www.w3.org/2000/svg"
           version="1.1"
           width="160px"
@@ -23,7 +24,13 @@ function CircleProgressbar() {
               <stop offset="100%" stop-color="#673ab7" />
             </linearGradient>
           </defs>
-          <circle cx="80" cy="80" r="70" stroke-linecap="round" />
+          <circle
+            class="user_circle"
+            cx="80"
+            cy="80"
+            r="70"
+            stroke-linecap="round"
+          />
         </svg>
       </div>
     </div>
