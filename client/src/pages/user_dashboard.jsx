@@ -1,13 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import "./../components/style.css";
 import ExpenseNavbar from "../components/expense_navbar";
 import CircleProgressbar from "../components/user_circle_progressbar";
-import AddNew from "../components/user_addnew";
+import ButtonAddNew from "../components/user_button_addNew";
+import AddNew from "./user_addnew";
 
 const User = () => {
   return (
     <div>
-      <ExpenseNavbar />
+      <div className="bg-white h-40"></div>
+      <div>
+        <ExpenseNavbar />
+      </div>
+      <div>
+        <CircleProgressbar />
+      </div>
+      <div>
+        <ButtonAddNew />
+      </div>
     </div>
   );
 };

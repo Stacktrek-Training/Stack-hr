@@ -1,6 +1,7 @@
 import React from "react";
 import "./../components/style.css";
 import "./../progressbar.js";
+
 function CircleProgressbar() {
   return (
     <div class="progressBody">
