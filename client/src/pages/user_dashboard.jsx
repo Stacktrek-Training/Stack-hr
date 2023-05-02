@@ -3,7 +3,6 @@ import "./../components/style.css";
 import ExpenseNavbar from "../components/expense_navbar";
 import CircleProgressbar from "../components/user_circle_progressbar";
 import ButtonAddNew from "../components/user_button_addNew";
-import AddNew from "./user_addnew";
 
 const User = () => {
   return (
