@@ -3,10 +3,6 @@
   padding: 0;
   font-family: Montserrat;
 }
-:root {
-  --background-color: #a89494;
-  --text-color: #110101;
-}
 
 body {
   background-color: var(--background-color);
@@ -71,6 +67,9 @@ body {
   margin-top: auto;
 }
 
+.Box {
+  width: 65rem;
+}
 .skill {
   width: 160px;
   height: 160px;
