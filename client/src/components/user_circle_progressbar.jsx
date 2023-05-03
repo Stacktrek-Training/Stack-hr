@@ -21,7 +21,7 @@ function CircleProgressbar() {
         >
           <defs>
             <linearGradient id="GradientColor">
-              <stop offset="0%" stop-color="#FD4F43" />
+              <stop offset="0%" stop-color="#5B9AD5" />
               <stop offset="100%" stop-color="#094BAC" />
             </linearGradient>
           </defs>

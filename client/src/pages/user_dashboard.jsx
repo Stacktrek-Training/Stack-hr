@@ -14,7 +14,8 @@ const User = () => {
       <div>
         <ContainerDashboard />
       </div>
-      <div className="flex justify-end">
+      <div className="bg-white h-20"></div>
+      <div className="flex justify-end mr-10">
         <ButtonAddNew />
       </div>
     </div>

@@ -24,9 +24,12 @@ function ContainerDashboard() {
                 <CircleProgressbar />
               </div>{" "}
               {/* Top 3 */}
-              <div className="p-10">
+              <div className="p-10 mt-5">
                 <div className="flex items-center">
                   <span className="mr-4 text-left">1. Food</span>
+                  <div className="w-24 h-4 bg-gray-300 rounded-full overflow-hidden">
+                    <div className="h-full bg-blue-500 rounded-full animate-pulse"></div>
+                  </div>
                 </div>
                 <div className="flex items-center mt-4">
                   <span className="mr-4 text-left">2. Transportation</span>
