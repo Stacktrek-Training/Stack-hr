@@ -70,6 +70,14 @@ body {
 .Box {
   width: 65rem;
 }
+
+.BoxMonth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .skill {
   width: 160px;
   height: 160px;
