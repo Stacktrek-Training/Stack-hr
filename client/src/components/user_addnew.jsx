@@ -14,11 +14,29 @@ function AddNew({ visible, onClose }) {
       onClick={handleOnClose}
       className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
     >
-      <div className="bg-white p-2 rounded">
+      <div className="bg-white p-2 rounded relative">
+        {/* Close button */}
+        <button className="absolute top-0 right-0 m-2" onClick={onClose}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+
         <div className="bg-white p-2 rounded">
           <div className="flex flex-col md:flex-row md:items-center">
             {/* Date picker */}
-            <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2">
+            <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-10">
               <input
                 type="date"
                 className="p-2 rounded border-gray-300 w-full"
@@ -28,18 +46,8 @@ function AddNew({ visible, onClose }) {
             {/* Dropdown */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mx-2">
               <select className="p-2 rounded border-gray-300 w-full">
-                <option value="january">January</option>
-                <option value="february">February</option>
-                <option value="march">March</option>
-                <option value="april">April</option>
-                <option value="may">May</option>
-                <option value="june">June</option>
-                <option value="july">July</option>
-                <option value="august">August</option>
-                <option value="september">September</option>
-                <option value="october">October</option>
-                <option value="november">November</option>
-                <option value="december">December</option>
+                <option value="january">Transportation</option>
+                <option value="february">Food</option>
               </select>
             </div>
 

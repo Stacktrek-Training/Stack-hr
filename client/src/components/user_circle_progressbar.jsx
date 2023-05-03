@@ -4,8 +4,8 @@ import "./../progressbar.js";
 
 function CircleProgressbar() {
   return (
-    <div class="progressBody">
-      <div class="skill">
+    <div class="progressBody block py-7 px-5">
+      <div class="skill mb-5 ">
         <div className="outer">
           <div className="inner">
             <div id="number"></div>
@@ -21,8 +21,8 @@ function CircleProgressbar() {
         >
           <defs>
             <linearGradient id="GradientColor">
-              <stop offset="0%" stop-color="#e91e63" />
-              <stop offset="100%" stop-color="#673ab7" />
+              <stop offset="0%" stop-color="#FD4F43" />
+              <stop offset="100%" stop-color="#094BAC" />
             </linearGradient>
           </defs>
           <circle
@@ -33,6 +33,10 @@ function CircleProgressbar() {
             stroke-linecap="round"
           />
         </svg>
+      </div>
+      <div className="text-center">
+        {" "}
+        <h1> Reimbursed(monthly)/Limmit</h1>{" "}
       </div>
     </div>
   );

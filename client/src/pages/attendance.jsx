@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./../components/style.css";
 import axios from "axios";
-import Sidebar from "../components/sidebar";
+import Sidebar2 from "../components/sidebar2";
 import Navbar from "../components/navbar";
 
 const Attendance = () => {
@@ -80,8 +80,8 @@ const Attendance = () => {
       {/* Navbar */}
       <Navbar />
       <div className="flex h-screen bg-gray-200 m-0 screen:h-screen overflow-auto screen:max-w-screen">
-        {/* Sidebar */}
-        <Sidebar />
+        {/* Sidebar2 */}
+        <Sidebar2 />
         {/* Searchbar */}
         <div className="flex-1 p-12 mt-20 ">
           <div class="flex items-center">

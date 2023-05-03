@@ -75,7 +75,7 @@ const ExpenseNavbar = () => {
         </div>
         {/* Menu sidebar */}
         {showSidebar && (
-          <div className="md:hidden bg-white py-2 px-4">
+          <div className="md:hidden  bg-white py-2 px-4">
             <a
               href="#"
               className="block text-gray-700 hover:text-gray-900 mb-2"

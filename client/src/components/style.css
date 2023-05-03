@@ -3,10 +3,6 @@
   padding: 0;
   font-family: Montserrat;
 }
-:root {
-  --background-color: #a89494;
-  --text-color: #110101;
-}
 
 body {
   background-color: var(--background-color);
@@ -69,6 +65,17 @@ body {
   align-items: center;
   justify-content: center;
   margin-top: auto;
+}
+
+.Box {
+  width: 65rem;
+}
+
+.BoxMonth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .skill {
