@@ -62,11 +62,11 @@ const Salaries = () => {
                   <th scope="col" class="px-6 py-3">
                     Rate per day
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  {/* <th scope="col" class="px-6 py-3">
                     Status
-                  </th>
+                  </th> */}
                   <th scope="col" class="px-6 py-3">
-                    Buttons
+                    Action
                   </th>
                 </tr>
               </thead>
@@ -90,10 +90,10 @@ const Salaries = () => {
                       <td class="px-6 py-4">
                         {formatter.format(salary.salary)}
                       </td>
-                      <td class="px-6 py-4">
+                      {/* <td class="px-6 py-4">
                         {" "}
                         <StatusSalaries salaries={salary} />
-                      </td>
+                      </td> */}
                       <td class=" px-6 py-4">
                         <EditSalary salaries={salary} />
                       </td>

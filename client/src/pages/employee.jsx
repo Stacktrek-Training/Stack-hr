@@ -55,7 +55,7 @@ const Employee = () => {
                     Contact
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Buttons
+                    Action
                   </th>
                 </tr>
               </thead>
@@ -82,7 +82,7 @@ const Employee = () => {
                       {employee.zipcode})
                     </td>
                     <td class="px-6 py-4">{employee.mobile_number}</td>
-                    <td class=" py-4 px-2 flex gap-2">
+                    <td class=" py-4 px-2 flex gap-2 text-center">
                       <ViewEmployee employee={employee} />
                       <EditEmployee employee={employee} />
                       <Delete_Employee employee={employee} />

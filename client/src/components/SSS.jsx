@@ -89,7 +89,7 @@ const SSS = () => {
                     rowspan="3"
                     class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
                   >
-                    Button
+                    Action
                   </th>
                 </tr>
                 <tr>
