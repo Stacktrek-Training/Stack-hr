@@ -16,6 +16,7 @@ const SSS = () => {
     minimumFractionDigits: 2,
   });
 
+  // fetch data in database
   const [SSS, setSSS] = useState([]);
 
   useEffect(() => {
@@ -88,7 +89,7 @@ const SSS = () => {
                     rowspan="3"
                     class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
                   >
-                    Button
+                    Action
                   </th>
                 </tr>
                 <tr>
@@ -124,19 +125,10 @@ const SSS = () => {
 
                 <tr>
                   <th scope="col" class="w-1/12 border border-gray-300">
-                    ER
+                    ER (%)
                   </th>
                   <th scope="col" class="w-1/12 border border-gray-300">
-                    EE
-                  </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
-                    TOTAL
-                  </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
-                    ER
-                  </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
-                    EE
+                    EE (%)
                   </th>
                   <th scope="col" class="w-1/12 border border-gray-300">
                     TOTAL
@@ -146,6 +138,15 @@ const SSS = () => {
                   </th>
                   <th scope="col" class="w-1/12 border border-gray-300">
                     EE
+                  </th>
+                  <th scope="col" class="w-1/12 border border-gray-300">
+                    TOTAL
+                  </th>
+                  <th scope="col" class="w-1/12 border border-gray-300">
+                    ER (%)
+                  </th>
+                  <th scope="col" class="w-1/12 border border-gray-300">
+                    EE (%)
                   </th>
                   <th scope="col" class="w-1/12 border border-gray-300">
                     TOTAL
@@ -201,7 +202,7 @@ const SSS = () => {
                     </td>
                     <td class="w-1/12 border border-gray-300">{`${
                       sss.employer_contribution_ec &&
-                      sss.employer_contribution_ec === 0
+                      sss.employee_contribution_ec === 0
                         ? "_"
                         : formatter.format(
                             parseFloat(sss.employer_contribution_ec) +

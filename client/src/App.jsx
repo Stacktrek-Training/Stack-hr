@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Dashboard from "./pages/dashboard";
 import Employee from "./pages/employee";
@@ -17,6 +16,7 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
+        {/* DEFUALT PATH */}
         <Route exact path="/">
           <Dashboard />
         </Route>

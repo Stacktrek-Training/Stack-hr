@@ -4,10 +4,6 @@
   font-family: Montserrat;
 }
 
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
 .Table {
   z-index: 0;
   max-height: 60vh;

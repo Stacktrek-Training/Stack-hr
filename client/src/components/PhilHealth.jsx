@@ -15,6 +15,7 @@ const PhilHealth = () => {
     currency: "PHP",
     minimumFractionDigits: 2,
   });
+  // fetch all the data in database
   const [philhealths, setPhilhealth] = useState([]);
   useEffect(() => {
     axios
@@ -54,7 +55,7 @@ const PhilHealth = () => {
                     Month Basic Salary
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Monthly Premium
+                    Monthly Premium (%)
                   </th>
                   <th scope="col" class="px-6 py-3">
                     Employee Share (%)
@@ -63,7 +64,7 @@ const PhilHealth = () => {
                     Employer Share (%)
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Button
+                    Action
                   </th>
                 </tr>
               </thead>
