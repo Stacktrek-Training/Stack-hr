@@ -9,7 +9,7 @@ export default {
   theme: {
     extend: {},
     screens: {
-      screen: { min: "768", max: "5120px" },
+      small: { min: "300", max: "640" },
     },
   },
   plugins: [require("flowbite/plugin"), require("tw-elements/dist/plugin.cjs")],

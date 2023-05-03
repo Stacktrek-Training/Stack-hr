@@ -165,6 +165,55 @@ app.delete("/employee/:id", async (req, res) => {
 });
 //end of employee
 
+//job roles
+//create job role
+app.post("/jobroles", async (req, res) => {
+  try {
+    const { job_title } = req.body;
+    const createJobrole = await pool.query(
+      `INSERT INTO "JOB_ROLES" (job_title, date_created) VALUES ($1,CURRENT_TIMESTAMP) RETURNING *`,
+      [job_title]
+    );
+    res.json(createJobrole.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//read job role
+app.get("/jobroles", async (req, res) => {
+  try {
+    const getJobroles = await pool.query(`SELECT * FROM "JOB_ROLES"`);
+    res.json(getJobroles.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//update jobrole
+
+app.put("/jobroles/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { job_title } = req.body;
+    const updataJobrole = await pool.query(
+      `UPDATE "JOB_ROLES" SET job_title = $1, date_updated = CURRENT_TIMESTAMP WHERE job_role_id = $2`,
+      [job_title, id]
+    );
+    res.json("data updated");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//delete jobrole
+app.delete("/jobroles/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query(`DELETE FROM "JOB_ROLES" WHERE job_role_id = $1`, [id]);
+    res.json("data deleted");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 //salaries
 
 //get data in employees that are not present in salaries
@@ -261,20 +310,6 @@ app.get("/deductions", async (req, res) => {
   }
 });
 //insert deduction
-
-// app.post("/deductions/", async (req, res) => {
-//   try {
-//     const { employee_id,monthly_salary } = req.body;
-//     const insertDeduction = await pool.query(
-//       `INSERT INTO "DEDUCTIONS" (employee_id,monthly_salary,date_created)VALUES($1,$2,CURRENT_TIMESTAMP) RETURNING *`,
-//       [employee_id,monthly_salary]
-//     );
-//     res.json("data inserted");
-//   } catch (error) {
-//     console.error(error.message);
-//   }
-// });
-
 app.post("/deductions/", async (req, res) => {
   try {
     const { employee_id } = req.body;
@@ -775,6 +810,20 @@ app.post("/attendance/", async (req, res) => {
     res.json("data inserted");
   } catch (error) {
     console.error(error.message);
+  }
+});
+
+app.get("/api/cities/:country", async (req, res) => {
+  try {
+    const { country } = req.params;
+    const { rows } = await pool.query(
+      "SELECT DISTINCT city FROM addresses WHERE country = $1 ORDER BY city",
+      [country]
+    );
+    res.json(rows);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Server error" });
   }
 });
 

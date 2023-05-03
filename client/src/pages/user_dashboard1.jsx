@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import profilePicture from "./../assets/profilepic.png";
-import ExpenseNavbar from "../components/expense_navbar";
 
 const User1 = () => {
   const [showSidebar, setShowSidebar] = useState(false);
