@@ -6,7 +6,6 @@ import ContainerDashboard from "../components/user_container_dashboard";
 
 const User = () => (
   <div>
-    <div className="bg-white h-40"></div>
     <div>
       <div className="bg-white h-40"></div>
       <div>
@@ -19,12 +18,6 @@ const User = () => (
       <div className="flex justify-end mr-10">
         <ButtonAddNew />
       </div>
-    </div>
-    <div>
-      <CircleProgressbar />
-    </div>
-    <div>
-      <ButtonAddNew />
     </div>
   </div>
 );

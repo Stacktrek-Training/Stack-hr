@@ -36,7 +36,7 @@ function CircleProgressbar() {
       </div>
       <div className="text-center">
         {" "}
-        <h1> Reimbursed(monthly)/Limmit</h1>{" "}
+        <h1> Reimbursed(monthly)/Limit</h1>{" "}
       </div>
     </div>
   );
