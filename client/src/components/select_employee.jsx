@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useState, useEffect } from "react";
 
 const SelectEmployee = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -7,6 +8,31 @@ const SelectEmployee = () => {
   };
   const handleModalClose = () => {
     setIsModalOpen(false);
+  };
+  const [employees, setEmployee] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/emp`)
+      .then((response) => {
+        setEmployee(response.data);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }, []);
+  const [emp, setEmp] = useState("");
+
+  const handleSave = () => {
+    axios
+      .post(`http://localhost:4000/deductions`, {
+        employee_id: emp,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
   };
 
   return (
@@ -89,7 +115,10 @@ const SelectEmployee = () => {
               <h3 class="mb-4 text-xl  font-bold text-gray-900 dark:text-white">
                 Select Employee
               </h3>
-              <form class="space-y flex flex-wrap gap-1.5 flex-col  ">
+              <form
+                class="space-y flex flex-wrap gap-1.5 flex-col  "
+                onSubmit={handleSave}
+              >
                 <div>
                   <label
                     htmlFor="employee-name"
@@ -100,15 +129,22 @@ const SelectEmployee = () => {
                   <select
                     id="employee-name"
                     name="employee-name"
+                    value={emp}
+                    onChange={(e) => setEmp(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     required
                   >
                     <option value="" disabled selected hidden>
                       Select Employee
                     </option>
-                    <option value="employee1">Employee 1</option>
-                    <option value="employee2">Employee 2</option>
-                    <option value="employee3">Employee 3</option>
+                    {employees.map((employee) => (
+                      <option
+                        value={employee.employee_id}
+                        key={employee.employee_id}
+                      >{`${employee.last_name}${","}${employee.first_name} ${
+                        employee.middle_name
+                      }`}</option>
+                    ))}
                   </select>
                 </div>
 

@@ -7,6 +7,7 @@ import Navbar from "./navbar";
 import ShowTable from "./show_table";
 import AddDeductionPhilHealth from "./add_deduction_philhealth";
 import EditDeductionPhilHealth from "./edit_deduction_philhealth";
+import axios from "axios";
 
 const PhilHealth = () => {
   const formatter = new Intl.NumberFormat("en-PH", {
@@ -14,6 +15,18 @@ const PhilHealth = () => {
     currency: "PHP",
     minimumFractionDigits: 2,
   });
+  // fetch all the data in database
+  const [philhealths, setPhilhealth] = useState([]);
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000/philhealth`)
+      .then((response) => {
+        setPhilhealth(response.data);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  }, []);
 
   return (
     <div className="h-screen relative">
@@ -42,7 +55,7 @@ const PhilHealth = () => {
                     Month Basic Salary
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Monthly Premium
+                    Monthly Premium (%)
                   </th>
                   <th scope="col" class="px-6 py-3">
                     Employee Share (%)
@@ -51,27 +64,44 @@ const PhilHealth = () => {
                     Employer Share (%)
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Button
+                    Action
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                {philhealths.map((philhealth, index) => (
+                  <tr
+                    key={philhealth.deduction_id}
+                    class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                   >
-                    1
-                  </th>
-                  <td class="px-6 py-4 capitalize">Sunny Virgo</td>
-                  <td class="px-6 py-4">3000</td>
+                    <th
+                      scope="row"
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {index + 1}
+                    </th>
+                    <td class="px-6 py-4 capitalize">
+                      {`${formatter.format(philhealth.salary_range_1)}${"-"}${
+                        philhealth.salary_range_2 > 80000
+                          ? "Above"
+                          : formatter.format(philhealth.salary_range_2)
+                      }`}
+                    </td>
+                    <td class="px-6 py-4">
+                      {`${philhealth.monthly_total_contribution}${"%"}`}
+                    </td>
 
-                  <td class="px-6 py-4">100</td>
-                  <td class=" px-6 py-4">1000</td>
-                  <td class=" px-6 py-4">
-                    <EditDeductionPhilHealth />
-                  </td>
-                </tr>
+                    <td class="px-6 py-4">{`${parseFloat(
+                      philhealth.monthly_total_contribution * 0.5
+                    )}${"%"}`}</td>
+                    <td class=" px-6 py-4">{`${parseFloat(
+                      philhealth.monthly_total_contribution * 0.5
+                    )}${"%"}`}</td>
+                    <td class=" px-6 py-4">
+                      <EditDeductionPhilHealth philhealth={philhealth} />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

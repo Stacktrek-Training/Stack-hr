@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Dashboard from "./pages/dashboard";
 import Employee from "./pages/employee";
@@ -12,10 +11,12 @@ import PhilHealth from "./components/PhilHealth";
 import SSS from "./components/SSS";
 import PAGIBIG from "./components/PAG-IBIG";
 
+
 function App() {
   return (
     <BrowserRouter>
       <Switch>
+        {/* DEFUALT PATH */}
         <Route exact path="/">
           <Dashboard />
         </Route>

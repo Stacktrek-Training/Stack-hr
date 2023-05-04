@@ -24,8 +24,8 @@ const AddSalaries = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  const [employee_id, setEmployeeId] = useState();
-  const [salary, setSalary] = useState();
+  const [employee_id, setEmployeeId] = useState("");
+  const [salary, setSalary] = useState("");
 
   const handleSave = () => {
     axios
