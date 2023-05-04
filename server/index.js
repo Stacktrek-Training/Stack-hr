@@ -798,21 +798,6 @@ app.put("/reports/:id", async (req, res) => {
   }
 });
 
-//insert attendance
-
-app.post("/attendance/", async (req, res) => {
-  try {
-    const { employee_id, time_in, time_out, working_hours } = req.body;
-    const insertAttendance = await pool.query(
-      `INSERT INTO "ATTENDANCE" (employee_id, time_in, time_out, working_hours)VALUES($1, $2, $3, $4) RETURNING *`,
-      [employee_id, time_in, time_out, working_hours]
-    );
-    res.json("data inserted");
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-
 app.get("/api/cities/:country", async (req, res) => {
   try {
     const { country } = req.params;
@@ -824,6 +809,56 @@ app.get("/api/cities/:country", async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Server error" });
+  }
+});
+
+// Attendance Time In
+app.post("/api/attendance/in", async (req, res) => {
+  try {
+    const { employeeId } = req.body;
+    const query =
+      "INSERT INTO attendance (employee_id, time_in) VALUES ($1, NOW())";
+    const values = [employeeId];
+    await pool.query(query, values);
+    res.send({ timeIn: new Date() });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Attendance Time Out
+app.put("/api/attendance/out", async (req, res) => {
+  try {
+    const { employeeId } = req.body;
+    const query =
+      "UPDATE attendance SET time_out = NOW() WHERE employee_id = $1";
+    const values = [employeeId];
+    const result = await pool.query(query, values);
+
+    if (result.rowCount === 0) {
+      return res.status(400).send("Employee has not timed in yet today.");
+    }
+
+    res.send({ timeOut: new Date() });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+// Attendance
+app.post("/api/attendance", async (req, res) => {
+  try {
+    const { employeeId, timeIn, timeOut, workingHours } = req.body;
+    const query =
+      "INSERT INTO attendance (employee_id, time_in, time_out, working_hours) VALUES ($1, $2, $3, $4)";
+    const values = [employeeId, timeIn, timeOut, workingHours];
+    await pool.query(query, values);
+    res.send("Attendance recorded successfully.");
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
   }
 });
 
