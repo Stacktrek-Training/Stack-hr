@@ -47,7 +47,6 @@ const EditEmployee = ({ employee }) => {
   );
 
   const [id, setId] = useState(employee.employee_id);
-  const utcBirthday = new Date(birthday).toISOString();
   const editEmp = async () => {
     const response = await axios
       .put(`http://localhost:4000/employee/${id}`, {
