@@ -5,12 +5,15 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
 //for employee
 
 //get all employees
 app.get("/employee", async (req, res) => {
   try {
-    const getEmployee = await pool.query(`SELECT * FROM "EMPLOYEES"`);
+    const getEmployee = await pool.query(
+      `SELECT e.*, j.job_title, j.job_role_id FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id`
+    );
     res.json(getEmployee.rows);
   } catch (error) {
     console.error(error.message);
@@ -54,9 +57,52 @@ app.post("/employee", async (req, res) => {
       marital_status,
       birthday,
     } = req.body;
+
+    //for generating password
+
+    const crypto = require("crypto");
+
+    function generateRandomPassword() {
+      // Generate a random password with 2 letters and 1 symbol
+      const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const symbols = "!@#$%^&*()_-+=";
+      let password = "";
+      password += letters[Math.floor(Math.random() * letters.length)];
+      password += letters[Math.floor(Math.random() * letters.length)];
+      password += symbols[Math.floor(Math.random() * symbols.length)];
+      for (let i = 0; i < 5; i++) {
+        password += letters[Math.floor(Math.random() * letters.length)];
+      }
+      // Shuffle the password characters randomly
+      password = password
+        .split("")
+        .sort(() => Math.random() - 0.5)
+        .join("");
+      return password;
+    }
+
+    const password = generateRandomPassword();
+
+    // Get the latest employee number from the database
+    const { rows } = await pool.query(
+      `SELECT employee_number FROM "EMPLOYEES" ORDER BY employee_id DESC LIMIT 1`
+    );
+    let code = "";
+    if (rows.length > 0) {
+      const latestEmployeeNumber = rows[0].employee_number;
+      if (latestEmployeeNumber) {
+        const counter = parseInt(latestEmployeeNumber.substring(3), 10);
+        code = "ST-" + ("0000" + (counter + 1)).slice(-4);
+      } else {
+        code = "ST-0001";
+      }
+    } else {
+      code = "ST-0001";
+    }
+
     const insertEmployee = await pool.query(
       // DATABASE COLUMN NAME
-      `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,province,city,municipality,baranggay,zipcode,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,date_updated,gender,marital_status,birthday)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17, CURRENT_TIMESTAMP,null,$18,$19,$20) RETURNING *`,
+      `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,province,city,municipality,baranggay,zipcode,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,date_updated,gender,marital_status,birthday,employee_number,password)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17, CURRENT_TIMESTAMP,null,$18,$19,$20,$21,$22) RETURNING *`,
       [
         first_name,
         middle_name,
@@ -78,6 +124,8 @@ app.post("/employee", async (req, res) => {
         gender,
         marital_status,
         birthday,
+        code,
+        password,
       ]
     );
     res.json("Inserted data");
