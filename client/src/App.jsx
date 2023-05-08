@@ -10,7 +10,7 @@ import Table from "./components/Table";
 import PhilHealth from "./components/PhilHealth";
 import SSS from "./components/SSS";
 import PAGIBIG from "./components/PAG-IBIG";
-
+import JobRoles from "./pages/jobroles";
 
 function App() {
   return (
@@ -49,6 +49,9 @@ function App() {
         </Route>
         <Route path="/pag-ibig">
           <PAGIBIG />
+        </Route>
+        <Route path="/jobroles">
+          <JobRoles />
         </Route>
       </Switch>
     </BrowserRouter>
