@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./../components/style.css";
 import axios from "axios";
+import Sidebar2 from "../components/sidebar2";
+import Navbar from "../components/navbar";
 
 function Attendance() {
   const [employeeId, setEmployeeId] = useState("");
@@ -69,42 +71,45 @@ function Attendance() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gray-100">
-      <div className="w-full max-w-md">
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 font-bold mb-2 "
-              htmlFor="employeeId"
-            >
-              Employee ID
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="employeeId"
-              type="text"
-              placeholder="Enter Employee ID"
-              value={employeeId}
-              onChange={(e) => setEmployeeId(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="bg-green-400 hover:bg-green-500 hover:text-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-              onClick={handleTimeIn}
-            >
-              Time In
-            </button>
-            <button
-              className="bg-red-500 hover:bg-red-600 hover:text-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-              onClick={handleTimeOut}
-            >
-              Time Out
-            </button>
-          </div>
-        </form>
+    <div className="h-screen relative">
+      {" "}
+      {/* Navbar */}
+      <Navbar />
+      <div className="flex h-screen bg-gray-200 m-0">
+        {/* Sidebar */}
+        <Sidebar2 />
+        <div class="mx-auto w-[400px] mt-40">
+          <form class="flex-1 flex-wrap flex-col p-20">
+            <div className="mb-4">
+              <input
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                id="employeeId"
+                type="text"
+                placeholder="Enter your ID"
+                value={employeeId}
+                onChange={(e) => setEmployeeId(e.target.value)}
+                style={{ fontSize: "24px" }}
+              />
+            </div>
+
+            <div className="flex items-center justify-between">
+              <button
+                className="bg-green-400 hover:bg-green-500 hover:text-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-lg"
+                type="submit"
+                onClick={handleTimeIn}
+              >
+                Time In
+              </button>
+              <button
+                className="bg-red-500 hover:bg-red-600 hover:text-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-lg"
+                type="submit"
+                onClick={handleTimeOut}
+              >
+                Time Out
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
