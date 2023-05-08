@@ -16,7 +16,10 @@ function AddNew({ visible, onClose }) {
     >
       <div className="bg-white p-2 rounded relative">
         {/* Close button */}
-        <button className="absolute top-0 right-0 m-2" onClick={onClose}>
+        <button
+          className="absolute top-0 right-0 m-2 shadow-sm"
+          onClick={onClose}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -36,7 +39,10 @@ function AddNew({ visible, onClose }) {
         <div className="bg-white p-2 rounded">
           <div className="flex flex-col md:flex-row md:items-center">
             {/* Date picker */}
-            <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-10">
+            <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-5">
+              <label class="block mb-2 font-bold" for="date">
+                Choose a date:
+              </label>
               <input
                 type="date"
                 className="p-2 rounded border-gray-300 w-full"
@@ -45,6 +51,9 @@ function AddNew({ visible, onClose }) {
 
             {/* Dropdown */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mx-2">
+              <label class="block mb-2 font-bold" for="date">
+                Choose a Category:
+              </label>
               <select className="p-2 rounded border-gray-300 w-full">
                 <option value="january">Transportation</option>
                 <option value="february">Food</option>
@@ -53,31 +62,31 @@ function AddNew({ visible, onClose }) {
 
             {/* Amount input */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mx-2 relative">
+              <label class="block mb-2 font-bold" for="date">
+                Enter Amount:
+              </label>
               <input
                 type="number"
                 className="p-2 rounded border-gray-300 w-full"
                 placeholder="Enter amount"
               />
-              <span className="absolute top-2 left-2 opacity-50 text-gray-500">
-                Amount
-              </span>
             </div>
           </div>
 
           {/* Upload image */}
-          <div className="flex flex-col md:flex-row md:items-center m-1 md:m-2">
-            <input
-              type="file"
-              className="p-2 rounded border-gray-300 mb-2 md:mb-0 md:mr-2"
-            />
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Upload
-            </button>
-          </div>
+
+          <label class="block mb-2 font-bold" for="date">
+            Upload Receipt
+          </label>
+          <input
+            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            id="file_input"
+            type="file"
+          />
 
           {/* Add new button */}
           <div className="flex justify-end m-1 md:m-2">
-            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+            <button class="bg-gradient-to-br from-orange-400 via-f0b673 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-800 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
               Add New
             </button>
           </div>

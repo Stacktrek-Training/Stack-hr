@@ -55,7 +55,7 @@ const ExpenseNavbar = () => {
                 />
               </svg>
             </button>
-          </div>
+          </div> 
           {/* Right side: clickable items */}
           <div className="hidden md:flex items-center">
             <a

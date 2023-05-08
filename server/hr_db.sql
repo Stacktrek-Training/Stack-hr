@@ -3,7 +3,7 @@ CREATE DATABASE "STACK-HR";
 
 CREATE TABLE "EMPLOYEES"(employee_id SERIAL PRIMARY KEY, first_name VARCHAR, middle_name VARCHAR, last_name VARCHAR, province VARCHAR, city VARCHAR, municipality VARCHAR, baranggay VARCHAR, zipcode VARCHAR,mobile_number VARCHAR, telephone_number VARCHAR, work_email VARCHAR, personal_email VARCHAR,emergency_contact_person VARCHAR, emergency_contact_email VARCHAR,emergency_contact_number VARCHAR, relationship VARCHAR, job_title VARCHAR, date_created DATE, date_updated DATE, status INTEGER DEFAULT 1, gender VARCHAR, marital_status VARCHAR, birthday DATE);
 
-CREATE TABLE "ATTENDANCE" (attendance_id SERIAL PRIMARY KEY, time_in TIMESTAMP, time_out TIMESTAMP, working_hours DECIMAL, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id));
+CREATE TABLE attendance ( attendance_id SERIAL PRIMARY KEY, time_in TIMESTAMP NOT NULL, time_out TIMESTAMP, working_hours INTERVAL, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id));
 
 CREATE TABLE "SALARIES" (salary_id SERIAL PRIMARY KEY, salary DECIMAL, status INTEGER, date_created DATE, date_updated DATE, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id));
 
