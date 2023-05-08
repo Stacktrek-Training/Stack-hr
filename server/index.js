@@ -12,7 +12,7 @@ app.use(express.json());
 app.get("/employee", async (req, res) => {
   try {
     const getEmployee = await pool.query(
-      `SELECT e.*, j.job_title, j.job_role_id FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id`
+      `SELECT e.*, j.job_title, j.job_role_id FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id ORDER BY employee_id ASC`
     );
     res.json(getEmployee.rows);
   } catch (error) {
