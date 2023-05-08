@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const EditEmployee = ({ employee }) => {
@@ -39,7 +39,7 @@ const EditEmployee = ({ employee }) => {
     employee.emergency_contact_number
   );
   const [relationship, setRelationship] = useState(employee.relationship);
-  const [job_title, setJobTitle] = useState(employee.job_title);
+  const [job_title, setJobTitle] = useState(employee.job_role_id);
   const [gender, setGender] = useState(employee.gender);
   const [marital_status, setMaritalStatus] = useState(employee.marital_status);
   const [birthday, setBirthday] = useState(
@@ -79,6 +79,17 @@ const EditEmployee = ({ employee }) => {
         console.error(error.message);
       });
   };
+
+  const [job_roles, setJobRoles] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/jobroles")
+      .then((response) => {
+        setJobRoles(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <>
@@ -271,14 +282,23 @@ const EditEmployee = ({ employee }) => {
                     {" "}
                     Job roles
                   </label>
-                  <input
-                    type="text"
+                  <select
+                    id="Job Roles"
                     value={job_title}
                     onChange={(e) => setJobTitle(e.target.value)}
-                    placeholder="Job roles "
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    required
-                  />
+                  >
+                    <option value="" disabled selected hidden>
+                      Job Roles
+                    </option>
+                    {job_roles.map((job_role) => (
+                      <option
+                        className="capitalize"
+                        value={job_role.job_role_id}
+                        key={job_role.job_role_id}
+                      >{`${job_role.job_title}`}</option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
