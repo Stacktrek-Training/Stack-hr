@@ -14,6 +14,7 @@ const EditEmployee = ({ employee }) => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+
   const [first_name, setFirstName] = useState(employee.first_name);
   const [middle_name, setMiddleName] = useState(employee.middle_name);
   const [last_name, setLastName] = useState(employee.last_name);
@@ -41,7 +42,10 @@ const EditEmployee = ({ employee }) => {
   const [job_title, setJobTitle] = useState(employee.job_title);
   const [gender, setGender] = useState(employee.gender);
   const [marital_status, setMaritalStatus] = useState(employee.marital_status);
-  const [birthday, setBirthday] = useState(employee.birthday);
+  const [birthday, setBirthday] = useState(
+    new Date(employee.birthday).toLocaleDateString("en-CA")
+  );
+
   const [id, setId] = useState(employee.employee_id);
   const editEmp = async () => {
     const response = await axios
@@ -200,7 +204,6 @@ const EditEmployee = ({ employee }) => {
                     value={birthday}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="birthday"
-                    required
                     onChange={(e) => setBirthday(e.target.value)}
                   />
                 </div>

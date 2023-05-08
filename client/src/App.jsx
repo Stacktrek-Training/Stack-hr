@@ -9,8 +9,12 @@ import Table from "./components/Table";
 import PhilHealth from "./components/PhilHealth";
 import SSS from "./components/SSS";
 import PAGIBIG from "./components/PAG-IBIG";
+<<<<<<< HEAD
 import EmployeeDashboard from "./pages/employee_dashboard";
 import Attendance from "./pages/employee_attendance";
+=======
+import JobRoles from "./pages/jobroles";
+>>>>>>> d649c2d85ba7d0eeb3abb30a9a7fa4b0b286840e
 
 function App() {
   return (
@@ -52,6 +56,9 @@ function App() {
         </Route>
         <Route path="/pag-ibig">
           <PAGIBIG />
+        </Route>
+        <Route path="/jobroles">
+          <JobRoles />
         </Route>
       </Switch>
     </BrowserRouter>
