@@ -70,7 +70,7 @@ const EditEmployee = ({ employee }) => {
         job_title: job_title,
         gender: gender,
         marital_status: marital_status,
-        birthday: utcBirthday,
+        birthday: birthday,
       })
 
       .then((response) => {
