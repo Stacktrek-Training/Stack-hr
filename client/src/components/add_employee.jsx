@@ -39,6 +39,7 @@ const AddEmployee = () => {
   const [gender, setGender] = useState("");
   const [marital_status, setMaritalStatus] = useState("");
   const [birthday, setBirthday] = useState("");
+  
 
   const handleSave = () => {
     axios
@@ -71,6 +72,17 @@ const AddEmployee = () => {
       .catch((error) => {
         console.error(error.message);
       });
+
+    const [job_title, setJobroles] = useState([]);
+    // get the data in jobroles
+    useEffect(() => {
+      axios
+        .get("http://localhost:4000/jobroles")
+        .then((response) => {
+          setJobrole(response.data);
+        })
+        .catch((error) => console.error(error));
+    }, []);
   };
 
   const [job_roles, setJobRoles] = useState([]);

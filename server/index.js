@@ -726,6 +726,141 @@ app.delete("/categories/:id", async (req, res) => {
   }
 });
 
+
+//get employee_sample 
+app.get("/login/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getEmp = await pool.query(
+      `SELECT * FROM "LOGIN" WHERE employee_id=$1`,
+      [id]
+    );
+    res.json(getEmp.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+//add employee data
+app.post("/login", async (req, res) => {
+  try {
+    const {
+      employee_name,
+      username,
+      password,
+     
+    } = req.body;
+    const insertEmp = await pool.query(
+      // DATABASE COLUMN NAME
+      `INSERT INTO "LOGIN"(employee_name,username,password)VALUES($1,$2,$3) RETURNING *`,
+      [
+        employee_name,
+        username,
+        password,
+      
+       
+      ]
+    );
+    res.json("Inserted data");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+
+//get expense id
+app.get("/expense/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getEXP = await pool.query(
+      `SELECT * FROM "Expenses" WHERE expense_id=$1`,
+      [id]
+    );
+    res.json(getEXP.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//add expense data
+app.post("/expense", async (req, res) => {
+  try {
+    const {
+      category,
+      amount,
+      receipt,
+      date,
+
+     
+    } = req.body;
+    const insertExp = await pool.query(
+      // DATABASE COLUMN NAME
+      `INSERT INTO "Expenses"(category,amount,receipt,date_inserted,date)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4) RETURNING *`,
+      [
+        category,
+        amount,
+        receipt,
+        date,
+       
+      ]
+    );
+    res.json("Inserted data");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+//update expense
+app.put("/expense/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { category, amount, receipt, date } =
+      req.body;
+    const updatePhilhealth = await pool.query(
+      `UPDATE "Expenses" SET category = $1, amount = $2, receipt =$3, date_updated = CURRENT_TIMESTAMP, date = $4 WHERE employee_id = $5`,
+      [category, amount, receipt, date, id]
+    );
+    res.json("updated");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+// edit expense
+app.put("/expense/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      description,
+      amount,
+      receipt,
+      date,
+      
+    } = req.body;
+    const updateExp = await pool.query(
+      `UPDATE "Expenses" SET description=$1,amount=$2,receipt=$3,date=DATE,date_updated=CURRENT_TIMESTAMP WHERE expense_id =$4`,
+      [
+        description,
+        amount,
+        receipt,
+        date,
+        id,
+      ]
+    );
+    res.json(updateExp.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//read
+app.get("/expenses", async (req, res) => {
+  try {
+    const getData = await pool.query(`SELECT * FROM "Expenses"`);
+    res.json(getData.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+
 //get transaction by id
 app.get("/transactions/:id", async (req, res) => {
   try {
