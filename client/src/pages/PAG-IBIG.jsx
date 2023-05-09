@@ -3,11 +3,11 @@ import "./../components/style.css";
 import axios from "axios";
 // import ShowDescription from "../components/hide_desc";
 // import EditDeduction from "../components/edit_deduction";
-import Sidebar from "./sidebar";
-import Navbar from "./navbar";
-import ShowTable from "./show_table";
-import AddDeductionPagIbig from "./add_deduction_pagibig";
-import EditDeductionPagIbig from "./edit_deduction_pagibig";
+import Sidebar from "../components/sidebar";
+import Navbar from "../components/navbar";
+import ShowTable from "../components/show_table";
+import AddDeductionPagIbig from "../components/add_deduction_pagibig";
+import EditDeductionPagIbig from "../components/edit_deduction_pagibig";
 
 const PAGIBIG = () => {
   const formatter = new Intl.NumberFormat("en-PH", {
@@ -57,28 +57,24 @@ const PAGIBIG = () => {
                 <tr>
                   <th
                     rowspan="2  "
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
-                  >
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
                     #
                   </th>
                   <th
                     rowspan="2"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
-                  >
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
                     Monthly Compensation
                   </th>
 
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-2/4 border border-gray-300"
-                  >
+                    class="w-2/4 border border-gray-300">
                     Membership Savings (Contribution)
                   </th>
                   <th
                     rowspan="2"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
-                  >
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
                     Action
                   </th>
                 </tr>
@@ -99,8 +95,7 @@ const PAGIBIG = () => {
                 {PAGIBIG.map((pagibig, index) => (
                   <tr
                     key={pagibig.deduction_id}
-                    className="border border-gray-300 "
-                  >
+                    className="border border-gray-300 ">
                     <td className="border border-gray-300">{index + 1}</td>
                     <td className="w-1/5 px-6 py-4 capitalize border border-gray-300">
                       {`${formatter.format(pagibig.salary_range_1)} ${"-"} ${

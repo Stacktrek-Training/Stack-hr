@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import "./../components/style.css";
 // import ShowDescription from "../components/hide_desc";
 // import EditDeduction from "../components/edit_deduction";
-import Sidebar from "./sidebar";
-import Navbar from "./navbar";
-import ShowTable from "./show_table";
-import AddDeduction from "./add_deduction_sss";
+import Sidebar from "../components/sidebar";
+import Navbar from "../components/navbar";
+import ShowTable from "../components/show_table";
+import AddDeduction from "../components/add_deduction_sss";
 import axios from "axios";
-import EditDeductionSSS from "./edit_deduction_sss";
+import EditDeductionSSS from "../components/edit_deduction_sss";
 
 const SSS = () => {
   const formatter = new Intl.NumberFormat("en-PH", {
@@ -67,28 +67,24 @@ const SSS = () => {
                 <tr>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
-                  >
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
                     #
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
-                  >
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
                     Range of Compensation
                   </th>
 
                   <th
                     colspan="12"
                     scope="colgroup"
-                    class="w-2/4 border border-gray-300"
-                  >
+                    class="w-2/4 border border-gray-300">
                     Employer - Employee
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
-                  >
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
                     Action
                   </th>
                 </tr>
@@ -96,29 +92,25 @@ const SSS = () => {
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/4 border border-gray-300"
-                  >
+                    class="w-1/4 border border-gray-300">
                     Social Security
                   </th>
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/4 border border-gray-300"
-                  >
+                    class="w-1/4 border border-gray-300">
                     Employees Compensation
                   </th>
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/4 border border-gray-300"
-                  >
+                    class="w-1/4 border border-gray-300">
                     Mandatory Provident Fund
                   </th>
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/4 border border-gray-300"
-                  >
+                    class="w-1/4 border border-gray-300">
                     Total Contribution
                   </th>
                 </tr>
@@ -166,8 +158,7 @@ const SSS = () => {
                 {SSS.map((sss, index) => (
                   <tr
                     className="border border-gray-300 "
-                    key={sss.deduction_id}
-                  >
+                    key={sss.deduction_id}>
                     <td className="border border-gray-300">{index + 1}</td>
 
                     <td className="border border-gray-300">
