@@ -39,6 +39,7 @@ const AddEmployee = () => {
   const [gender, setGender] = useState("");
   const [marital_status, setMaritalStatus] = useState("");
   const [birthday, setBirthday] = useState("");
+  
 
   const handleSave = () => {
     axios
