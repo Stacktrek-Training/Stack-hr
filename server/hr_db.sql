@@ -1,7 +1,7 @@
 CREATE DATABASE "STACK-HR";
 -- stakPayroll
 
-CREATE TABLE "EMPLOYEES"(employee_id SERIAL PRIMARY KEY, first_name VARCHAR, middle_name VARCHAR, last_name VARCHAR, province VARCHAR, city VARCHAR, municipality VARCHAR, baranggay VARCHAR, zipcode VARCHAR,mobile_number VARCHAR, telephone_number VARCHAR, work_email VARCHAR, personal_email VARCHAR,emergency_contact_person VARCHAR, emergency_contact_email VARCHAR,emergency_contact_number VARCHAR, relationship VARCHAR, job_title VARCHAR, date_created DATE, date_updated DATE, status INTEGER DEFAULT 1, gender VARCHAR, marital_status VARCHAR, birthday DATE, reimburse_limit DECIMAL, reimbursed_total DECIMAL);
+CREATE TABLE "EMPLOYEES"(employee_id SERIAL PRIMARY KEY, first_name VARCHAR, middle_name VARCHAR, last_name VARCHAR, province VARCHAR, city VARCHAR, municipality VARCHAR, baranggay VARCHAR, zipcode VARCHAR,mobile_number VARCHAR, telephone_number VARCHAR, work_email VARCHAR, personal_email VARCHAR,emergency_contact_person VARCHAR, emergency_contact_email VARCHAR,emergency_contact_number VARCHAR, relationship VARCHAR, job_title VARCHAR, date_created DATE, date_updated DATE, status INTEGER DEFAULT 1, gender VARCHAR, marital_status VARCHAR, birthday DATE, reimburse_limit DECIMAL);
 
 CREATE TABLE "ATTENDANCE" (attendance_id SERIAL PRIMARY KEY, time_in TIMESTAMP, time_out TIMESTAMP, working_hours DECIMAL, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id));
 
@@ -23,6 +23,6 @@ CREATE TABLE "DEDUCTIONS" (deduction_id SERIAL PRIMARY KEY, employee_id INTEGER,
 
 CREATE TABLE "REPORTS" (report_id SERIAL PRIMARY KEY,transaction_Id INTEGER UNIQUE REFERENCES "TRANSACTIONS" (transaction_id),date DATE, category_Id INTEGER REFERENCES "CATEGORIES"(category_id), description VARCHAR, amount NUMERIC(10, 2));
 
-
+CREATE TABLE "Expense" (expense_id SERIAL PRIMARY KEY, description VARCHAR, amount NUMERIC(10, 2), date_inserted DATE, date_updated DATE, date DATE);
 
 
