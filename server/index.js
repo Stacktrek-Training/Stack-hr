@@ -5,12 +5,15 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
 //for employee
 
 //get all employees
 app.get("/employee", async (req, res) => {
   try {
-    const getEmployee = await pool.query(`SELECT * FROM "EMPLOYEES"`);
+    const getEmployee = await pool.query(
+      `SELECT e.*, j.job_title, j.job_role_id FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id ORDER BY employee_id ASC`
+    );
     res.json(getEmployee.rows);
   } catch (error) {
     console.error(error.message);
@@ -54,9 +57,52 @@ app.post("/employee", async (req, res) => {
       marital_status,
       birthday,
     } = req.body;
+
+    //for generating password
+
+    const crypto = require("crypto");
+
+    function generateRandomPassword() {
+      // Generate a random password with 2 letters and 1 symbol
+      const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const symbols = "!@#$%^&*()_-+=";
+      let password = "";
+      password += letters[Math.floor(Math.random() * letters.length)];
+      password += letters[Math.floor(Math.random() * letters.length)];
+      password += symbols[Math.floor(Math.random() * symbols.length)];
+      for (let i = 0; i < 5; i++) {
+        password += letters[Math.floor(Math.random() * letters.length)];
+      }
+      // Shuffle the password characters randomly
+      password = password
+        .split("")
+        .sort(() => Math.random() - 0.5)
+        .join("");
+      return password;
+    }
+
+    const password = generateRandomPassword();
+
+    // Get the latest employee number from the database
+    const { rows } = await pool.query(
+      `SELECT employee_number FROM "EMPLOYEES" ORDER BY employee_id DESC LIMIT 1`
+    );
+    let code = "";
+    if (rows.length > 0) {
+      const latestEmployeeNumber = rows[0].employee_number;
+      if (latestEmployeeNumber) {
+        const counter = parseInt(latestEmployeeNumber.substring(3), 10);
+        code = "ST-" + ("0000" + (counter + 1)).slice(-4);
+      } else {
+        code = "ST-0001";
+      }
+    } else {
+      code = "ST-0001";
+    }
+
     const insertEmployee = await pool.query(
       // DATABASE COLUMN NAME
-      `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,province,city,municipality,baranggay,zipcode,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,date_updated,gender,marital_status,birthday)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17, CURRENT_TIMESTAMP,null,$18,$19,$20) RETURNING *`,
+      `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,province,city,municipality,baranggay,zipcode,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,date_updated,gender,marital_status,birthday,employee_number,password)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17, CURRENT_TIMESTAMP,null,$18,$19,$20,$21,$22) RETURNING *`,
       [
         first_name,
         middle_name,
@@ -78,6 +124,8 @@ app.post("/employee", async (req, res) => {
         gender,
         marital_status,
         birthday,
+        code,
+        password,
       ]
     );
     res.json("Inserted data");
@@ -933,21 +981,6 @@ app.put("/reports/:id", async (req, res) => {
   }
 });
 
-//insert attendance
-
-app.post("/attendance/", async (req, res) => {
-  try {
-    const { employee_id, time_in, time_out, working_hours } = req.body;
-    const insertAttendance = await pool.query(
-      `INSERT INTO "ATTENDANCE" (employee_id, time_in, time_out, working_hours)VALUES($1, $2, $3, $4) RETURNING *`,
-      [employee_id, time_in, time_out, working_hours]
-    );
-    res.json("data inserted");
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-
 app.get("/api/cities/:country", async (req, res) => {
   try {
     const { country } = req.params;
@@ -959,6 +992,96 @@ app.get("/api/cities/:country", async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Server error" });
+  }
+});
+
+// create a POST route for recording time in
+app.post("/api/attendance/in", async (req, res) => {
+  const { employeeId } = req.body;
+
+  try {
+    // get the current date
+    const today = new Date().toISOString().slice(0, 10);
+
+    // check if the employee has already timed in today
+    const attendance = await pool.query(
+      "SELECT time_in FROM attendance WHERE employee_id = $1 AND DATE(time_in) = $2",
+      [employeeId, today]
+    );
+
+    if (attendance.rowCount > 0) {
+      return res
+        .status(409)
+        .send("Attendance Time In already recorded for today.");
+    }
+
+    // insert the attendance record for time in
+    const result = await pool.query(
+      "INSERT INTO attendance (employee_id, time_in) VALUES ($1, NOW()) RETURNING time_in",
+      [employeeId]
+    );
+
+    res.status(200).json({ timeIn: result.rows[0].time_in });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error while recording Attendance Time In.");
+  }
+});
+
+// create a PUT route for recording time out
+app.put("/api/attendance/out", async (req, res) => {
+  const { employeeId } = req.body;
+
+  try {
+    // get the current date
+    const today = new Date().toISOString().slice(0, 10);
+
+    // check if the employee has already timed out today or has not timed in
+    const attendance = await pool.query(
+      "SELECT time_in, time_out FROM attendance WHERE employee_id = $1 AND DATE(time_in) = $2",
+      [employeeId, today]
+    );
+
+    if (attendance.rowCount === 0) {
+      return res
+        .status(400)
+        .send("Employee has already timed out today or has not timed in.");
+    }
+
+    if (attendance.rows[0].time_out !== null) {
+      return res
+        .status(409)
+        .send("Attendance Time Out already recorded for today.");
+    }
+
+    // update the attendance record for time out
+    const result = await pool.query(
+      "UPDATE attendance SET time_out = NOW() WHERE employee_id = $1 AND DATE(time_in) = $2 RETURNING time_out",
+      [employeeId, today]
+    );
+
+    res.status(200).json({ timeOut: result.rows[0].time_out });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error while recording Attendance Time Out.");
+  }
+});
+
+// create a POST route for inserting a new attendance record
+app.post("/api/attendance", async (req, res) => {
+  const { employeeId, timeIn, timeOut, workingHours } = req.body;
+
+  try {
+    // insert the attendance record
+    const result = await pool.query(
+      "INSERT INTO attendance (employee_id, time_in, time_out, working_hours) VALUES ($1, $2, $3, $4) RETURNING attendance_id",
+      [employeeId, timeIn, timeOut, workingHours]
+    );
+
+    res.status(200).json({ attendanceId: result.rows[0].attendance_id });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error while inserting Attendance record.");
   }
 });
 

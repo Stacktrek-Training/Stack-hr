@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Dashboard from "./pages/dashboard";
 import Employee from "./pages/employee";
-import Attendance from "./pages/attendance";
 import Payroll from "./pages/payrolls";
 import User from "./pages/user_dashboard";
 import Salaries from "./pages/salaries";
@@ -10,7 +9,9 @@ import Table from "./components/Table";
 import PhilHealth from "./components/PhilHealth";
 import SSS from "./components/SSS";
 import PAGIBIG from "./components/PAG-IBIG";
-
+import EmployeeDashboard from "./pages/employee_dashboard";
+import Attendance from "./pages/employee_attendance";
+import JobRoles from "./pages/jobroles";
 
 function App() {
   return (
@@ -23,7 +24,10 @@ function App() {
         <Route path="/employee">
           <Employee />
         </Route>
-        <Route path="/attendance">
+        <Route exact path="/employee_dashboard">
+          <EmployeeDashboard />
+        </Route>
+        <Route path="/employee_attendance">
           <Attendance />
         </Route>
         <Route path="/expense">
@@ -49,6 +53,9 @@ function App() {
         </Route>
         <Route path="/pag-ibig">
           <PAGIBIG />
+        </Route>
+        <Route path="/jobroles">
+          <JobRoles />
         </Route>
       </Switch>
     </BrowserRouter>

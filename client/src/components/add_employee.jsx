@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const AddEmployee = () => {
@@ -72,8 +72,18 @@ const AddEmployee = () => {
       .catch((error) => {
         console.error(error.message);
       });
-    handleCloseModal();
   };
+
+  const [job_roles, setJobRoles] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/jobroles")
+      .then((response) => {
+        setJobRoles(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
   return (
     <div className="flex w-full justify-between">
       <div class="flex items-center">
@@ -285,14 +295,23 @@ const AddEmployee = () => {
                     {" "}
                     Job Roles
                   </label>
-                  <input
-                    type="text"
+
+                  <select
                     value={job_title}
-                    placeholder=" Job roles"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    required
                     onChange={(e) => setJobTitle(e.target.value)}
-                  />
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  >
+                    <option value="" disabled selected hidden>
+                      Job Role
+                    </option>
+                    {job_roles.map((job_role) => (
+                      <option
+                        className="capitalize"
+                        value={job_role.job_role_id}
+                        key={job_role.job_role_id}
+                      >{`${job_role.job_title}`}</option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
