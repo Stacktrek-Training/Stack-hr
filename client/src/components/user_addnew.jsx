@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import "./../components/style.css";
+import axios from "axios";
+
 
 function AddNew({ visible, onClose }) {
   const handleOnClose = (e) => {
@@ -7,6 +9,40 @@ function AddNew({ visible, onClose }) {
   };
 
   if (!visible) return null;
+
+const [ date, setDate ] = useState("")
+const [ category, setCategory ] = useState("")
+const [ amount, setamount ] = useState("")
+const [ receipt, setReceipt ] = useState("")
+
+const handleImageChange = (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = () => {
+    if (reader.readyState === 2) {
+      setReceipt(reader.result);
+    }
+  };
+  reader.readAsDataURL(file);
+};
+
+  const handleSave = () => {
+    axios
+      .post("http://localhost:4000/expense", {
+
+      date: date,
+      category: category,
+      amount: amount,
+      receipt: receipt,
+        
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  };
 
   return (
     <div
@@ -35,7 +71,7 @@ function AddNew({ visible, onClose }) {
             />
           </svg>
         </button>
-
+<form onSubmit={handleSave}>
         <div className="bg-white p-2 rounded">
           <div className="flex flex-col md:flex-row md:items-center">
             {/* Date picker */}
@@ -50,6 +86,8 @@ function AddNew({ visible, onClose }) {
               <input
                 type="date"
                 className="p-2 rounded border-gray-300 w-full"
+                value={date}
+                onChange={(e)=> setDate(e.target.value)}
               />
             </div>
 
@@ -58,12 +96,20 @@ function AddNew({ visible, onClose }) {
               <label class="block mb-2 font-bold" for="date">
                 Choose a Category:
               </label>
-              <select className="p-2 rounded border-gray-300 w-full">
-                <option value="january">Transportation</option>
-                <option value="february">Food</option>
-                <option value="february">Non-Coding Activity</option>
-                <option value="february">Internet</option>
-                <option value="february">Office Supplies</option>
+              <select className="p-2 rounded border-gray-300 w-full" 
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              
+              >
+                <option value="Transportation">Transportation</option>
+                <option value="Other Expenses">Other Expenses</option>
+                <option value="Non-Coding Activity">Non-Coding Activity</option>
+                <option value="Internet">Internet</option>
+                <option value=">Office Supplies">Office Supplies</option>
+                <option value="Meals">Meals</option>
+                <option value="Medicine">Medicine</option>
+
+
               </select>
             </div>
 
@@ -76,31 +122,42 @@ function AddNew({ visible, onClose }) {
                 type="number"
                 className="p-2 rounded border-gray-300 w-full"
                 placeholder="Enter amount"
+                value={amount}
+                onChange={(e)=> setamount(e.target.value)}
               />
             </div>
           </div>
 
           {/* Upload image */}
 
-          <label class="block mb-2 font-bold" for="date">
+          <label className="block mb-2 font-bold" for="file_input">
             Upload Receipt
           </label>
           <input
-            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             id="file_input"
             type="file"
+            onChange={handleImageChange}
           />
 
+          {/* Preview Receipt Image */}
+          {receipt && (
+            <div className="mt-2">
+            <img src={receipt} alt="Uploaded image" className="w-64" />
+            </div>
+          )}
           {/* Add new button */}
           <div className="flex justify-end m-1 md:m-2">
-            <button class="bg-gradient-to-br from-orange-400 via-f0b673 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-800 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+            <button type="submit" class="bg-gradient-to-br from-orange-400 via-f0b673 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-800 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
               Add New
             </button>
           </div>
         </div>
+        </form>
       </div>
     </div>
   );
 }
+
 
 export default AddNew;
