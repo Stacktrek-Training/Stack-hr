@@ -15,16 +15,7 @@ const [ category, setCategory ] = useState("")
 const [ amount, setamount ] = useState("")
 const [ receipt, setReceipt ] = useState("")
 
-const handleImageChange = (e) => {
-  const file = e.target.files[0];
-  const reader = new FileReader();
-  reader.onload = () => {
-    if (reader.readyState === 2) {
-      setReceipt(reader.result);
-    }
-  };
-  reader.readAsDataURL(file);
-};
+
 
   const handleSave = () => {
     axios
@@ -32,8 +23,7 @@ const handleImageChange = (e) => {
 
       date: date,
       category: category,
-      amount: amount,
-      receipt: receipt,
+      amount: amount
         
       })
       .then((response) => {
@@ -77,7 +67,7 @@ const handleImageChange = (e) => {
             {/* Date picker */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-5">
               <label class="block mb-2 font-bold">
-                Available Funds: <span class="text-orange-500">₱8900</span>
+                Available Funds: <span class="text-blue-500">₱8900</span>
               </label>
 
               <label class="block mb-2 font-bold" for="date">
@@ -130,22 +120,17 @@ const handleImageChange = (e) => {
 
           {/* Upload image */}
 
-          <label className="block mb-2 font-bold" for="file_input">
+          <label class="block mb-2 font-bold" for="date">
             Upload Receipt
           </label>
           <input
-            className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+            class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
             id="file_input"
             type="file"
-            onChange={handleImageChange}
+            
           />
 
-          {/* Preview Receipt Image */}
-          {receipt && (
-            <div className="mt-2">
-            <img src={receipt} alt="Uploaded image" className="w-64" />
-            </div>
-          )}
+         
           {/* Add new button */}
           <div className="flex justify-end m-1 md:m-2">
             <button type="submit" class="bg-gradient-to-br from-orange-400 via-f0b673 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-800 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
