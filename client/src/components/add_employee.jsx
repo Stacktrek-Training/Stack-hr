@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 const AddEmployee = () => {
@@ -71,6 +71,17 @@ const AddEmployee = () => {
       .catch((error) => {
         console.error(error.message);
       });
+
+    const [job_title, setJobroles] = useState([]);
+    // get the data in jobroles
+    useEffect(() => {
+      axios
+        .get("http://localhost:4000/jobroles")
+        .then((response) => {
+          setJobrole(response.data);
+        })
+        .catch((error) => console.error(error));
+    }, []);
   };
   return (
     <div className="flex w-full justify-between">

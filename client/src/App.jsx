@@ -7,9 +7,9 @@ import User from "./pages/user_dashboard";
 import Salaries from "./pages/salaries";
 import Deduction from "./pages/deduction";
 import Table from "./components/Table";
-import PhilHealth from "./components/PhilHealth";
-import SSS from "./components/SSS";
-import PAGIBIG from "./components/PAG-IBIG";
+import PhilHealth from "./pages/PhilHealth";
+import SSS from "./pages/SSS";
+import PAGIBIG from "./pages/PAG-IBIG";
 import JobRoles from "./pages/jobroles";
 
 function App() {

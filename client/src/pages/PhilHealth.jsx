@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import "./../components/style.css";
 // import ShowDescription from "../components/hide_desc";
 // import EditDeduction from "../components/edit_deduction";
-import Sidebar from "./sidebar";
-import Navbar from "./navbar";
-import ShowTable from "./show_table";
-import AddDeductionPhilHealth from "./add_deduction_philhealth";
-import EditDeductionPhilHealth from "./edit_deduction_philhealth";
+import Sidebar from "../components/sidebar";
+import Navbar from "../components/navbar";
+import ShowTable from "../components/show_table";
+import AddDeductionPhilHealth from "../components/add_deduction_philhealth";
+import EditDeductionPhilHealth from "../components/edit_deduction_philhealth";
 import axios from "axios";
 
 const PhilHealth = () => {
@@ -72,12 +72,10 @@ const PhilHealth = () => {
                 {philhealths.map((philhealth, index) => (
                   <tr
                     key={philhealth.deduction_id}
-                    class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                  >
+                    class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       {index + 1}
                     </th>
                     <td class="px-6 py-4 capitalize">
