@@ -77,7 +77,7 @@ const handleImageChange = (e) => {
             {/* Date picker */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-5">
               <label class="block mb-2 font-bold">
-                Available Funds: <span class="text-blue-500">₱8900</span>
+                Available Funds: <span class="text-orange-500">₱8900</span>
               </label>
 
               <label class="block mb-2 font-bold" for="date">

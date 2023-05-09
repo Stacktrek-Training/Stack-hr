@@ -40,7 +40,7 @@ function EditLimitModal({ visible, onClose }) {
           <div className="flex flex-col md:flex-row md:items-center">
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-5">
               <label class="block mb-2 font-bold">
-                Current Limit: <span class="text-blue-500">₱10,000</span>
+                Current Limit: <span class="text-orange-500">₱10,000</span>
               </label>
             </div>
 
