@@ -40,6 +40,10 @@ function AddNew({ visible, onClose }) {
           <div className="flex flex-col md:flex-row md:items-center">
             {/* Date picker */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-5">
+              <label class="block mb-2 font-bold">
+                Available Funds: <span class="text-blue-500">₱8900</span>
+              </label>
+
               <label class="block mb-2 font-bold" for="date">
                 Choose a date:
               </label>
@@ -57,6 +61,9 @@ function AddNew({ visible, onClose }) {
               <select className="p-2 rounded border-gray-300 w-full">
                 <option value="january">Transportation</option>
                 <option value="february">Food</option>
+                <option value="february">Non-Coding Activity</option>
+                <option value="february">Internet</option>
+                <option value="february">Office Supplies</option>
               </select>
             </div>
 

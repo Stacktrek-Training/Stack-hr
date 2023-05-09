@@ -80,7 +80,7 @@ const PhilHealth = () => {
                     </th>
                     <td class="px-6 py-4 capitalize">
                       {`${formatter.format(philhealth.salary_range_1)}${"-"}${
-                        philhealth.salary_range_2 > 80000
+                        philhealth.salary_range_2 > 90000
                           ? "Above"
                           : formatter.format(philhealth.salary_range_2)
                       }`}

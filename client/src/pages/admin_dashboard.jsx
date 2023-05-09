@@ -1,6 +1,7 @@
 import React from "react";
+import AdminContainerDashboard from "../components/admin_container_dashboard";
 const Admin = () => {
-  return <h1>headmin</h1>;
+  return <AdminContainerDashboard />;
 };
 
 export default Admin;
