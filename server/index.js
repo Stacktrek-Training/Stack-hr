@@ -939,19 +939,7 @@ app.get("/reports", async (req, res) => {
     console.error(error.message);
   }
 });
-//get report by id
-app.get("/report/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const getReports = await pool.query(
-      `SELECT * FROM "REPORTS" WHERE report_id=$1`,
-      [id]
-    );
-    res.json(getReports.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
+
 //add reports
 app.post("/reports", async (req, res) => {
   try {
