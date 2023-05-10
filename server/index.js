@@ -12,7 +12,7 @@ app.use(express.json());
 app.get("/employee", async (req, res) => {
   try {
     const getEmployee = await pool.query(
-      `SELECT e.*, j.job_title, j.job_role_id FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id ORDER BY employee_id ASC`
+      `SELECT e.*, j.job_title, j.job_role_id, e.reimbursed_limit FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id ORDER BY employee_id ASC`
     );
     res.json(getEmployee.rows);
   } catch (error) {
@@ -700,7 +700,7 @@ app.put("/category/:id", async (req, res) => {
     const { category_name } = req.body;
     const updateCat = await pool.query(
       `UPDATE "CATEGORIES" SET category_Name=$1 WHERE category_Id =$2`,
-      [category_name, category_Id]
+      [category_name, id]
     );
     res.json(updateCat.rows);
   } catch (error) {
@@ -783,7 +783,7 @@ app.put("/expense/:id", async (req, res) => {
     const { category, amount, receipt, date } =
       req.body;
     const updatePhilhealth = await pool.query(
-      `UPDATE "EXPENSES" SET category = $1, amount = $2, receipt =$3, date_updated = CURRENT_TIMESTAMP, date = $4 WHERE employee_id = $5`,
+      `UPDATE "EXPENSES" SET category = $1, amount = $2, receipt =$3, date_updated = CURRENT_TIMESTAMP, date = $4 WHERE expense_id= $5`,
       [category, amount, receipt, date, id]
     );
     res.json("updated");
