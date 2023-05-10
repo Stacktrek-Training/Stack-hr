@@ -4,20 +4,17 @@ import "./../components/style.css";
 import "./../progressbar.js";
 
 function CircleProgressbar() {
-  const Expense = () => {
-    // for getting all expenses data
-    const [expenses, setExpense] = useState([]);
-    const id = 1;
+  const [expenses, setExpense] = useState([]);
+  const id = 1;
 
-    useEffect(() => {
-      axios
-        .get(`http://localhost:4000/expense/${id}`)
-        .then((response) => {
-          setExpense(response.data);
-        })
-        .catch((error) => console.error(error));
-    }, []);
-  };
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000C/expense/${id}`)
+      .then((response) => {
+        setExpense(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   return (
     <div class="progressBody block py-7 px-5">
@@ -52,7 +49,9 @@ function CircleProgressbar() {
       </div>
       <div className="text-center">
         {" "}
-        <h1>7000/</h1>{" "}
+        {expenses.map((expense) => (
+          <h1>7000/{expense.data}</h1>
+        ))}{" "}
       </div>
     </div>
   );

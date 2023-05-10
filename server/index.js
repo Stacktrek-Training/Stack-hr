@@ -859,7 +859,7 @@ app.get("/expense/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const getExp = await pool.query(
-      `SELECT * FROM "EXPENSES" WHERE expense_id=$1`,
+      `SELECT * FROM "EMPLOYEES" WHERE employee_id=$1`,
       [id]
     );
     res.json(getExp.rows);
