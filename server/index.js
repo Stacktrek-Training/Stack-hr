@@ -5,12 +5,15 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
 //for employee
 
 //get all employees
 app.get("/employee", async (req, res) => {
   try {
-    const getEmployee = await pool.query(`SELECT * FROM "EMPLOYEES"`);
+    const getEmployee = await pool.query(
+      `SELECT e.*, j.job_title, j.job_role_id FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id ORDER BY employee_id ASC`
+    );
     res.json(getEmployee.rows);
   } catch (error) {
     console.error(error.message);
@@ -54,9 +57,51 @@ app.post("/employee", async (req, res) => {
       marital_status,
       birthday,
     } = req.body;
+
+    //for generating password
+
+    const crypto = require("crypto");
+
+    function generateRandomPassword() {
+      // Generate a random password with 2 letters and 1 symbol
+      const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      const symbols = "!@#$%^&*()_-+=";
+      let password = "";
+      password += letters[Math.floor(Math.random() * letters.length)];
+      password += letters[Math.floor(Math.random() * letters.length)];
+      password += symbols[Math.floor(Math.random() * symbols.length)];
+      for (let i = 0; i < 5; i++) {
+        password += letters[Math.floor(Math.random() * letters.length)];
+      }
+      // Shuffle the password characters randomly
+      password = password
+        .split("")
+        .sort(() => Math.random() - 0.5)
+        .join("");
+      return password;
+    }
+
+    const password = generateRandomPassword();
+
+    // Get the latest employee number from the database
+    const { rows } = await pool.query(
+      `SELECT employee_number FROM "EMPLOYEES" ORDER BY employee_id DESC LIMIT 1`
+    );
+    let code = "";
+    if (rows.length > 0) {
+      const latestEmployeeNumber = rows[0].employee_number;
+      if (latestEmployeeNumber) {
+        const counter = parseInt(latestEmployeeNumber.substring(3), 10);
+        code = "ST-" + ("0000" + (counter + 1)).slice(-4);
+      } else {
+        code = "ST-0001";
+      }
+    } else {
+      code = "ST-0001";
+    }
+
     const insertEmployee = await pool.query(
-      // DATABASE COLUMN NAME
-      `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,province,city,municipality,baranggay,zipcode,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,date_updated,gender,marital_status,birthday)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17, CURRENT_TIMESTAMP,null,$18,$19,$20) RETURNING *`,
+      `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,province,city,municipality,baranggay,zipcode,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,date_updated,gender,marital_status,birthday,employee_number,password)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17, CURRENT_TIMESTAMP,null,$18,$19,$20,$21,$22) RETURNING *`,
       [
         first_name,
         middle_name,
@@ -78,6 +123,8 @@ app.post("/employee", async (req, res) => {
         gender,
         marital_status,
         birthday,
+        code,
+        password,
       ]
     );
     res.json("Inserted data");
@@ -678,6 +725,141 @@ app.delete("/categories/:id", async (req, res) => {
     console.error(error.message);
   }
 });
+
+
+//get employee_sample 
+app.get("/login/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getEmp = await pool.query(
+      `SELECT * FROM "LOGIN" WHERE employee_id=$1`,
+      [id]
+    );
+    res.json(getEmp.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+//add employee data
+app.post("/login", async (req, res) => {
+  try {
+    const {
+      employee_name,
+      username,
+      password,
+     
+    } = req.body;
+    const insertEmp = await pool.query(
+      // DATABASE COLUMN NAME
+      `INSERT INTO "LOGIN"(employee_name,username,password)VALUES($1,$2,$3) RETURNING *`,
+      [
+        employee_name,
+        username,
+        password,
+      
+       
+      ]
+    );
+    res.json("Inserted data");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+
+//get expense id
+app.get("/expense/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getEXP = await pool.query(
+      `SELECT * FROM "Expenses" WHERE expense_id=$1`,
+      [id]
+    );
+    res.json(getEXP.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//add expense data
+app.post("/expense", async (req, res) => {
+  try {
+    const {
+      category,
+      amount,
+      receipt,
+      date,
+
+     
+    } = req.body;
+    const insertExp = await pool.query(
+      // DATABASE COLUMN NAME
+      `INSERT INTO "Expenses"(category,amount,receipt,date_inserted,date)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4) RETURNING *`,
+      [
+        category,
+        amount,
+        receipt,
+        date,
+       
+      ]
+    );
+    res.json("Inserted data");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+//update expense
+app.put("/expense/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { category, amount, receipt, date } =
+      req.body;
+    const updatePhilhealth = await pool.query(
+      `UPDATE "EXPENSES" SET category = $1, amount = $2, receipt =$3, date_updated = CURRENT_TIMESTAMP, date = $4 WHERE employee_id = $5`,
+      [category, amount, receipt, date, id]
+    );
+    res.json("updated");
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+// edit expense
+app.put("/expense/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      description,
+      amount,
+      receipt,
+      date,
+      
+    } = req.body;
+    const updateExp = await pool.query(
+      `UPDATE "EXPENSES" SET category=$1,amount=$2,receipt=$3,date=$4,date_updated=CURRENT_TIMESTAMP WHERE expense_id =$5`,
+      [
+        description,
+        amount,
+        receipt,
+        date,
+        id,
+      ]
+    );
+    res.json(updateExp.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//read
+app.get("/expenses", async (req, res) => {
+  try {
+    const getData = await pool.query(`SELECT * FROM "EXPENSES"`);
+    res.json(getData.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 
 //get transaction by id
 app.get("/transactions/:id", async (req, res) => {

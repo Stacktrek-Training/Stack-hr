@@ -75,12 +75,10 @@ const Salaries = () => {
                   return (
                     <tr
                       class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={salary.salary_id}
-                    >
+                      key={salary.salary_id}>
                       <th
                         scope="row"
-                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {index + 1}
                       </th>
                       <td class="px-6 py-4 capitalize">

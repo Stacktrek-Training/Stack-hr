@@ -76,6 +76,16 @@ const ViewEmployee = ({ employee }) => {
                       for="name"
                       class="block  text-sm font-semibold text-gray-900 dark:text-white"
                     >
+                      Employee Number
+                    </label>
+                    <span className="capitalize">{`${employee.employee_number}`}</span>
+                  </div>
+
+                  <div className="mb-2">
+                    <label
+                      for="name"
+                      class="block  text-sm font-semibold text-gray-900 dark:text-white"
+                    >
                       Employee Name
                     </label>
                     <span className="capitalize">{`${employee.last_name}, ${employee.first_name} ${employee.middle_name} `}</span>

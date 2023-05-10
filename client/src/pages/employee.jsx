@@ -60,21 +60,23 @@ const Employee = () => {
                 </tr>
               </thead>
               <tbody>
-                {employees.map((employee, index) => (
+                {employees.map((employee) => (
                   <tr
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    key={employee.employee_id}>
+                    key={employee.employee_id}
+                  >
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {index + 1}
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
+                      {employee.employee_number}
                     </th>
                     <td class="px-6 py-4 capitalize">
                       {employee.last_name}, {employee.first_name}{" "}
                       {employee.middle_name}
                     </td>
                     <td class="px-6 py-4">{employee.job_title}</td>
-                    <td class="px-6 py-4">
+                    <td class="px-6 py-4 capitalize">
                       {employee.province}, {employee.city},
                       {employee.municipality}, {employee.baranggay} (
                       {employee.zipcode})
@@ -92,7 +94,8 @@ const Employee = () => {
           </div>
           <div
             className="mt-2 flex justify-center
-          "></div>
+          "
+          ></div>
         </div>
       </div>
     </div>
