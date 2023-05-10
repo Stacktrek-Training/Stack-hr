@@ -33,7 +33,7 @@ const EditSalary = ({ salaries }) => {
 
   const editSalary = async () => {
     const response = await axios
-      .put(`http://localhost:4000/salaries/${id}`, {
+      .put(`http://localhost:4000/salaries/${emp_id}`, {
         salary: parseFloat(salary),
       })
       .then((response) => {
