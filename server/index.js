@@ -854,13 +854,8 @@ app.delete("/category/:id", async (req, res) => {
   }
 });
 
-<<<<<<< HEAD
-//get employee_sample
-app.get("/login/:id", async (req, res) => {
-=======
 //get expense id
 app.get("/expense/:id", async (req, res) => {
->>>>>>> 4fe6a3ecc44a7421c4677d43d575e23ef14ddd60
   try {
     const { id } = req.params;
     const getExp = await pool.query(
