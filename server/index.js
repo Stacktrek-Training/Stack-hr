@@ -816,7 +816,7 @@ app.put("/expense/:id", async (req, res) => {
     const { category, amount, receipt, date } =
       req.body;
     const updatePhilhealth = await pool.query(
-      `UPDATE "Expenses" SET category = $1, amount = $2, receipt =$3, date_updated = CURRENT_TIMESTAMP, date = $4 WHERE employee_id = $5`,
+      `UPDATE "EXPENSES" SET category = $1, amount = $2, receipt =$3, date_updated = CURRENT_TIMESTAMP, date = $4 WHERE employee_id = $5`,
       [category, amount, receipt, date, id]
     );
     res.json("updated");
@@ -836,7 +836,7 @@ app.put("/expense/:id", async (req, res) => {
       
     } = req.body;
     const updateExp = await pool.query(
-      `UPDATE "Expenses" SET description=$1,amount=$2,receipt=$3,date=DATE,date_updated=CURRENT_TIMESTAMP WHERE expense_id =$4`,
+      `UPDATE "EXPENSES" SET category=$1,amount=$2,receipt=$3,date=$4,date_updated=CURRENT_TIMESTAMP WHERE expense_id =$5`,
       [
         description,
         amount,
@@ -853,7 +853,7 @@ app.put("/expense/:id", async (req, res) => {
 //read
 app.get("/expenses", async (req, res) => {
   try {
-    const getData = await pool.query(`SELECT * FROM "Expenses"`);
+    const getData = await pool.query(`SELECT * FROM "EXPENSES"`);
     res.json(getData.rows);
   } catch (error) {
     console.error(error.message);

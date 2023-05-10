@@ -2,7 +2,7 @@ import React from "react";
 
 function TableContainer() {
   return (
-    <div>
+    <div className="p-10 bg-gray-100 shadow-inner">
       <div class="overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
