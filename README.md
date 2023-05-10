@@ -40,11 +40,30 @@ To get started with Stack-hr & Stack-expense, follow these steps:
 💠Make your changes and commit them: </br>
     --git add . </br>
     --git commit -m "Add your message"</br>
+        --git commit -m "Add functionality in adding expense"</br>
+        --You can add emoji "🔧 Fixing codes in dashboard page"</br>
+        
+    Here's the link for emoji's: https://gitmoji.dev/<br>
+    ☑️Click the emoji you want it will be automatically copied.<br>
+    ☑️Then paste on your commit message.
 
 💠Push to the branch</br>
     --git push origin feature/your-feature-name</br>
 
+🔶 Can use Visual Studio Code directly </br>
+    Step 1: Click Source Control (Ctrl+Shift+G)</br>
+    Step 2: Add files/packages you want to commit on Stage Changes</br>
+    Step 3: Put an emoji in the message box with commit message (be specific)</br>
+    Step 4: Click --Commit--</br>
+    Step 5: Click the 3(three) dots above the click Push</br>
 
+Check you github if there's an update. If none, try to Pull then Push again...
+</br>
+</br>
+
+
+
+<h2 style="text-align:center"> 🎉 Happy Coding! </h2>
 
 
 
