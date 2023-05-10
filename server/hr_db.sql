@@ -1,15 +1,11 @@
 CREATE DATABASE "STACK-HR";
 -- stakPayroll
 
-<<<<<<< HEAD
-CREATE TABLE "EMPLOYEES"(employee_id SERIAL PRIMARY KEY, first_name VARCHAR, middle_name VARCHAR, last_name VARCHAR, province VARCHAR, city VARCHAR, municipality VARCHAR, baranggay VARCHAR, zipcode VARCHAR,mobile_number VARCHAR, telephone_number VARCHAR, work_email VARCHAR, personal_email VARCHAR,emergency_contact_person VARCHAR, emergency_contact_email VARCHAR,emergency_contact_number VARCHAR, relationship VARCHAR, job_title VARCHAR, date_created DATE, date_updated DATE, status INTEGER DEFAULT 1, gender VARCHAR, marital_status VARCHAR, birthday DATE, reimburse_limit DECIMAL);
-=======
 CREATE TABLE "EMPLOYEES"(employee_id SERIAL PRIMARY KEY, first_name VARCHAR, middle_name VARCHAR, last_name VARCHAR, province VARCHAR, city VARCHAR, municipality VARCHAR, baranggay VARCHAR, zipcode VARCHAR,mobile_number VARCHAR, telephone_number VARCHAR, work_email VARCHAR, personal_email VARCHAR,emergency_contact_person VARCHAR, emergency_contact_email VARCHAR,emergency_contact_number VARCHAR, relationship VARCHAR, job_title INTEGER REFERENCES "JOB_ROLES" (job_role_id), date_created DATE, date_updated DATE, status INTEGER DEFAULT 1, gender VARCHAR, marital_status VARCHAR, birthday DATE, employee_number VARCHAR, password VARCHAR);
->>>>>>> 0068d115dc63548ddf6a0423f6ca237c862d0974
 
 CREATE TABLE "JOB_ROLES" (job_role_id SERIAL PRIMARY KEY, job_title VARCHAR, date_created DATE, date_updated DATE);
 
-CREATE TABLE attendance ( attendance_id SERIAL PRIMARY KEY, time_in TIMESTAMP NOT NULL,time_out TIMESTAMP, working_hours DECIMAL, employee_id INTEGER REFERENCES "EMPLOYEES" (employee_id));
+CREATE TABLE "ATTENDANCE" ( attendance_id SERIAL PRIMARY KEY, time_in TIMESTAMP NOT NULL,time_out TIMESTAMP, working_hours DECIMAL, employee_id INTEGER REFERENCES "EMPLOYEES" (employee_id));
 
 CREATE TABLE "SALARIES" (salary_id SERIAL PRIMARY KEY, salary DECIMAL, status INTEGER, date_created DATE, date_updated DATE, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id));
 
@@ -25,7 +21,7 @@ CREATE TABLE "DEDUCTIONS" (deduction_id SERIAL PRIMARY KEY, employee_id INTEGER,
 
  CREATE table "CATEGORIES" (category_id SERIAL PRIMARY KEY, category_name VARCHAR);
 
- CREATE TABLE "TRANSACTIONS" (transaction_id SERIAL PRIMARY KEY, date DATE, employee_id INTEGER UNIQUE REFERENCES "employees"(employee_id), category_id INTEGER REFERENCES "CATEGORIES"(category_id), total_amount NUMERIC(10,2), receipt_image BYTEA, date_inserted DATE, date_updated DATE);
+ CREATE TABLE "TRANSACTIONS" (transaction_id SERIAL PRIMARY KEY, date DATE, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id), category_id INTEGER REFERENCES "CATEGORIES"(category_id), total_amount NUMERIC(10,2), receipt_image BYTEA, date_inserted DATE, date_updated DATE);
 
 CREATE TABLE "REPORTS" (report_id SERIAL PRIMARY KEY,transaction_Id INTEGER UNIQUE REFERENCES "TRANSACTIONS" (transaction_id),date DATE, category_Id INTEGER REFERENCES "CATEGORIES"(category_id), description VARCHAR, amount NUMERIC(10, 2));
 
