@@ -5,19 +5,19 @@ function TableContainer() {
     <div className="p-10 bg-gray-100 shadow-inner">
       <div class="overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <thead class="text-xs text-gray-700 uppercase bg-gradient-to-br from-orange-500 to-orange-400 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" class="p-4"></th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" class="px-6 py-3 text-white">
                 Date
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" class="px-6 py-3 text-white">
                 Category
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" class="px-6 py-3 text-white">
                 Amount
               </th>
-              <th scope="col" class="px-6 py-3">
+              <th scope="col" class="px-6 py-3 text-white">
                 Receipt
               </th>
             </tr>
