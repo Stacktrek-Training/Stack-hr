@@ -773,7 +773,7 @@ app.put("/sss/:id", async (req, res) => {
 });
 //stack-Expense
 //get category by id
-app.get("/categories/:id", async (req, res) => {
+app.get("/category/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const getCAT = await pool.query(
@@ -785,7 +785,7 @@ app.get("/categories/:id", async (req, res) => {
     console.error(error.message);
   }
 });
-app.get("/categories", async (req, res) => {
+app.get("/category", async (req, res) => {
   try {
     const getCAT = await pool.query(`SELECT * FROM "CATEGORIES"`);
     res.json(getCAT.rows);
@@ -795,7 +795,7 @@ app.get("/categories", async (req, res) => {
 });
 
 // add category
-app.post("/categories", async (req, res) => {
+app.post("/category", async (req, res) => {
   try {
     const { category_name } = req.body;
     const insertCategory = await pool.query(
@@ -836,7 +836,7 @@ app.put("/category/:id", async (req, res) => {
   }
 });
 //delete categories
-app.delete("/categories/:id", async (req, res) => {
+app.delete("/category/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const deleteFromCategories = await pool.query(
@@ -854,22 +854,20 @@ app.delete("/categories/:id", async (req, res) => {
   }
 });
 
-//get employee_sample
-app.get("/login/:id", async (req, res) => {
+//get expense id
+app.get("/expense/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const getEmp = await pool.query(
-      `SELECT * FROM "LOGIN" WHERE employee_id=$1`,
+    const getExp = await pool.query(
+      `SELECT * FROM "EXPENSES" WHERE expense_id=$1`,
       [id]
     );
-    res.json(getEmp.rows);
+    res.json(getExp.rows);
   } catch (error) {
     console.error(error.message);
   }
 });
-
-//add employee data
-app.post("/login", async (req, res) => {
+app.get("/expense", async (req, res) => {
   try {
     const { employee_name, username, password } = req.body;
     const insertEmp = await pool.query(
