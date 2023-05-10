@@ -828,7 +828,7 @@ app.put("/category/:id", async (req, res) => {
     const { category_name } = req.body;
     const updateCat = await pool.query(
       `UPDATE "CATEGORIES" SET category_Name=$1 WHERE category_Id =$2`,
-      [category_name, category_Id]
+      [category_name, id]
     );
     res.json(updateCat.rows);
   } catch (error) {
@@ -854,8 +854,13 @@ app.delete("/category/:id", async (req, res) => {
   }
 });
 
+<<<<<<< HEAD
+//get employee_sample
+app.get("/login/:id", async (req, res) => {
+=======
 //get expense id
 app.get("/expense/:id", async (req, res) => {
+>>>>>>> 4fe6a3ecc44a7421c4677d43d575e23ef14ddd60
   try {
     const { id } = req.params;
     const getExp = await pool.query(
@@ -915,7 +920,7 @@ app.put("/expense/:id", async (req, res) => {
     const { id } = req.params;
     const { category, amount, receipt, date } = req.body;
     const updatePhilhealth = await pool.query(
-      `UPDATE "EXPENSES" SET category = $1, amount = $2, receipt =$3, date_updated = CURRENT_TIMESTAMP, date = $4 WHERE employee_id = $5`,
+      `UPDATE "EXPENSES" SET category = $1, amount = $2, receipt =$3, date_updated = CURRENT_TIMESTAMP, date = $4 WHERE expense_id= $5`,
       [category, amount, receipt, date, id]
     );
     res.json("updated");

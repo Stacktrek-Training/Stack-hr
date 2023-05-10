@@ -4,12 +4,11 @@ import "./../components/style.css";
 import "./../progressbar.js";
 
 function CircleProgressbar() {
-
   const Expense = () => {
     // for getting all expenses data
     const [expenses, setExpense] = useState([]);
-    const id = 1
-  
+    const id = 1;
+
     useEffect(() => {
       axios
         .get(`http://localhost:4000/expense/${id}`)
@@ -17,9 +16,8 @@ function CircleProgressbar() {
           setExpense(response.data);
         })
         .catch((error) => console.error(error));
-    }, [])
-  }
-  
+    }, []);
+  };
 
   return (
     <div class="progressBody block py-7 px-5">
@@ -54,11 +52,10 @@ function CircleProgressbar() {
       </div>
       <div className="text-center">
         {" "}
-        <h1> 7000/10000</h1>{" "}
+        <h1>7000/</h1>{" "}
       </div>
     </div>
   );
 }
-
 
 export default CircleProgressbar;
