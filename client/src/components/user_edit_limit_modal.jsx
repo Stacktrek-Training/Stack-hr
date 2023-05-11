@@ -39,14 +39,18 @@ function EditLimitModal({ visible, onClose }) {
         <div className="bg-white p-2 rounded">
           <div className="flex flex-col md:flex-row md:items-center">
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-5">
-              <label class="block mb-2 font-bold">
-                Current Limit: <span class="text-orange-500">₱10,000</span>
+              <label className="block mb-2 font-bold">
+                Current Limit: <span className="text-orange-500">₱10,000</span>
               </label>
+            </div>
+
+            <div className="flex items-center">
+              <CircleProgressbar />
             </div>
 
             {/* Amount input */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mx-2 relative">
-              <label class="block mb-2 font-bold" for="date">
+              <label className="block mb-2 font-bold" htmlFor="date">
                 Enter New Limit:
               </label>
               <input
@@ -55,11 +59,10 @@ function EditLimitModal({ visible, onClose }) {
                 placeholder="Enter Limit"
               />
             </div>
-            <CircleProgressbar />
           </div>
           {/* Edit limit button */}
           <div className="flex justify-end m-1 md:m-2">
-            <button class="bg-gradient-to-br from-orange-400 via-f0b673 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-800 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
+            <button className="bg-gradient-to-br from-orange-400 via-f0b673 to-orange-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-orange-200 dark:focus:ring-orange-800 text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">
               Edit Limit
             </button>
           </div>
