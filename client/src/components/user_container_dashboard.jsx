@@ -17,7 +17,7 @@ function ContainerDashboard() {
         </div>
 
         <div>
-          <div className="transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300flex-1 mx-10 relative align-middle text-center p-1 shadow-2xl">
+          <div className="flex-1 mx-10 relative align-middle text-center p-1 shadow-2xl">
             <span className="font-bold">April</span>
             {/* Right side: container */}
             <div className=" Box flex align-middle text-center">
