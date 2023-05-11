@@ -11,6 +11,7 @@ import SSS from "./pages/SSS";
 import PAGIBIG from "./pages/PAG-IBIG";
 import EmployeeDashboard from "./pages/employee_dashboard";
 import Attendance from "./pages/employee_attendance";
+import Attendance1 from "./pages/attendance_trial";
 import JobRoles from "./pages/jobroles";
 
 function App() {
@@ -56,6 +57,9 @@ function App() {
         </Route>
         <Route path="/jobroles">
           <JobRoles />
+        </Route>
+        <Route path="/att">
+          <Attendance1 />
         </Route>
       </Switch>
     </BrowserRouter>
