@@ -7,7 +7,7 @@ function ContainerDashboard() {
   return (
     <div className="mx-0.5 BoxMonth">
       <div className="flex">
-        <div className="w-72 h-72 rounded-xl ml-10 flex flex-col justify-center items-center">
+        <div className="w-72 h-72 rounded-xl ml-10 flex flex-col justify-center items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
           <span className="align-middle text-center font-bold">Supervisor</span>
           <img
             className="object-cover rounded-lg shadow-xl"
