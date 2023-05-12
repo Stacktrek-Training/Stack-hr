@@ -55,9 +55,9 @@ const ExpenseNavbar = () => {
                 />
               </svg>
             </button>
-          </div> 
+          </div>
           {/* Right side: clickable items */}
-          <div className="hidden md:flex items-center">
+          <div className="hidden md:block items-center">
             <a
               href="#"
               className="text-blue-600 hover:text-blue-600 mr-10 relative"
@@ -96,6 +96,7 @@ const ExpenseNavbar = () => {
             </a>
           </div>
         )}
+        <div></div>
       </nav>
     </div>
   );

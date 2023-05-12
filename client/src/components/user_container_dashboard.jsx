@@ -27,19 +27,25 @@ function ContainerDashboard() {
               {/* Top 3 */}
               <div className="p-10 mt-5">
                 <div className="flex items-center">
-                  <span className="mr-4 text-left">1. Food</span>
+                  <span className="mr-4 text-left transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+                    1. Food
+                  </span>
                   <div className="w-1/2 h-4 bg-gray-300 rounded-full overflow-hidden">
                     <div className="h-full bg-blue-500 rounded-full animate-pulse"></div>
                   </div>
                 </div>
                 <div className="flex items-center mt-4">
-                  <span className="mr-4 text-left">2. Transportation</span>
+                  <span className="mr-4 text-left transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+                    2. Transportation
+                  </span>
                   <div className="w-24 h-4 bg-gray-300 rounded-full overflow-hidden">
                     <div className="h-full bg-orange-400 rounded-full animate-pulse"></div>
                   </div>
                 </div>
                 <div className="flex items-center mt-4">
-                  <span className="mr-4 text-left">3. Others</span>
+                  <span className="mr-4 text-left transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+                    3. Others
+                  </span>
                   <div className="w-24 h-4 bg-gray-300 rounded-full overflow-hidden">
                     <div className="h-full bg-blue-500 rounded-full animate-pulse"></div>
                   </div>
