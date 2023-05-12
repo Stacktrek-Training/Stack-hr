@@ -60,7 +60,7 @@ const ExpenseNavbar = () => {
           <div className="hidden md:block items-center">
             <a
               href="#"
-              className="text-blue-600 hover:text-blue-600 mr-10 relative"
+              className="text-blue-600 hover:text-blue-600 mr-10 relative transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
             >
               Dashboard
               <div className="absolute top-9 left-0 w-full h-1 bg-blue-600"></div>
