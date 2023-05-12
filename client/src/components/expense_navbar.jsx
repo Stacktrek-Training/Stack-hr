@@ -65,7 +65,10 @@ const ExpenseNavbar = () => {
               Dashboard
               <div className="absolute top-9 left-0 w-full h-1 bg-blue-600"></div>
             </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 mr-10">
+            <a
+              href="#"
+              className="text-gray-700 hover:text-blue-600 mr-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+            >
               Statistics
             </a>
             <a href="#" className="text-gray-700 hover:text-blue-600 mr-10">
