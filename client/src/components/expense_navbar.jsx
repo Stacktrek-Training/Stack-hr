@@ -71,7 +71,10 @@ const ExpenseNavbar = () => {
             >
               Statistics
             </a>
-            <a href="#" className="text-gray-700 hover:text-blue-600 mr-10">
+            <a
+              href="#"
+              className="text-gray-700 hover:text-blue-600 mr-10 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300"
+            >
               Logout
             </a>
           </div>
