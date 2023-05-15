@@ -59,7 +59,7 @@ function CircleProgressbar(props) {
       </div>
       <div className="text-center">
         {" "}
-        <h1>{reimburseLimit}</h1>{" "}
+        <h1>700/{reimburseLimit}</h1>{" "}
       </div>
     </div>
   );

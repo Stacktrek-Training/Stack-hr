@@ -6,7 +6,7 @@ import EditLimitButton from "./user_edit_limit_button";
 function ContainerDashboard() {
   return (
     <div className="mx-0.5 BoxMonth">
-      <div className="flex">
+      <div className="md:flex">
         <div className="w-72 h-72 rounded-xl ml-10 flex flex-col justify-center items-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
           <span className="align-middle text-center font-bold">Supervisor</span>
           <img
@@ -22,7 +22,7 @@ function ContainerDashboard() {
               April
             </span>
             {/* Right side: container */}
-            <div className=" Box flex align-middle text-center">
+            <div className=" Box md:flex align-middle text-center">
               <div class="justify-center items-center">
                 <CircleProgressbar />
               </div>{" "}
