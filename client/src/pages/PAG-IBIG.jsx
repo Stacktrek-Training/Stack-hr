@@ -5,7 +5,7 @@ import axios from "axios";
 // import EditDeduction from "../components/edit_deduction";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
-import ShowTable from "../components/show_table";
+// import ShowTable from "../components/show_table";
 import AddDeductionPagIbig from "../components/add_deduction_pagibig";
 import EditDeductionPagIbig from "../components/edit_deduction_pagibig";
 
@@ -39,7 +39,7 @@ const PAGIBIG = () => {
         <div className="flex-1 p-12 mt-20">
           <div className=" flex justify-between mb-2">
             {" "}
-            <ShowTable />
+            {/* <ShowTable /> */}
           </div>
           <div className="mb-5  ">
             <AddDeductionPagIbig />

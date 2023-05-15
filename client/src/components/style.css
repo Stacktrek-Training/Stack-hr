@@ -26,7 +26,14 @@
 .image {
   margin-top: -100px;
 }
-
+.ul {
+  margin-top: 100px;
+}
+.dropdown {
+  position: absolute;
+  left: 15.1rem;
+  top: 25rem;
+}
 .avatar {
   height: 50px;
   width: 50px;
@@ -122,6 +129,6 @@
 
 @keyframes circleAnim {
   100% {
-    stroke-dashoffset: 114;
+    stroke-dashoffset: 165;
   }
 }
