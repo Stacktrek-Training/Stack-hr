@@ -47,7 +47,6 @@ const AddEmployee = () => {
         middle_name: middle_name,
         last_name: last_name,
         province: province,
-        city: city,
         municipality: municipality,
         baranggay: baranggay,
         zipcode: zipcode,
@@ -314,7 +313,7 @@ const AddEmployee = () => {
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Province
+                    Province/City
                   </label>
                   <input
                     type="text"
@@ -323,19 +322,6 @@ const AddEmployee = () => {
                     placeholder="Province"
                     required
                     onChange={(e) => setProvince(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    City
-                  </label>
-                  <input
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="City"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                    required
                   />
                 </div>
                 <div>
