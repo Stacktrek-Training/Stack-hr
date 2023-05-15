@@ -23,7 +23,7 @@ function ContainerDashboard() {
             </span>
             {/* Right side: container */}
             <div className=" Box md:flex align-middle text-center">
-              <div class="justify-center items-center">
+              <div class="flex justify-center items-center">
                 <CircleProgressbar />
               </div>{" "}
               {/* Top 3 */}

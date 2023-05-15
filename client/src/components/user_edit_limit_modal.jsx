@@ -14,7 +14,7 @@ function EditLimitModal({ visible, onClose }) {
       onClick={handleOnClose}
       className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
     >
-      <div className="bg-white p-5 rounded relative">
+      <div className="bg-white p-5 rounded relative ExpenseModal">
         {/* Close button */}
         <button
           className="absolute top-0 right-0 m-2 shadow-sm"
@@ -37,7 +37,7 @@ function EditLimitModal({ visible, onClose }) {
         </button>
 
         <div className="bg-white p-2 rounded">
-          <div className="flex flex-col md:flex-row md:items-center">
+          <div className="flex flex-col md:items-center">
             {/* Current limit */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-2 md:mt-0">
               <label className="block mb-2 font-bold">
@@ -46,7 +46,7 @@ function EditLimitModal({ visible, onClose }) {
             </div>
 
             {/* Circle progress bar */}
-            <div className="flex items-center">
+            <div class="flex justify-center items-center">
               <CircleProgressbar />
             </div>
 
