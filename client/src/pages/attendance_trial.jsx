@@ -4,7 +4,7 @@ import axios from "axios";
 import Sidebar2 from "../components/sidebar2";
 import Navbar from "../components/navbar";
 
-function Attendance1() {
+function Attendance1({ employee }) {
   const [timeIn, setTimeIn] = useState(null);
   const [timeOut, setTimeOut] = useState(null);
   const id = 3;
@@ -33,6 +33,7 @@ function Attendance1() {
         })
         .then((response) => {
           console.log(response.data);
+          alert("Attendance Time In recorded successfully.");
           window.location.href = "/att";
         });
     } catch (error) {
@@ -46,6 +47,7 @@ function Attendance1() {
         .put(`http://localhost:4000/attendance/${id}`)
         .then((response) => {
           console.log(response.data);
+          alert("Attendance Time Out recorded successfully.");
           window.location.href = "/att";
         });
     } catch (error) {
@@ -72,6 +74,7 @@ function Attendance1() {
         <div class="mx-auto w-[400px] mt-40">
           <div className="mb-4">
             <div className="flex items-center justify-between">
+              {employee && <h1>{employee.employee_id}</h1>}
               {timeIn ? (
                 <button
                   onClick={saveTimeOut}
