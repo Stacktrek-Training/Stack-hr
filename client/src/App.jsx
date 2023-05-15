@@ -14,6 +14,7 @@ import EmployeeDashboard from "./pages/employee_dashboard";
 import Attendance from "./pages/employee_attendance";
 import Attendance1 from "./pages/attendance_trial";
 import JobRoles from "./pages/jobroles";
+import Login from "./pages/login_page";
 import AttendanceHr from "./pages/attendance_hr";
 
 function App() {
@@ -22,6 +23,9 @@ function App() {
       <Switch>
         {/* DEFUALT PATH */}
         <Route exact path="/">
+          <Login />
+        </Route>
+        <Route path="/dashboard">
           <Dashboard />
         </Route>
         <Route path="/employee">

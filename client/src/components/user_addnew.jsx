@@ -35,7 +35,7 @@ function AddNew({ visible, onClose }) {
       onClick={handleOnClose}
       className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
     >
-      <div className="bg-white p-2 rounded relative">
+      <div className="bg-white p-2 rounded relative ExpenseModal mt-10">
         {/* Close button */}
         <button
           className="absolute top-0 right-0 m-2 shadow-sm"
@@ -57,7 +57,7 @@ function AddNew({ visible, onClose }) {
           </svg>
         </button>
         <form onSubmit={handleSave} className="bg-white p-2 rounded">
-          <div className="flex flex-col md:flex-row md:items-center">
+          <div className="flex flex-col md:items-center">
             {/* Date picker */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-5">
               <label class="block mb-2 font-bold">

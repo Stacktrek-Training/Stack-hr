@@ -95,13 +95,11 @@ const AddEmployee = () => {
               class="w-5 h-5 text-gray-500 dark:text-gray-400"
               fill="currentColor"
               viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+              xmlns="http://www.w3.org/2000/svg">
               <path
                 fill-rule="evenodd"
                 d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                clip-rule="evenodd"
-              ></path>
+                clip-rule="evenodd"></path>
             </svg>
           </div>
 
@@ -120,8 +118,7 @@ const AddEmployee = () => {
         onClick={handleModalOpen}
         title="Add Employee"
         class=" flex  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5  py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        type="button"
-      >
+        type="button">
         Add Employee
       </button>
 
@@ -131,28 +128,24 @@ const AddEmployee = () => {
         aria-hidden="true"
         class={`fixed  z-50 w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 ${
           isModalOpen ? "" : "hidden"
-        } flex items-center justify-center`}
-      >
+        } flex items-center justify-center`}>
         <div class="relative w-full max-w-2xl max-h-full Modal ">
           {/* <!-- Modal content --> */}
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button
               type="button"
               class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
-              onClick={handleModalClose}
-            >
+              onClick={handleModalClose}>
               <svg
                 aria-hidden="true"
                 class="w-5 h-5"
                 fill="currentColor"
                 viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                xmlns="http://www.w3.org/2000/svg">
                 <path
                   fill-rule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                ></path>
+                  clip-rule="evenodd"></path>
               </svg>
               <span class="sr-only">Close modal</span>
             </button>
@@ -162,13 +155,11 @@ const AddEmployee = () => {
               </h3>
               <form
                 class="space-y flex flex-wrap gap-1.5 flex-col  "
-                onSubmit={handleSave}
-              >
+                onSubmit={handleSave}>
                 <div>
                   <label
                     for="firstname"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     First Name
                   </label>
                   <input
@@ -183,8 +174,7 @@ const AddEmployee = () => {
                 <div>
                   <label
                     for="middlename"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Middle Name
                   </label>
                   <input
@@ -199,8 +189,7 @@ const AddEmployee = () => {
                 <div>
                   <label
                     for="lastname"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Last Name
                   </label>
                   <input
@@ -216,8 +205,7 @@ const AddEmployee = () => {
                 <div>
                   <label
                     for="birthday"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Birthday
                   </label>
                   <input
@@ -233,16 +221,14 @@ const AddEmployee = () => {
                 <div>
                   <label
                     for="gender"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Gender
                   </label>
                   <select
                     id="gender"
                     value={gender}
                     onChange={(e) => setGender(e.target.value)}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  >
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                     <option value="" disabled selected hidden>
                       Gender
                     </option>
@@ -259,16 +245,14 @@ const AddEmployee = () => {
                 <div>
                   <label
                     for="marital_status"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Marital Status
                   </label>
                   <select
                     id="marital_status"
                     value={marital_status}
                     onChange={(e) => setMaritalStatus(e.target.value)}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  >
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                     <option value="" disabled selected hidden>
                       {" "}
                       Marital Status
@@ -288,8 +272,7 @@ const AddEmployee = () => {
                 <div>
                   <label
                     for="Job roles"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     {" "}
                     Job Roles
                   </label>
@@ -297,8 +280,7 @@ const AddEmployee = () => {
                   <select
                     value={job_title}
                     onChange={(e) => setJobTitle(e.target.value)}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                  >
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                     <option value="" disabled selected hidden>
                       Job Role
                     </option>
@@ -306,8 +288,9 @@ const AddEmployee = () => {
                       <option
                         className="capitalize"
                         value={job_role.job_role_id}
-                        key={job_role.job_role_id}
-                      >{`${job_role.job_title}`}</option>
+                        key={
+                          job_role.job_role_id
+                        }>{`${job_role.job_title}`}</option>
                     ))}
                   </select>
                 </div>
@@ -477,8 +460,7 @@ const AddEmployee = () => {
                 </div>
                 <button
                   type="submit"
-                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
+                  class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                   Save
                 </button>
               </form>

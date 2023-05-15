@@ -26,6 +26,22 @@ function CircleProgressbar(props) {
     return <div>Loading...</div>;
   }
 
+  useEffect(() => {
+    axios
+      .get(`http://localhost:4000C/expense/${id}`)
+      .then((response) => {
+        setExpense(response.data);
+
+        //calculate total amount
+        let sum = 0;
+        response.data.forEach((expense) => {
+          sum += expense.data;
+        });
+          totalAmount = sum;
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <div class="progressBody block py-7 px-5">
       <div class="skill mb-5 ">
@@ -59,7 +75,7 @@ function CircleProgressbar(props) {
       </div>
       <div className="text-center">
         {" "}
-        <h1>{reimburseLimit}</h1>{" "}
+        <h1>{{sum}}/{reimburseLimit}</h1>{" "}
       </div>
     </div>
   );
