@@ -991,6 +991,20 @@ app.post("/api/attendance/in", async (req, res) => {
   }
 });
 
+//get attendance and display in HR
+app.post("/employeeAttendance", async (req, res) => {
+  try {
+    const { date } = req.body;
+    const getAttendance = await pool.query(
+      `SELECT a.*, e.middle_name,e.last_name,e.first_name,e.employee_number FROM "attendance" a JOIN "EMPLOYEES" e ON a.employee_id =  e.employee_id WHERE DATE(time_in) = $1`,
+      [date]
+    );
+    res.json(getAttendance.rows);
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 // create a PUT route for recording time out
 app.put("/api/attendance/out", async (req, res) => {
   const { employeeId } = req.body;
