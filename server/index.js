@@ -965,13 +965,13 @@ app.post("/api/attendance/in", async (req, res) => {
   const { employeeId } = req.body;
 
   try {
-    // get the current date
-    const today = new Date().toISOString().slice(0, 10);
+    // get the current date and time
+    const now = new Date();
 
     // check if the employee has already timed in today
     const attendance = await pool.query(
       "SELECT time_in FROM attendance WHERE employee_id = $1 AND DATE(time_in) = $2",
-      [employeeId, today]
+      [employeeId, now.toISOString().slice(0, 10)]
     );
 
     if (attendance.rowCount > 0) {
@@ -982,11 +982,11 @@ app.post("/api/attendance/in", async (req, res) => {
 
     // insert the attendance record for time in
     const result = await pool.query(
-      "INSERT INTO attendance (employee_id, time_in) VALUES ($1, NOW()) RETURNING time_in",
-      [employeeId]
+      "INSERT INTO attendance (employee_id, time_in) VALUES ($1, $2) RETURNING *",
+      [employeeId, now]
     );
 
-    res.status(200).json({ timeIn: result.rows[0].time_in });
+    res.status(200).json(result.rows[0]);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error while recording Attendance Time In.");
@@ -998,13 +998,13 @@ app.put("/api/attendance/out", async (req, res) => {
   const { employeeId } = req.body;
 
   try {
-    // get the current date
-    const today = new Date().toISOString().slice(0, 10);
+    // get the current date and time
+    const now = new Date();
 
     // check if the employee has already timed out today or has not timed in
     const attendance = await pool.query(
       "SELECT time_in, time_out FROM attendance WHERE employee_id = $1 AND DATE(time_in) = $2",
-      [employeeId, today]
+      [employeeId, now.toISOString().slice(0, 10)]
     );
 
     if (attendance.rowCount === 0) {
@@ -1019,34 +1019,21 @@ app.put("/api/attendance/out", async (req, res) => {
         .send("Attendance Time Out already recorded for today.");
     }
 
-    // update the attendance record for time out
+    // update the attendance record for time out and working hours
+    const timeIn = new Date(attendance.rows[0].time_in);
+    const timeOut = now;
+    const diffInMs = timeOut.getTime() - timeIn.getTime();
+    const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
+
     const result = await pool.query(
-      "UPDATE attendance SET time_out = NOW() WHERE employee_id = $1 AND DATE(time_in) = $2 RETURNING time_out",
-      [employeeId, today]
+      "UPDATE attendance SET time_out = $1, working_hours = $2 WHERE employee_id = $3 AND DATE(time_in) = $4 RETURNING *",
+      [timeOut, workingHours, employeeId, now.toISOString().slice(0, 10)]
     );
 
-    res.status(200).json({ timeOut: result.rows[0].time_out });
+    res.status(200).json(result.rows[0]);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error while recording Attendance Time Out.");
-  }
-});
-
-// create a POST route for inserting a new attendance record
-app.post("/api/attendance", async (req, res) => {
-  const { employeeId, timeIn, timeOut, workingHours } = req.body;
-
-  try {
-    // insert the attendance record
-    const result = await pool.query(
-      "INSERT INTO attendance (employee_id, time_in, time_out, working_hours) VALUES ($1, $2, $3, $4) RETURNING attendance_id",
-      [employeeId, timeIn, timeOut, workingHours]
-    );
-
-    res.status(200).json({ attendanceId: result.rows[0].attendance_id });
-  } catch (err) {
-    console.error(err.message);
-    res.status(500).send("Server error while inserting Attendance record.");
   }
 });
 
