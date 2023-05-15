@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./../components/style.css";
 import CircleProgressbar from "./user_circle_progressbar";
 
-function EditLimitModal({ visible, onClose }) {
+function EditLimitModal({ visible, onClose, props }) {
   const handleOnClose = (e) => {
     if (e.target.id === "editlimitcontainer") onClose();
   };
   if (!visible) return null;
+
+  const [reimburseLimit, setReimburseLimit] = useState(null);
+  const id = 1;
+  useEffect(() => {
+    const fetchEmployee = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/employee/${id}`
+        );
+        setReimburseLimit(response.data[0].reimbursed_limit);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchEmployee();
+  }, [id]);
+
+  if (reimburseLimit === null) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
@@ -41,7 +63,8 @@ function EditLimitModal({ visible, onClose }) {
             {/* Current limit */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-2 md:mt-0">
               <label className="block mb-2 font-bold">
-                Current Limit: <span className="text-orange-500">₱10,000</span>
+                Current Limit:{" "}
+                <span className="text-orange-500">₱{reimburseLimit}</span>
               </label>
             </div>
 
