@@ -132,3 +132,12 @@
     stroke-dashoffset: 165;
   }
 }
+
+.ExpenseModal {
+  opacity: 0;
+  transform: translateY(50%);
+  animation: scroll-in 0.5s ease-out forwards;
+  scroll-behavior: smooth;
+  height: 30rem;
+  width: 25rem;
+}
