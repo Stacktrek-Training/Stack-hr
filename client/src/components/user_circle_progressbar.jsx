@@ -6,6 +6,7 @@ import "./../progressbar.js";
 function CircleProgressbar(props) {
   const [reimburseLimit, setReimburseLimit] = useState(null);
   const id = 1;
+  let totalAmount = 0;
 
   useEffect(() => {
     const fetchEmployee = async () => {
@@ -23,12 +24,12 @@ function CircleProgressbar(props) {
   }, [id]);
 
   if (reimburseLimit === null) {
-    return <div>Loading...</div>;
+    return <div></div>;
   }
 
   useEffect(() => {
     axios
-      .get(`http://localhost:4000C/expense/${id}`)
+      .get(`http://localhost:4000/expense/${id}`)
       .then((response) => {
         setExpense(response.data);
 
@@ -75,7 +76,7 @@ function CircleProgressbar(props) {
       </div>
       <div className="text-center">
         {" "}
-        <h1>{{sum}}/{reimburseLimit}</h1>{" "}
+        <h1>{}/{reimburseLimit}</h1>{" "}
       </div>
     </div>
   );

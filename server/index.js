@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const pool = require("./database");
 const app = express();
+const moment = require('moment');
 
 app.use(cors());
 app.use(express.json());
@@ -944,6 +945,23 @@ app.get("/expenses", async (req, res) => {
     console.error(error.message);
   }
 });
+
+//expense total amount
+app.get("/expense/:id/:month", async (req, res) => {
+  try {
+    const { id, month } = req.params;
+    const currentMonth = moment().month() + 1;
+    const getTotalExpenses = await pool.query(
+      `SELECT SUM(amount) AS total_amount FROM "EXPENSES" WHERE employee_id=$1 AND EXTRACT(MONTH FROM "date") = $2`,
+      [id, month]
+    );
+    const { total_amount } = getTotalExpenses.rows[0];
+    res.json({ total_amount });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
 app.get("/api/cities/:country", async (req, res) => {
   try {
     const { country } = req.params;
