@@ -898,7 +898,7 @@ app.post("/expense", async (req, res) => {
     const { category, amount, receipt, date } = req.body;
     const insertExp = await pool.query(
       // DATABASE COLUMN NAME
-      `INSERT INTO "Expenses"(category,amount,receipt,date_inserted,date)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4) RETURNING *`,
+      `INSERT INTO "EXPENSES"(category,amount,receipt,date_inserted,date)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4) RETURNING *`,
       [category, amount, receipt, date]
     );
     res.json("Inserted data");
