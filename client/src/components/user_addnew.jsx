@@ -35,7 +35,7 @@ function AddNew({ visible, onClose }) {
       onClick={handleOnClose}
       className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
     >
-      <div className="bg-white p-2 rounded relative ExpenseModal">
+      <div className="bg-white p-2 rounded relative ExpenseModal mt-10">
         {/* Close button */}
         <button
           className="absolute top-0 right-0 m-2 shadow-sm"
