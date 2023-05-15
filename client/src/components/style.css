@@ -26,10 +26,46 @@
 .image {
   margin-top: -100px;
 }
-
+.ul {
+  margin-top: 100px;
+}
+.dropdown {
+  position: absolute;
+  left: 15.1rem;
+  top: 25rem;
+}
 .avatar {
   height: 50px;
   width: 50px;
+}
+.background {
+  background-image: url(../assets/Background.png);
+  background-size: cover;
+}
+.logo {
+  background-image: url(../assets/logo.png);
+  background-repeat: no-repeat;
+  margin-top: 2rem;
+  margin-left: 2rem;
+}
+.stack {
+  background-image: url(../assets/stacktrek.png);
+  background-repeat: no-repeat;
+  background-size: 30%;
+  margin-top: 5rem;
+  margin-left: -10rem;
+  z-index: 10;
+}
+.LoginForm {
+  margin-top: 10rem;
+  margin-left: 5rem;
+}
+.LoginForm input {
+  height: 3rem;
+}
+.LoginForm a {
+  margin-left: 14rem;
+  border-radius: 20px 0px 12px 20px;
 }
 .Font {
   font-size: 50px;
@@ -62,7 +98,7 @@
 }
 
 .Box {
-  width: 65rem;
+  width: 70vw;
 }
 
 .BoxMonth {
@@ -122,6 +158,15 @@
 
 @keyframes circleAnim {
   100% {
-    stroke-dashoffset: 114;
+    stroke-dashoffset: 165;
   }
+}
+
+.ExpenseModal {
+  opacity: 0;
+  transform: translateY(50%);
+  animation: scroll-in 0.5s ease-out forwards;
+  scroll-behavior: smooth;
+  height: 30rem;
+  width: 25rem;
 }
