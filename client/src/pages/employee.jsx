@@ -77,9 +77,10 @@ const Employee = () => {
                     </td>
                     <td class="px-6 py-4">{employee.job_title}</td>
                     <td class="px-6 py-4 capitalize">
-                      {employee.province}, {employee.city},
-                      {employee.municipality}, {employee.baranggay} (
-                      {employee.zipcode})
+                      {`${employee.baranggay}${", "}${
+                        employee.municipality
+                      }${", "}
+                      ${employee.province}`}
                     </td>
                     <td class="px-6 py-4">{employee.mobile_number}</td>
                     <td class=" py-4 px-2 flex gap-2 text-center">

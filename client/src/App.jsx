@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import React from "react";
 import Dashboard from "./pages/dashboard";
 import Employee from "./pages/employee";
 import Payroll from "./pages/payrolls";
@@ -25,9 +26,10 @@ function App() {
         <Route path="/employee">
           <Employee />
         </Route>
-        <Route exact path="/employee_dashboard">
+        <Route path="/employee_dashboard">
           <EmployeeDashboard />
         </Route>
+
         <Route path="/employee_attendance">
           <Attendance />
         </Route>
