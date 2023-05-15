@@ -19,7 +19,7 @@ function Attendance() {
           employeeId,
         }
       );
-      const { time_in: recordedTimeIn } = response.data;
+      const { timeIn: recordedTimeIn } = response.data;
       alert("Attendance Time In recorded successfully.");
       setTimeIn(recordedTimeIn);
       setEmployeeId("");
@@ -42,7 +42,7 @@ function Attendance() {
           employeeId,
         }
       );
-      const { time_out: recordedTimeOut } = response.data;
+      const { timeOut: recordedTimeOut } = response.data;
       alert("Attendance Time Out recorded successfully.");
       setTimeOut(recordedTimeOut);
       setEmployeeId("");
@@ -53,8 +53,9 @@ function Attendance() {
         const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
         setWorkingHours(workingHours);
 
-        await axios.put("http://localhost:4000/api/attendance", {
+        await axios.post("http://localhost:4000/api/attendance", {
           employeeId,
+          timeIn,
           timeOut: recordedTimeOut,
           workingHours,
         });

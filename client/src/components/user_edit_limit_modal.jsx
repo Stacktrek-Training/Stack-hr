@@ -1,34 +1,12 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import "./../components/style.css";
 import CircleProgressbar from "./user_circle_progressbar";
 
-function EditLimitModal({ visible, onClose, props }) {
+function EditLimitModal({ visible, onClose }) {
   const handleOnClose = (e) => {
     if (e.target.id === "editlimitcontainer") onClose();
   };
   if (!visible) return null;
-
-  const [reimburseLimit, setReimburseLimit] = useState(null);
-  const id = 1;
-  useEffect(() => {
-    const fetchEmployee = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:4000/employee/${id}`
-        );
-        setReimburseLimit(response.data[0].reimbursed_limit);
-      } catch (error) {
-        console.error(error.message);
-      }
-    };
-
-    fetchEmployee();
-  }, [id]);
-
-  if (reimburseLimit === null) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <div
@@ -36,7 +14,7 @@ function EditLimitModal({ visible, onClose, props }) {
       onClick={handleOnClose}
       className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center"
     >
-      <div className="bg-white p-5 rounded relative ExpenseModal mt-10">
+      <div className="bg-white p-5 rounded relative">
         {/* Close button */}
         <button
           className="absolute top-0 right-0 m-2 shadow-sm"
@@ -59,17 +37,16 @@ function EditLimitModal({ visible, onClose, props }) {
         </button>
 
         <div className="bg-white p-2 rounded">
-          <div className="flex flex-col md:items-center">
+          <div className="flex flex-col md:flex-row md:items-center">
             {/* Current limit */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-2 md:mt-0">
               <label className="block mb-2 font-bold">
-                Current Limit:{" "}
-                <span className="text-orange-500">₱{reimburseLimit}</span>
+                Current Limit: <span className="text-orange-500">₱10,000</span>
               </label>
             </div>
 
             {/* Circle progress bar */}
-            <div class="flex justify-center items-center">
+            <div className="flex items-center">
               <CircleProgressbar />
             </div>
 

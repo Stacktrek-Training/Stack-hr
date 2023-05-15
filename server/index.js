@@ -852,8 +852,8 @@ app.delete("/category/:id", async (req, res) => {
   }
 });
 
-//get expense id
-app.get("/expense/:id", async (req, res) => {
+//get employee id
+app.get("/employee/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const getExp = await pool.query(
@@ -865,7 +865,7 @@ app.get("/expense/:id", async (req, res) => {
     console.error(error.message);
   }
 });
-app.get("/expense", async (req, res) => {
+/*app.get("/expense", async (req, res) => {
   try {
     const { employee_name, username, password } = req.body;
     const insertEmp = await pool.query(
@@ -877,14 +877,14 @@ app.get("/expense", async (req, res) => {
   } catch (error) {
     console.error(error.message);
   }
-});
+});*/
 
 //get expense id
 app.get("/expense/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const getEXP = await pool.query(
-      `SELECT * FROM "Expenses" WHERE expense_id=$1`,
+      `SELECT * FROM "EXPENSES" WHERE expense_id=$1`,
       [id]
     );
     res.json(getEXP.rows);

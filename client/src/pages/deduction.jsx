@@ -5,7 +5,8 @@ import "./../components/style.css";
 // import EditDeduction from "../components/edit_deduction";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
-// import ShowTable from "../components/show_table";
+import SelectEmployee from "../components/select_employee";
+import ShowTable from "../components/show_table";
 
 const Deduction = () => {
   const formatter = new Intl.NumberFormat("en-PH", {
@@ -13,6 +14,15 @@ const Deduction = () => {
     currency: "PHP",
     minimumFractionDigits: 2,
   });
+  // const [deductions, setDeductions] = useState([]);
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:4000/deductions`)
+  //     .then((response) => {
+  //       setDeductions(response.data);
+  //     })
+  //     .catch((error) => console.error(error));
+  // }, []);
   const [deductions, setDeduction] = useState([]);
 
   useEffect(() => {
@@ -34,7 +44,10 @@ const Deduction = () => {
         {/* Sidebar */}
         <Sidebar />
         <div className="flex-1 justify-between p-12 mt-20">
-          <div className=" flex justify-start mb-2"> {/* <ShowTable /> */}</div>
+          <div className=" flex justify-start mb-2">
+            {" "}
+            <ShowTable />
+          </div>
           <div className="mb-5 flex justify-end mb-2 ">
             <div class="flex items-center">
               <label for="simple-search" class="sr-only">
@@ -47,11 +60,13 @@ const Deduction = () => {
                     class="w-5 h-5 text-gray-500 dark:text-gray-400"
                     fill="currentColor"
                     viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
                     <path
                       fill-rule="evenodd"
                       d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                      clip-rule="evenodd"></path>
+                      clip-rule="evenodd"
+                    ></path>
                   </svg>
                 </div>
 
@@ -97,10 +112,12 @@ const Deduction = () => {
                 {deductions.map((deduction, index) => (
                   <tr
                     key={deduction.deduction_id}
-                    class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  >
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
                       {" "}
                       {index + 1}
                     </th>

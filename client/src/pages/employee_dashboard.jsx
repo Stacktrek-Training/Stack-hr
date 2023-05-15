@@ -13,7 +13,7 @@ const EmployeeDashboard = () => {
         {/* Sidebar */}
         <Sidebar2 />
         <div className="flex-1 flex-wrap  flex-col p-20 ">
-          {/* other content for the dashboard */}
+          <h1>adminfdsfjdsjf</h1>
         </div>
       </div>
     </div>

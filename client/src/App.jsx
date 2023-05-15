@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import React from "react";
 import Dashboard from "./pages/dashboard";
 import Employee from "./pages/employee";
 import Payroll from "./pages/payrolls";
@@ -14,8 +13,6 @@ import EmployeeDashboard from "./pages/employee_dashboard";
 import Attendance from "./pages/employee_attendance";
 import Attendance1 from "./pages/attendance_trial";
 import JobRoles from "./pages/jobroles";
-import Login from "./pages/login_page";
-import AttendanceHr from "./pages/attendance_hr";
 
 function App() {
   return (
@@ -23,21 +20,14 @@ function App() {
       <Switch>
         {/* DEFUALT PATH */}
         <Route exact path="/">
-          <Login />
-        </Route>
-        <Route path="/dashboard">
           <Dashboard />
         </Route>
         <Route path="/employee">
           <Employee />
         </Route>
-        <Route path="/attendance_hr">
-          <AttendanceHr />
-        </Route>
-        <Route path="/employee_dashboard">
+        <Route exact path="/employee_dashboard">
           <EmployeeDashboard />
         </Route>
-
         <Route path="/employee_attendance">
           <Attendance />
         </Route>
