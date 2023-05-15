@@ -4,7 +4,7 @@ import "./../components/style.css";
 // import EditDeduction from "../components/edit_deduction";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
-import ShowTable from "../components/show_table";
+// import ShowTable from "../components/show_table";
 import AddDeduction from "../components/add_deduction_sss";
 import axios from "axios";
 import EditDeductionSSS from "../components/edit_deduction_sss";
@@ -41,7 +41,7 @@ const SSS = () => {
         <div className="flex-1 p-12 mt-20">
           <div className=" flex justify-between mb-2">
             {" "}
-            <ShowTable />
+            {/* <ShowTable /> */}
           </div>
           <div className="mb-5  ">
             <AddDeduction />
