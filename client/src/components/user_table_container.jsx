@@ -3,7 +3,7 @@ import React from "react";
 function TableContainer() {
   return (
     <div className="p-10 bg-gray-100 shadow-inner">
-      <div class="overflow-x-auto shadow-md sm:rounded-lg">
+      <div class="overflow-x-auto shadow-md sm:rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
         <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead class="text-xs text-gray-700 uppercase bg-gradient-to-br from-orange-500 to-orange-400 dark:bg-gray-700 dark:text-gray-400">
             <tr>
