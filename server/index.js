@@ -1170,45 +1170,6 @@ app.post("/api/attendance", async (req, res) => {
   }
 });
 
-app.post("/attendance", async (req, res) => {
-  try {
-    const { id } = req.body;
-    const insertTimeIn = await pool.query(
-      `INSERT INTO "ATTENDANCES" (employee_id, time_in, date_created)VALUES($1,CURRENT_TIME,CURRENT_DATE) RETURNING *`,
-      [id]
-    );
-    res.json(insertTimeIn.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-
-app.put("/attendance/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const timeOut = await pool.query(
-      `UPDATE "ATTENDANCES" SET time_out = CURRENT_TIME, date_updated = CURRENT_DATE WHERE employee_id = $1`,
-      [id]
-    );
-    res.json(timeOut.rows[0]);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-
-app.get("/attendance/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const getAttendance = await pool.query(
-      `SELECT * FROM "ATTENDANCES" WHERE employee_id = $1 AND date_created = CURRENT_DATE`,
-      [id]
-    );
-    res.json(getAttendance.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-
 app.listen(4000, () => {
   console.log("Listening to port 4000");
 });
