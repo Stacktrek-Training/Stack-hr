@@ -852,8 +852,8 @@ app.delete("/category/:id", async (req, res) => {
   }
 });
 
-//get expense id
-app.get("/expense/:id", async (req, res) => {
+//get employee id
+app.get("/employee/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const getExp = await pool.query(
@@ -865,7 +865,7 @@ app.get("/expense/:id", async (req, res) => {
     console.error(error.message);
   }
 });
-app.get("/expense", async (req, res) => {
+/*app.get("/expense", async (req, res) => {
   try {
     const { employee_name, username, password } = req.body;
     const insertEmp = await pool.query(
@@ -877,14 +877,14 @@ app.get("/expense", async (req, res) => {
   } catch (error) {
     console.error(error.message);
   }
-});
+});*/
 
 //get expense id
 app.get("/expense/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const getEXP = await pool.query(
-      `SELECT * FROM "Expenses" WHERE expense_id=$1`,
+      `SELECT * FROM "EXPENSES" WHERE expense_id=$1`,
       [id]
     );
     res.json(getEXP.rows);
@@ -898,7 +898,7 @@ app.post("/expense", async (req, res) => {
     const { category, amount, receipt, date } = req.body;
     const insertExp = await pool.query(
       // DATABASE COLUMN NAME
-      `INSERT INTO "Expenses"(category,amount,receipt,date_inserted,date)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4) RETURNING *`,
+      `INSERT INTO "EXPENSES"(category,amount,receipt,date_inserted,date)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4) RETURNING *`,
       [category, amount, receipt, date]
     );
     res.json("Inserted data");
@@ -988,6 +988,20 @@ app.post("/api/attendance/in", async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error while recording Attendance Time In.");
+  }
+});
+
+//get attendance and display in HR
+app.post("/employeeAttendance", async (req, res) => {
+  try {
+    const { date } = req.body;
+    const getAttendance = await pool.query(
+      `SELECT a.*, e.middle_name,e.last_name,e.first_name,e.employee_number FROM "attendance" a JOIN "EMPLOYEES" e ON a.employee_id =  e.employee_id WHERE DATE(time_in) = $1`,
+      [date]
+    );
+    res.json(getAttendance.rows);
+  } catch (error) {
+    console.error(error.message);
   }
 });
 
