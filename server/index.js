@@ -952,11 +952,11 @@ app.get("/expense/:id/:month", async (req, res) => {
     const { id, month } = req.params;
     const currentMonth = moment().month() + 1;
     const getTotalExpenses = await pool.query(
-      `SELECT SUM(amount) AS total_amount FROM "EXPENSES" WHERE employee_id=$1 AND EXTRACT(MONTH FROM "date") = $2`,
+      `SELECT amount AS totalAmount FROM "EXPENSES" WHERE employee_id=$1 AND EXTRACT(MONTH FROM "date") = $2`,
       [id, month]
     );
-    const { total_amount } = getTotalExpenses.rows[0];
-    res.json({ total_amount });
+    const { totalAmount } = getTotalExpenses.rows[0];
+    res.json({ totalAmount });
   } catch (error) {
     console.error(error.message);
   }
@@ -1006,6 +1006,20 @@ app.post("/api/attendance/in", async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error while recording Attendance Time In.");
+  }
+});
+
+//get attendance and display in HR
+app.post("/employeeAttendance", async (req, res) => {
+  try {
+    const { date } = req.body;
+    const getAttendance = await pool.query(
+      `SELECT a.*, e.middle_name,e.last_name,e.first_name,e.employee_number FROM "attendance" a JOIN "EMPLOYEES" e ON a.employee_id =  e.employee_id WHERE DATE(time_in) = $1`,
+      [date]
+    );
+    res.json(getAttendance.rows);
+  } catch (error) {
+    console.error(error.message);
   }
 });
 

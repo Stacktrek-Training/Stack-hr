@@ -5,16 +5,22 @@ import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
 const AttendanceHr = () => {
   // for getting all employees
-  const [employees, setEmployees] = useState([]);
+  const [attendanceData, setAttendanceData] = useState([]);
+  const [selectedDate, setSelectedDate] = useState("");
 
   useEffect(() => {
+    fetchAttendanceData(selectedDate);
+  }, [selectedDate]);
+
+  const fetchAttendanceData = (date) => {
+    const currentDate = date || new Date().toISOString().split("T")[0];
     axios
-      .get("http://localhost:4000/employee")
+      .post("http://localhost:4000/employeeAttendance", { date: currentDate })
       .then((response) => {
-        setEmployees(response.data);
+        setAttendanceData(response.data);
       })
       .catch((error) => console.error(error));
-  }, []);
+  };
 
   return (
     <div className="h-screen relative">
@@ -65,19 +71,16 @@ const AttendanceHr = () => {
                 />
               </div>
             </div>
-            <div className="flex space-x-1">
-              <input
-                type="date"
-                className="ml-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30  pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-              <button
-                title="Sort"
-                class=" flex  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5  py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                type="button"
-              >
-                SORT
-              </button>
-            </div>
+            <form action="">
+              <div className="flex space-x-1">
+                <input
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => setSelectedDate(e.target.value)}
+                  className="ml-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30  pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+            </form>
           </div>
 
           <div className="relative Table overflow-x-auto shadow-md ">
@@ -89,9 +92,6 @@ const AttendanceHr = () => {
                   </th>
                   <th scope="col" class="px-6 py-3">
                     Employee Name
-                  </th>
-                  <th scope="col" class="px-6 py-3">
-                    Job Role
                   </th>
 
                   <th scope="col" class="px-6 py-3">
@@ -106,25 +106,56 @@ const AttendanceHr = () => {
                 </tr>
               </thead>
               <tbody>
-                {employees.map((employee) => (
+                {attendanceData.map((attendance) => (
                   <tr
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    key={employee.employee_id}
+                    key={attendance.attendance_id}
                   >
                     <th
                       scope="row"
                       class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                     >
-                      {employee.employee_number}
+                      {attendance.employee_number}
                     </th>
                     <td class="px-6 py-4 capitalize">
-                      {employee.last_name}, {employee.first_name}{" "}
-                      {employee.middle_name}
+                      {`${attendance.last_name}${", "}${
+                        attendance.first_name
+                      } ${attendance.middle_name}`}
                     </td>
-                    <td class="px-6 py-4">{employee.job_title}</td>
-                    <td class="px-6 py-4 capitalize">January, 1 2000</td>
-                    <td class="px-6 py-4 capitalize">8:00 AM</td>
-                    <td class="px-6 py-4">4:00 PM</td>
+
+                    <td class="px-6 py-4 capitalize">
+                      {" "}
+                      {new Date(attendance.time_in).toLocaleDateString(
+                        "en-US",
+                        {
+                          month: "long",
+                          day: "numeric",
+                          year: "numeric",
+                        }
+                      )}
+                    </td>
+                    <td class="px-6 py-4 capitalize">
+                      {new Date(attendance.time_in).toLocaleTimeString(
+                        "en-US",
+                        {
+                          hour: "numeric",
+                          minute: "numeric",
+                          hour12: true,
+                        }
+                      )}
+                    </td>
+                    <td class="px-6 py-4">
+                      {attendance.time_out
+                        ? new Date(attendance.time_out).toLocaleTimeString(
+                            "en-US",
+                            {
+                              hour: "numeric",
+                              minute: "numeric",
+                              hour12: true,
+                            }
+                          )
+                        : "-----------"}
+                    </td>
                   </tr>
                 ))}
               </tbody>
