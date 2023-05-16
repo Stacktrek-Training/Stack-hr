@@ -50,17 +50,20 @@ const Payroll = () => {
                 <tr>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
+                  >
                     #
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
+                  >
                     Employee
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
+                  >
                     JobRole
                   </th>
 
@@ -71,148 +74,175 @@ const Payroll = () => {
                   <th
                     colspan="1"
                     scope="colgroup"
-                    class="w-1/10 border border-gray-300 px-2">
+                    class="w-1/10 border border-gray-300 px-2"
+                  >
                     {" "}
                     Monthly-Item
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
+                  >
                     Regular Hours Taken (Hrs.)
                   </th>
                   <th
                     colspan="2"
                     scope="colgroup"
-                    class="w-1/2 border border-gray-300">
+                    class="w-1/2 border border-gray-300"
+                  >
                     Over Time
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/2 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/2 border px-4 py-8 rounded-tl-lg  border-gray-300"
+                  >
                     Gross Pay
                   </th>
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/10 border border-gray-300 ">
+                    class="w-1/10 border border-gray-300 "
+                  >
                     Deduction
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
+                  >
                     Taxable Pay
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
+                  >
                     Exempt Pay
                   </th>
 
                   <th
                     colspan="1"
                     scope="colgroup"
-                    class="w-1/10 border border-gray-300 px-2">
+                    class="w-1/10 border border-gray-300 px-2"
+                  >
                     Allowance
                   </th>
                   <th
                     colspan="1"
                     scope="colgroup"
-                    class="w-1/10 border border-gray-300 px-2">
+                    class="w-1/10 border border-gray-300 px-2"
+                  >
                     Advance
                   </th>
                   <th
                     colspan="1"
                     scope="colgroup"
-                    class="w-1/10 border border-gray-300 px-2">
+                    class="w-1/10 border border-gray-300 px-2"
+                  >
                     Deduction
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
+                  >
                     Net Pay
                   </th>
                   <th
                     colspan="1"
                     scope="colgroup"
-                    class="w-1/10 border border-gray-300 px-2">
+                    class="w-1/10 border border-gray-300 px-2"
+                  >
                     Bunos
                   </th>
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/10 border border-gray-300 px-2">
+                    class="w-1/10 border border-gray-300 px-2"
+                  >
                     Deduction
                   </th>
                 </tr>
                 <tr>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     Base Pay
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     Regular Taken
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     Overtime: Regular Worked
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     Overtime: Regular Worked (Hrs.)
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     Pag-IBIG
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     PhilHealth
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     Social Insurance
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     Allowances
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     Cash Advance
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     BIR
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     13th Month
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     Social Insurance
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  >
                     PhilHealth
                   </th>
                   <th
                     scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2"></th>
+                    class="w-1/12 border border-gray-300 capitalize px-2"
+                  ></th>
                 </tr>
               </thead>
               <tbody className="text-gray-900">
@@ -226,7 +256,7 @@ const Payroll = () => {
                   <td class="w-1/21 px-2 py-4 capitalize border border-gray-300">
                     Full Stack
                   </td>
-                  <td class="   border border-gray-300">40000</td>
+                  <td class=" border border-gray-300">40000</td>
                   <td class=" border border-gray-300">-1585.45</td>
                   <td class=" border border-gray-300">19.62</td>
                   <td class=" border border-gray-300">381.82</td>
