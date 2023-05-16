@@ -1,4 +1,16 @@
 import React from "react";
+import axios from "axios";
+
+const [employees, setEmployees] = useState([]);
+
+useEffect(() => {
+  axios
+    .get("http://localhost:4000/employee")
+    .then((response) => {
+      setEmployees(response.data);
+    })
+    .catch((error) => console.error(error));
+}, []);
 
 function TableContainer() {
   return (
