@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./../components/style.css";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 import Navbar from "../components/navbar";
 import AddJobRoles from "../components/add_jobroles";
 import EditJobRoles from "../components/edit_jobroles";

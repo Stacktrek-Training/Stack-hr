@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./../components/style.css";
 // import ShowDescription from "../components/hide_desc";
 // import EditDeduction from "../components/edit_deduction";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 import Navbar from "../components/navbar";
 // import ShowTable from "../components/show_table";
 import AddDeductionPhilHealth from "../components/add_deduction_philhealth";

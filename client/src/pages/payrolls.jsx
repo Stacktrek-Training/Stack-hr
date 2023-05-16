@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./../components/style.css";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 
 import Navbar from "../components/navbar";
 
@@ -19,9 +19,12 @@ const Payroll = () => {
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-20">
-          <div className="mb-5 flex ">{/* Add Salaries */}</div>
-          <div class="relative Table overflow-x-scroll max-w-5xl shadow-md sm:rounded-lg">
+        <div className="flex-1 p-12 mt-20 ml-14">
+          <div className="mb-5 flex text-3xl font-bold text-gray-700">
+            {" "}
+            Payroll
+          </div>
+          <div class="relative Table overflow-x-scroll max-w-4xl shadow-md  sm:rounded-lg">
             <table class="sticky top-0 text-center  Data">
               <colgroup class="bg-gray-100"></colgroup>
               <colgroup class="bg-gray-100"></colgroup>

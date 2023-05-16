@@ -1,6 +1,6 @@
 import React from "react";
 import "./../components/style.css";
-import Sidebar2 from "../components/sidebar2";
+import Sidebar2 from "../components/sidebar_employee";
 import Navbar from "../components/navbar";
 
 const EmployeeDashboard = () => {
@@ -13,7 +13,7 @@ const EmployeeDashboard = () => {
         {/* Sidebar */}
         <Sidebar2 />
         <div className="flex-1 flex-wrap  flex-col p-20 ">
-          {/* other content for the dashboard */}
+          {/* other content for the dashboard */}..
         </div>
       </div>
     </div>

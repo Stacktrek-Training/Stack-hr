@@ -1,7 +1,7 @@
 import React from "react";
 import "./../components/style.css";
 import Admin from "./admin_dashboard";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 import Navbar from "../components/navbar";
 
 const Dashboard = () => {

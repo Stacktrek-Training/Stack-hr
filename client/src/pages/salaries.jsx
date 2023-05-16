@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./../components/style.css";
 import EditSalary from "../components/edit_salaries";
 import StatusSalaries from "../components/status_salaries";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import AddSalaries from "../components/add_salaries";
