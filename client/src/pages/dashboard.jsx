@@ -14,9 +14,7 @@ const Dashboard = ({ employee }) => {
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 flex-wrap  flex-col p-20 ">
-          <Admin />
-        </div>
+        <div className="flex-1 flex-wrap  flex-col p-20 "></div>
       </div>
     </div>
   );

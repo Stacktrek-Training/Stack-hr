@@ -259,7 +259,7 @@ const Payroll = () => {
                   <td class="w-1/21 px-2 py-4 capitalize border border-gray-300">
                     Full Stack
                   </td>
-                  <td class="   border border-gray-300">40000</td>
+                  <td class=" border border-gray-300">40000</td>
                   <td class=" border border-gray-300">-1585.45</td>
                   <td class=" border border-gray-300">19.62</td>
                   <td class=" border border-gray-300">381.82</td>

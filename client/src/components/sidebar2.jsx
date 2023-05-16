@@ -26,7 +26,7 @@ const Sidebar2 = () => {
               <path d="M11.47 3.84a.75.75 0 011.06 0l8.69 8.69a.75.75 0 101.06-1.06l-8.689-8.69a2.25 2.25 0 00-3.182 0l-8.69 8.69a.75.75 0 001.061 1.06l8.69-8.69z" />
               <path d="M12 5.432l8.159 8.159c.03.03.06.058.091.086v6.198c0 1.035-.84 1.875-1.875 1.875H15a.75.75 0 01-.75-.75v-4.5a.75.75 0 00-.75-.75h-3a.75.75 0 00-.75.75V21a.75.75 0 01-.75.75H5.625a1.875 1.875 0 01-1.875-1.875v-6.198a2.29 2.29 0 00.091-.086L12 5.43z" />
             </svg>
-            <p className="block font-semibold text-l pl-7">Dashboard</p>
+            <p className="block font-semibold text-xl pl-7">Dashboard</p>
           </li>
         </a>
         <a href="/employee_attendance">
@@ -46,7 +46,7 @@ const Sidebar2 = () => {
               <circle cx="12" cy="12" r="2.5" fill="currentColor" />
             </svg>
 
-            <p className="block font-semibold text-l pl-7">Time in/Time out</p>
+            <p className="block font-bold text-l pl-7">Time in/Time out</p>
           </li>
         </a>
         <a href="/employee_leave">
@@ -60,7 +60,7 @@ const Sidebar2 = () => {
               <path d="M18.85,4.09A7.46,7.46,0,0,0,4.1,18.84l0,0A7.46,7.46,0,0,0,18.84,4.09Zm-1.68,11.23H16.19v1.69H12.85v-1.69H8.58V10.81h8.58Zm0-7.6H9.22L9.83,5.1H14.17l.6,2.62Z" />
             </svg>
 
-            <p className="block font-semibold text-l pl-7">Leave</p>
+            <p className="block font-semibold text-xl pl-7">Leave</p>
           </li>
         </a>
       </ul>

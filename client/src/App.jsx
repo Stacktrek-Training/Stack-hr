@@ -15,6 +15,7 @@ import Attendance from "./pages/employee_attendance";
 import JobRoles from "./pages/jobroles";
 import Login from "./pages/login_page";
 import AttendanceHr from "./pages/attendance_hr";
+import Admin from "./pages/admin_dashboard";
 
 function App() {
   const [employee, setEmployee] = useState(() => {
@@ -78,6 +79,9 @@ function App() {
         </Route>
         <Route path="/jobroles">
           <JobRoles employee={employee} />
+        </Route>
+        <Route path="/expense-admin">
+          <Admin />
         </Route>
       </Switch>
     </BrowserRouter>
