@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 const ViewEmployee = ({ employee }) => {
+  console.log(employee);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);

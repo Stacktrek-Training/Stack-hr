@@ -28,7 +28,10 @@ const Employee = () => {
       <div className="flex h-screen bg-gray-200 m-0 screen:h-screen overflow-auto screen:max-w-screen">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-20 ">
+        <div className="flex-1 p-12 mt-10 ">
+          <div className="flex justify-start mb-3">
+            <h1 className="text-3xl font-bold text-gray-700">Employees</h1>
+          </div>
           {/* Add Employee */}
           <div className="mb-5 flex ">
             <AddEmployee />

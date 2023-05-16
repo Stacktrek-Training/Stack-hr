@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import Dashboard from "./pages/dashboard";
 import Employee from "./pages/employee";
 import Payroll from "./pages/payrolls";
@@ -12,34 +12,45 @@ import SSS from "./pages/SSS";
 import PAGIBIG from "./pages/PAG-IBIG";
 import EmployeeDashboard from "./pages/employee_dashboard";
 import Attendance from "./pages/employee_attendance";
-import Attendance1 from "./pages/attendance_trial";
 import JobRoles from "./pages/jobroles";
 import Login from "./pages/login_page";
 import AttendanceHr from "./pages/attendance_hr";
 
 function App() {
+  const [employee, setEmployee] = useState(() => {
+    const storedEmployee = localStorage.getItem("employee");
+    return storedEmployee ? JSON.parse(storedEmployee) : [];
+  });
+
+  const handleLogin = (employeeData) => {
+    console.log(employeeData);
+    setEmployee(employeeData);
+    localStorage.setItem("employee", JSON.stringify(employeeData));
+  };
+
+  console.log(employee);
   return (
     <BrowserRouter>
       <Switch>
         {/* DEFUALT PATH */}
         <Route exact path="/">
-          <Login />
+          <Login onLogin={handleLogin} />
         </Route>
         <Route path="/dashboard">
-          <Dashboard />
+          <Dashboard employee={employee} />
         </Route>
         <Route path="/employee">
-          <Employee />
+          <Employee employee={employee} />
         </Route>
         <Route path="/attendance_hr">
-          <AttendanceHr />
+          <AttendanceHr employee={employee} />
         </Route>
         <Route path="/employee_dashboard">
-          <EmployeeDashboard />
+          {employee && <EmployeeDashboard employee={employee} />}
         </Route>
 
         <Route path="/employee_attendance">
-          <Attendance />
+          <Attendance employee={employee} />
         </Route>
         <Route path="/expense">
           <User />
@@ -48,28 +59,25 @@ function App() {
           <Payroll />
         </Route>
         <Route path="/salaries">
-          <Salaries />
+          <Salaries employee={employee} />
         </Route>
         <Route path="/table">
           <Table />
         </Route>
         <Route path="/deduction">
-          <Deduction />
+          <Deduction employee={employee} />
         </Route>
         <Route path="/philhealth">
-          <PhilHealth />
+          <PhilHealth employee={employee} />
         </Route>
         <Route path="/sss">
-          <SSS />
+          <SSS employee={employee} />
         </Route>
         <Route path="/pag-ibig">
-          <PAGIBIG />
+          <PAGIBIG employee={employee} />
         </Route>
         <Route path="/jobroles">
-          <JobRoles />
-        </Route>
-        <Route path="/att">
-          <Attendance1 />
+          <JobRoles employee={employee} />
         </Route>
       </Switch>
     </BrowserRouter>
