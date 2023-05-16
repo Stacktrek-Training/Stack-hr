@@ -44,7 +44,10 @@ const Salaries = () => {
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-20">
+        <div className="flex-1 p-12 mt-10">
+          <div className="flex justify-start mb-3">
+            <h1 className="text-3xl font-bold text-gray-700">Salaries</h1>
+          </div>
           <div className="mb-5 flex ">
             {/* Add Salaries */}
             <AddSalaries />
@@ -75,10 +78,12 @@ const Salaries = () => {
                   return (
                     <tr
                       class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={salary.salary_id}>
+                      key={salary.salary_id}
+                    >
                       <th
                         scope="row"
-                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                      >
                         {index + 1}
                       </th>
                       <td class="px-6 py-4 capitalize">

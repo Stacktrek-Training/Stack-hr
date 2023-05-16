@@ -4,7 +4,8 @@ import Admin from "./admin_dashboard";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
 
-const Dashboard = () => {
+const Dashboard = ({ employee }) => {
+  console.log(employee);
   return (
     <div className="h-screen relative">
       {" "}
