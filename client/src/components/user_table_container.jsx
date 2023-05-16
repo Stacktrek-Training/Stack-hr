@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const [employees, setEmployees] = useState([]);
-
-useEffect(() => {
-  axios
-    .get("http://localhost:4000/employee")
-    .then((response) => {
-      setEmployees(response.data);
-    })
-    .catch((error) => console.error(error));
-}, []);
-
 function TableContainer() {
+  const [expenses, setExpenses] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/expenses")
+      .then((response) => {
+        setExpenses(response.data);
+      })
+      .catch((error) => console.error(error));
+  }, []);
+
   return (
     <div className="p-10 bg-gray-100 shadow-inner">
       <div class="overflow-x-auto shadow-md sm:rounded-lg transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
@@ -35,90 +35,22 @@ function TableContainer() {
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td class="w-4 p-4"></td>
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                May 8, 2023
-              </th>
-              <td class="px-6 py-4">Food</td>
-              <td class="px-6 py-4">₱580</td>
-              <td class="px-6 py-4">
-                <button className=" rounded-sm text-blue-400">view</button>{" "}
-              </td>
-            </tr>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td class="w-4 p-4"></td>
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                May 7, 2023
-              </th>
-              <td class="px-6 py-4">Transportation</td>
-              <td class="px-6 py-4">₱700</td>
-              <td class="px-6 py-4">
-                <button className=" rounded-sm text-blue-400">view</button>{" "}
-              </td>
-            </tr>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td class="w-4 p-4"></td>
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                May 5, 2023
-              </th>
-              <td class="px-6 py-4">Food</td>
-              <td class="px-6 py-4">₱300</td>
-              <td class="px-6 py-4">
-                <button className=" rounded-sm text-blue-400">view</button>{" "}
-              </td>
-            </tr>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td class="w-4 p-4"></td>
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                May 3, 2023
-              </th>
-              <td class="px-6 py-4">Internet</td>
-              <td class="px-6 py-4">₱1500</td>
-              <td class="px-6 py-4">
-                <button className=" rounded-sm text-blue-400">view</button>{" "}
-              </td>
-            </tr>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td class="w-4 p-4"></td>
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                May 2, 2023
-              </th>
-              <td class="px-6 py-4">Non-Coding Activity</td>
-              <td class="px-6 py-4">₱500</td>
-              <td class="px-6 py-4">
-                <button className=" rounded-sm text-blue-400">view</button>{" "}
-              </td>
-            </tr>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td class="w-4 p-4"></td>
-              <th
-                scope="row"
-                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                May 1, 2023
-              </th>
-              <td class="px-6 py-4">Office Supplies</td>
-              <td class="px-6 py-4">₱400</td>
-              <td class="px-6 py-4">
-                <button className=" rounded-sm text-blue-400">view</button>{" "}
-              </td>
-            </tr>
+            {expenses.map((expense) => (
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td class="w-4 p-4"></td>
+                <th
+                  scope="row"
+                  class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  {expense.date}
+                </th>
+                <td class="px-6 py-4">{expense.category}</td>
+                <td class="px-6 py-4">{expense.amount}</td>
+                <td class="px-6 py-4">
+                  <button className="rounded-sm text-blue-400">view</button>{" "}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
