@@ -38,47 +38,45 @@ function App() {
           <Login onLogin={handleLogin} />
         </Route>
         <Route path="/dashboard">
-          <Dashboard employee={employee} />
+          {employee && <Dashboard employee={employee} />}
         </Route>
         <Route path="/employee">
-          <Employee employee={employee} />
+          {employee && <Employee employee={employee} />}
         </Route>
         <Route path="/attendance_hr">
-          <AttendanceHr employee={employee} />
+          {employee && <AttendanceHr employee={employee} />}
         </Route>
         <Route path="/employee_dashboard">
           {employee && <EmployeeDashboard employee={employee} />}
         </Route>
 
         <Route path="/employee_attendance">
-          <Attendance employee={employee} />
+          {employee && <Attendance employee={employee} />}
         </Route>
         <Route path="/expense">
           <User />
         </Route>
         <Route path="/payroll">
-          <Payroll />
+          {employee && <Payroll employee={employee} />}
         </Route>
         <Route path="/salaries">
-          <Salaries employee={employee} />
+          {employee && <Salaries employee={employee} />}
         </Route>
         <Route path="/table">
           <Table />
         </Route>
         <Route path="/deduction">
-          <Deduction employee={employee} />
+          {employee && <Deduction employee={employee} />}
         </Route>
         <Route path="/philhealth">
-          <PhilHealth employee={employee} />
+          {employee && <PhilHealth employee={employee} />}
         </Route>
-        <Route path="/sss">
-          <SSS employee={employee} />
-        </Route>
+        <Route path="/sss">{employee && <SSS employee={employee} />}</Route>
         <Route path="/pag-ibig">
-          <PAGIBIG employee={employee} />
+          {employee && <PAGIBIG employee={employee} />}
         </Route>
         <Route path="/jobroles">
-          <JobRoles employee={employee} />
+          {employee && <JobRoles employee={employee} />}
         </Route>
         <Route path="/expense-admin">
           <Admin />

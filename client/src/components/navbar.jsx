@@ -3,8 +3,8 @@ import image2 from "./../assets/User-Icon.jpg";
 import "./../components/style.css";
 import classNames from "classnames";
 
-const Navbar = ({ employeeId }) => {
-  console.log(employeeId);
+const Navbar = ({ employee }) => {
+  console.log(employee);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -24,7 +24,7 @@ const Navbar = ({ employeeId }) => {
       {/* Use absolute position for the navbar */}
       <div className="p-2 px-2 flex justify-end items-center pr-10 mx-auto">
         <div class="font-bold text-black pl-5 ">
-          <div className="mr-2">Sunny Virgo</div>
+          <div className="mr-2">{`${employee.first_name} ${employee.last_name}`}</div>
         </div>
         <div>
           <a

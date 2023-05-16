@@ -3,7 +3,9 @@ import "./../components/style.css";
 import axios from "axios";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
-const AttendanceHr = () => {
+const AttendanceHr = ({ employee }) => {
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   // for getting all employees
   const [attendanceData, setAttendanceData] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
@@ -26,7 +28,7 @@ const AttendanceHr = () => {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0 screen:h-screen overflow-auto screen:max-w-screen">
         {/* Sidebar */}
         <Sidebar />

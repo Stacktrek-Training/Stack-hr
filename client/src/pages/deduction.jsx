@@ -7,7 +7,9 @@ import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
 // import ShowTable from "../components/show_table";
 
-const Deduction = () => {
+const Deduction = ({ employee }) => {
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const formatter = new Intl.NumberFormat("en-PH", {
     style: "currency",
     currency: "PHP",
@@ -29,7 +31,7 @@ const Deduction = () => {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />

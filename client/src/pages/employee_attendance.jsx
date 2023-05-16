@@ -76,7 +76,7 @@ function Attendance({ employee }) {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar2 />

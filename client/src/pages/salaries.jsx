@@ -7,7 +7,9 @@ import axios from "axios";
 import Navbar from "../components/navbar";
 import AddSalaries from "../components/add_salaries";
 
-const Salaries = () => {
+const Salaries = ({ employee }) => {
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const [salaries, setSalaries] = useState([]);
 
   useEffect(() => {
@@ -40,7 +42,7 @@ const Salaries = () => {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
