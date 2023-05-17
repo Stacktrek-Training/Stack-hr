@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const pool = require("./database");
 const app = express();
-const moment = require('moment');
+const moment = require("moment");
 
 app.use(cors());
 app.use(express.json());
@@ -295,10 +295,10 @@ WHERE d.employee_id IS NULL`);
 // insert all dataa in salaries
 app.post("/salaries/", async (req, res) => {
   try {
-    const { employee_id, salary } = req.body;
+    const { employee_id, salary, rate_type, required_hours } = req.body;
     const insertSalary = await pool.query(
-      `INSERT INTO "SALARIES" (employee_id, salary, status, date_created) VALUES($1, $2, 1, CURRENT_TIMESTAMP) RETURNING *`,
-      [employee_id, salary]
+      `INSERT INTO "SALARIES" (employee_id, salary, status, rate_type, hours_required, date_created) VALUES($1, $2, 1,$3,$4, CURRENT_TIMESTAMP) RETURNING *`,
+      [employee_id, salary, rate_type, required_hours]
     );
     res.json("Data Inserted");
 
@@ -392,10 +392,10 @@ app.get("/salaries", async (req, res) => {
 app.put("/salaries/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { salary } = req.body;
+    const { salary, rate_type, required_hours } = req.body;
     const updateSalary = await pool.query(
-      `UPDATE "SALARIES" SET salary = $1, date_updated = CURRENT_TIMESTAMP WHERE employee_id=$2`,
-      [salary, id]
+      `UPDATE "SALARIES" SET salary = $1,rate_type=$3, hours_required=$4, date_updated = CURRENT_TIMESTAMP WHERE employee_id=$2`,
+      [salary, id, rate_type, required_hours]
     );
     res.json("Updated successfully");
 
@@ -855,7 +855,6 @@ app.get("/employee/:id", async (req, res) => {
   }
 });
 
-
 //add expense data
 app.post("/expense", async (req, res) => {
   try {
@@ -947,7 +946,8 @@ app.get("/expense/:id", async (req, res) => {
 app.get("/sum/:id/:month", async (req, res) => {
   try {
     const { id, month } = req.params;
-    const getTotalExpenses = await pool.query(`
+    const getTotalExpenses = await pool.query(
+      `
       SELECT
         e.first_name,
         e.middle_name,
@@ -965,15 +965,28 @@ app.get("/sum/:id/:month", async (req, res) => {
         e.middle_name,
         e.last_name,
         e.reimbursed_limit
-    `, [id, month]);
+    `,
+      [id, month]
+    );
 
-    const { first_name, middle_name, last_name, reimbursed_limit, total_amount } = getTotalExpenses.rows[0];
-    res.json({ first_name, middle_name, last_name, reimbursed_limit, total_amount });
+    const {
+      first_name,
+      middle_name,
+      last_name,
+      reimbursed_limit,
+      total_amount,
+    } = getTotalExpenses.rows[0];
+    res.json({
+      first_name,
+      middle_name,
+      last_name,
+      reimbursed_limit,
+      total_amount,
+    });
   } catch (error) {
     console.error(error.message);
   }
 });
-
 
 app.get("/api/cities/:country", async (req, res) => {
   try {

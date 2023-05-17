@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./../components/style.css";
-import Sidebar2 from "../components/sidebar2";
+import Sidebar2 from "../components/sidebar_employee";
 import Navbar from "../components/navbar";
 
 const EmployeeDashboard = ({ employee }) => {

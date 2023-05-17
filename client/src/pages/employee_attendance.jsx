@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./../components/style.css";
 import axios from "axios";
-import Sidebar2 from "../components/sidebar2";
+import Sidebar2 from "../components/sidebar_employee";
 import Navbar from "../components/navbar";
 
 function Attendance({ employee }) {
@@ -137,15 +137,13 @@ function Attendance({ employee }) {
               <button
                 className="bg-green-400 hover:bg-green-500 hover:text-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-lg"
                 type="submit"
-                onClick={handleTimeIn}
-              >
+                onClick={handleTimeIn}>
                 Time In
               </button>
               <button
                 className="bg-red-500 hover:bg-red-600 hover:text-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-lg"
                 type="submit"
-                onClick={handleTimeOut}
-              >
+                onClick={handleTimeOut}>
                 Time Out
               </button>
             </div>

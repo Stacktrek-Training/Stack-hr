@@ -3,10 +3,10 @@ import axios from "axios";
 
 function TableContainer() {
   const [expenses, setExpenses] = useState([]);
-
+  const id = 1;
   useEffect(() => {
     axios
-      .get("http://localhost:4000/expenses")
+      .get(`http://localhost:4000/expense/${id}`)
       .then((response) => {
         setExpenses(response.data);
       })

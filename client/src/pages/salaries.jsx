@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./../components/style.css";
 import EditSalary from "../components/edit_salaries";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import AddSalaries from "../components/add_salaries";
@@ -64,11 +64,14 @@ const Salaries = ({ employee }) => {
                     Employee Name
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Rate per day
+                    Rate
                   </th>
-                  {/* <th scope="col" class="px-6 py-3">
-                    Status
-                  </th> */}
+                  <th scope="col" class="px-6 py-3">
+                    Type
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Hours Required
+                  </th>
                   <th scope="col" class="px-6 py-3">
                     Action
                   </th>
@@ -79,12 +82,10 @@ const Salaries = ({ employee }) => {
                   return (
                     <tr
                       class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={salary.salary_id}
-                    >
+                      key={salary.salary_id}>
                       <th
                         scope="row"
-                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {index + 1}
                       </th>
                       <td class="px-6 py-4 capitalize">
@@ -94,10 +95,10 @@ const Salaries = ({ employee }) => {
                       <td class="px-6 py-4">
                         {formatter.format(salary.salary)}
                       </td>
-                      {/* <td class="px-6 py-4">
-                        {" "}
-                        <StatusSalaries salaries={salary} />
-                      </td> */}
+                      <td class="px-6 py-4">{salary.rate_type}</td>
+                      <td class="px-6 py-4">{`${
+                        salary.hours_required
+                      } ${"Hours"}`}</td>
                       <td class=" px-6 py-4">
                         <EditSalary salaries={salary} />
                       </td>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./../components/style.css";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 import Navbar from "../components/navbar";
 import AddJobRoles from "../components/add_jobroles";
 import EditJobRoles from "../components/edit_jobroles";
@@ -43,7 +43,7 @@ const JobRoles = ({ employee }) => {
                     #
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Job Role
+                    Position
                   </th>
 
                   <th scope="col" class="px-6 py-3">
@@ -55,12 +55,10 @@ const JobRoles = ({ employee }) => {
                 {jobrole.map((jobrole, index) => (
                   <tr
                     class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    key={jobrole.job_role_id}
-                  >
+                    key={jobrole.job_role_id}>
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       {index + 1}
                     </th>
                     <td class="px-6 py-4 capitalize">{jobrole.job_title}</td>

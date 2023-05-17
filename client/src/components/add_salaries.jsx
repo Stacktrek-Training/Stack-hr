@@ -26,12 +26,16 @@ const AddSalaries = () => {
 
   const [employee_id, setEmployeeId] = useState("");
   const [salary, setSalary] = useState("");
+  const [rate_type, setRateType] = useState("");
+  const [required_hours, setrequiredHours] = useState("");
 
   const handleSave = () => {
     axios
       .post("http://localhost:4000/salaries", {
         employee_id: parseInt(employee_id),
         salary: parseFloat(salary),
+        rate_type: rate_type,
+        required_hours: required_hours,
       })
       .then((response) => {
         console.log(response.data);
@@ -171,6 +175,51 @@ const AddSalaries = () => {
                     onInput={OnlyNumber}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Salary Rate"
+                    required
+                  />
+                </div>
+                <div>
+                  <label
+                    for="type"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Rate Type
+                  </label>
+                  <select
+                    id="type"
+                    name="type"
+                    value={rate_type}
+                    onChange={(e) => setRateType(e.target.value)}
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                  >
+                    <option value="" disabled selected hidden>
+                      Rate Type
+                    </option>
+                    <option className="capitalize" value="Per Hour">
+                      Per Hour
+                    </option>
+                    <option className="capitalize" value="Monthly">
+                      Monthly
+                    </option>
+                    <option className="capitalize" value="Daily">
+                      Daily
+                    </option>
+                  </select>
+                </div>
+                <div>
+                  <label
+                    for="required_hours"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Required Hours
+                  </label>
+                  <input
+                    type="text"
+                    value={required_hours}
+                    onChange={(e) => setrequiredHours(e.target.value)}
+                    onInput={OnlyNumber}
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Required Hours"
                     required
                   />
                 </div>
