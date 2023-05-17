@@ -36,11 +36,6 @@ function CircleProgressbar(props) {
       })
       .catch((error) => console.error(error));
   }, []);
-  
-
-  if (reimburseLimit === null) {
-    return <div></div>;
-  }
 
   return (
     <div className="progressBody block py-7 px-5">

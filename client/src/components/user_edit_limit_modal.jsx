@@ -26,10 +26,6 @@ function EditLimitModal({ visible, onClose, props }) {
     fetchEmployee();
   }, [id]);
 
-  if (reimburseLimit === null) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div
       id="editlimitcontainer"
