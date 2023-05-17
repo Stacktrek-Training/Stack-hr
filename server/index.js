@@ -858,11 +858,11 @@ app.get("/employee/:id", async (req, res) => {
 //add expense data
 app.post("/expense", async (req, res) => {
   try {
-    const { category, amount, receipt, date } = req.body;
+    const { category, amount, receipt, date, employee_id } = req.body;
     const insertExp = await pool.query(
       // DATABASE COLUMN NAME
-      `INSERT INTO "EXPENSES"(category,amount,receipt,date_inserted,date)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4) RETURNING *`,
-      [category, amount, receipt, date]
+      `INSERT INTO "EXPENSES"(category,amount,receipt,date_inserted,date,employee_id)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4, $5) RETURNING *`,
+      [category, amount, receipt, date, employee_id]
     );
     res.json("Inserted data");
   } catch (error) {
