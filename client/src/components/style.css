@@ -170,3 +170,9 @@
   height: 30rem;
   width: 25rem;
 }
+
+@media only screen and (max-width: 600px) {
+  .my-div {
+    display: none;
+  }
+}
