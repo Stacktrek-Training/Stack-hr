@@ -64,11 +64,14 @@ const Salaries = ({ employee }) => {
                     Employee Name
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Rate per day
+                    Rate
                   </th>
-                  {/* <th scope="col" class="px-6 py-3">
-                    Status
-                  </th> */}
+                  <th scope="col" class="px-6 py-3">
+                    Type
+                  </th>
+                  <th scope="col" class="px-6 py-3">
+                    Hours Required
+                  </th>
                   <th scope="col" class="px-6 py-3">
                     Action
                   </th>
@@ -92,10 +95,10 @@ const Salaries = ({ employee }) => {
                       <td class="px-6 py-4">
                         {formatter.format(salary.salary)}
                       </td>
-                      {/* <td class="px-6 py-4">
-                        {" "}
-                        <StatusSalaries salaries={salary} />
-                      </td> */}
+                      <td class="px-6 py-4">{salary.rate_type}</td>
+                      <td class="px-6 py-4">{`${
+                        salary.hours_required
+                      } ${"Hours"}`}</td>
                       <td class=" px-6 py-4">
                         <EditSalary salaries={salary} />
                       </td>

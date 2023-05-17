@@ -27,10 +27,14 @@ CREATE DATABASE "STACK-HR";
 
  CREATE table "CATEGORIES" (category_id SERIAL PRIMARY KEY, category_name VARCHAR);
 
-CREATE TABLE "EXPENSES" (expense_id SERIAL PRIMARY KEY, category VARCHAR, amount NUMERIC(10, 2), receipt BYTEA, date_inserted DATE, date_updated DATE, date DATE);
+CREATE TABLE "EXPENSES" (expense_id SERIAL PRIMARY KEY, category VARCHAR, amount NUMERIC(10, 2), receipt VARCHAR, date_inserted DATE, date_updated DATE, date DATE, employee_id INTEGER);
 
 ALTER TABLE "EXPENSES" ALTER COLUMN receipt TYPE TEXT;
+
 ALTER TABLE "EXPENSES" ADD COLUMN employee_id INT REFERENCES "EMPLOYEES" (employee_id);
+
+ALTER TABLE "EXPENSES" ALTER COLUMN employee_id SET DATA TYPE INT, ADD CONSTRAINT fk_employee_id FOREIGN KEY (employee_id) REFERENCES "EMPLOYEES" (employee_id);
+
 
 
 
