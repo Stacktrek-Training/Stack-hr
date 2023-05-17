@@ -927,7 +927,7 @@ app.get("/expense/:id", async (req, res) => {
 });
 
 //expense total amount
-app.get("/total/:id/:month", async (req, res) => {
+/*app.get("/total/:id/:month", async (req, res) => {
   try {
     const { id, month } = req.params;
     const currentMonth = moment().month() + 1;
@@ -940,7 +940,8 @@ app.get("/total/:id/:month", async (req, res) => {
   } catch (error) {
     console.error(error.message);
   }
-});
+});*/
+
 //expense connected to employees
 app.get("/sum/:id/:month", async (req, res) => {
   try {
@@ -1003,7 +1004,7 @@ app.get("/api/cities/:country", async (req, res) => {
 
 // create a POST route for recording time in
 app.post("/api/attendance/in", async (req, res) => {
-  const { employeeId } = req.body;
+  const { employeeNumber } = req.body;
 
   try {
     // get the current date and time
@@ -1011,8 +1012,8 @@ app.post("/api/attendance/in", async (req, res) => {
 
     // check if the employee has already timed in today
     const attendance = await pool.query(
-      "SELECT time_in FROM attendance WHERE employee_id = $1 AND DATE(time_in) = $2",
-      [employeeId, now.toISOString().slice(0, 10)]
+      "SELECT time_in FROM attendance WHERE employee_number = $1 AND DATE(time_in) = $2",
+      [employeeNumber, now.toISOString().slice(0, 10)]
     );
 
     if (attendance.rowCount > 0) {
@@ -1023,8 +1024,8 @@ app.post("/api/attendance/in", async (req, res) => {
 
     // insert the attendance record for time in
     const result = await pool.query(
-      "INSERT INTO attendance (employee_id, time_in) VALUES ($1, $2) RETURNING *",
-      [employeeId, now]
+      "INSERT INTO attendance (employee_number, time_in) VALUES ($1, $2) RETURNING *",
+      [employeeNumber, now]
     );
 
     res.status(200).json(result.rows[0]);
@@ -1039,7 +1040,7 @@ app.post("/employeeAttendance", async (req, res) => {
   try {
     const { date } = req.body;
     const getAttendance = await pool.query(
-      `SELECT a.*, e.middle_name,e.last_name,e.first_name,e.employee_number FROM "attendance" a JOIN "EMPLOYEES" e ON a.employee_id =  e.employee_id WHERE DATE(time_in) = $1 ORDER BY time_in DESC`,
+      `SELECT a.*, e.middle_name,e.last_name,e.first_name,e.employee_number FROM "attendance" a JOIN "EMPLOYEES" e ON a.employee_number =  e.employee_number WHERE DATE(time_in) = $1 ORDER BY time_in DESC`,
       [date]
     );
     res.json(getAttendance.rows);
@@ -1050,16 +1051,16 @@ app.post("/employeeAttendance", async (req, res) => {
 
 // create a PUT route for recording time out
 app.put("/api/attendance/out", async (req, res) => {
-  const { employeeId } = req.body;
+  const { employeeNumber, status } = req.body;
 
   try {
-    // get the current date and time
+    // Get the current date and time
     const now = new Date();
 
-    // check if the employee has already timed out today or has not timed in
+    // Check if the employee has already timed out today or has not timed in
     const attendance = await pool.query(
-      "SELECT time_in, time_out FROM attendance WHERE employee_id = $1 AND DATE(time_in) = $2",
-      [employeeId, now.toISOString().slice(0, 10)]
+      "SELECT time_in, time_out FROM attendance WHERE employee_number = $1 AND DATE(time_in) = $2",
+      [employeeNumber, now.toISOString().slice(0, 10)]
     );
 
     if (attendance.rowCount === 0) {
@@ -1074,15 +1075,21 @@ app.put("/api/attendance/out", async (req, res) => {
         .send("Attendance Time Out already recorded for today.");
     }
 
-    // update the attendance record for time out and working hours
+    // Update the attendance record for time out and working hours
     const timeIn = new Date(attendance.rows[0].time_in);
     const timeOut = now;
     const diffInMs = timeOut.getTime() - timeIn.getTime();
     const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
 
     const result = await pool.query(
-      "UPDATE attendance SET time_out = $1, working_hours = $2 WHERE employee_id = $3 AND DATE(time_in) = $4 RETURNING *",
-      [timeOut, workingHours, employeeId, now.toISOString().slice(0, 10)]
+      "UPDATE attendance SET time_out = $1, working_hours = $2, status = $3 WHERE employee_number = $4 AND DATE(time_in) = $5 RETURNING *",
+      [
+        timeOut,
+        workingHours,
+        status, // Use the status value in the update query
+        employeeNumber,
+        now.toISOString().slice(0, 10),
+      ]
     );
 
     res.status(200).json(result.rows[0]);

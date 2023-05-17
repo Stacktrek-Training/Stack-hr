@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./../components/style.css";
 import EditSalary from "../components/edit_salaries";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import AddSalaries from "../components/add_salaries";
@@ -79,12 +79,10 @@ const Salaries = ({ employee }) => {
                   return (
                     <tr
                       class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                      key={salary.salary_id}
-                    >
+                      key={salary.salary_id}>
                       <th
                         scope="row"
-                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                      >
+                        class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {index + 1}
                       </th>
                       <td class="px-6 py-4 capitalize">

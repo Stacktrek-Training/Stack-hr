@@ -6,7 +6,6 @@ import Payroll from "./pages/payrolls";
 import User from "./pages/user_dashboard";
 import Salaries from "./pages/salaries";
 import Deduction from "./pages/deduction";
-import Table from "./components/Table";
 import PhilHealth from "./pages/PhilHealth";
 import SSS from "./pages/SSS";
 import PAGIBIG from "./pages/PAG-IBIG";
@@ -61,9 +60,6 @@ function App() {
         </Route>
         <Route path="/salaries">
           {employee && <Salaries employee={employee} />}
-        </Route>
-        <Route path="/table">
-          <Table />
         </Route>
         <Route path="/deduction">
           {employee && <Deduction employee={employee} />}

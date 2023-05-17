@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./../components/style.css";
 // import ShowDescription from "../components/hide_desc";
 // import EditDeduction from "../components/edit_deduction";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 import Navbar from "../components/navbar";
 // import ShowTable from "../components/show_table";
 import AddDeduction from "../components/add_deduction_sss";
@@ -69,28 +69,24 @@ const SSS = ({ employee }) => {
                 <tr>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
-                  >
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
                     #
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
-                  >
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
                     Range of Compensation
                   </th>
 
                   <th
-                    colspan="12"
+                    colspan="9"
                     scope="colgroup"
-                    class="w-2/4 border border-gray-300"
-                  >
+                    class="w-2/4 border border-gray-300">
                     Employer - Employee
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300"
-                  >
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
                     Action
                   </th>
                 </tr>
@@ -98,30 +94,20 @@ const SSS = ({ employee }) => {
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/4 border border-gray-300"
-                  >
+                    class="w-1/4 border border-gray-300">
                     Social Security
                   </th>
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/4 border border-gray-300"
-                  >
+                    class="w-1/4 border border-gray-300">
                     Employees Compensation
                   </th>
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/4 border border-gray-300"
-                  >
+                    class="w-1/4 border border-gray-300">
                     Mandatory Provident Fund
-                  </th>
-                  <th
-                    colspan="3"
-                    scope="colgroup"
-                    class="w-1/4 border border-gray-300"
-                  >
-                    Total Contribution
                   </th>
                 </tr>
 
@@ -149,15 +135,6 @@ const SSS = ({ employee }) => {
                   </th>
                   <th scope="col" class="w-1/12 border border-gray-300">
                     EE (%)
-                  </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
-                    TOTAL
-                  </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
-                    ER
-                  </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
-                    EE
                   </th>
                   <th scope="col" class="w-1/12 border border-gray-300">
                     TOTAL
@@ -168,8 +145,7 @@ const SSS = ({ employee }) => {
                 {SSS.map((sss, index) => (
                   <tr
                     className="border border-gray-300 "
-                    key={sss.deduction_id}
-                  >
+                    key={sss.deduction_id}>
                     <td className="border border-gray-300">{index + 1}</td>
 
                     <td className="border border-gray-300">
@@ -230,9 +206,7 @@ const SSS = ({ employee }) => {
                             parseFloat(sss.employee_contribution_mpf)
                           }${"%"}`}
                     </td>
-                    <td class="w-1/12 border border-gray-300">390</td>
-                    <td class="w-1/12 border border-gray-300">180</td>
-                    <td class="w-1/12 border border-gray-300">570</td>
+
                     <td class="w-1/12 border border-gray-300 px-4">
                       <EditDeductionSSS sss={sss} />
                     </td>
