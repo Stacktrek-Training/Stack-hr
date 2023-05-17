@@ -294,10 +294,10 @@ WHERE d.employee_id IS NULL`);
 // insert all dataa in salaries
 app.post("/salaries/", async (req, res) => {
   try {
-    const { employee_id, salary } = req.body;
+    const { employee_id, salary, rate_type, required_hours } = req.body;
     const insertSalary = await pool.query(
-      `INSERT INTO "SALARIES" (employee_id, salary, status, date_created) VALUES($1, $2, 1, CURRENT_TIMESTAMP) RETURNING *`,
-      [employee_id, salary]
+      `INSERT INTO "SALARIES" (employee_id, salary, status, rate_type, hours_required, date_created) VALUES($1, $2, 1,$3,$4, CURRENT_TIMESTAMP) RETURNING *`,
+      [employee_id, salary, rate_type, required_hours]
     );
     res.json("Data Inserted");
 
@@ -391,10 +391,10 @@ app.get("/salaries", async (req, res) => {
 app.put("/salaries/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { salary } = req.body;
+    const { salary, rate_type, required_hours } = req.body;
     const updateSalary = await pool.query(
-      `UPDATE "SALARIES" SET salary = $1, date_updated = CURRENT_TIMESTAMP WHERE employee_id=$2`,
-      [salary, id]
+      `UPDATE "SALARIES" SET salary = $1,rate_type=$3, hours_required=$4, date_updated = CURRENT_TIMESTAMP WHERE employee_id=$2`,
+      [salary, id, rate_type, required_hours]
     );
     res.json("Updated successfully");
 

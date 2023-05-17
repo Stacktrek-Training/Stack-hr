@@ -9,7 +9,7 @@ import Navbar from "../components/navbar";
 import AddDeductionPagIbig from "../components/add_deduction_pagibig";
 import EditDeductionPagIbig from "../components/edit_deduction_pagibig";
 
-const PAGIBIG = (employee) => {
+const PAGIBIG = ({ employee }) => {
   const employeeData = employee && employee.length > 0 ? employee[0] : null;
 
   const formatter = new Intl.NumberFormat("en-PH", {
