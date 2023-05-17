@@ -8,10 +8,11 @@ function Attendance({ employee }) {
   console.log(employee);
   const employeeData = employee && employee.length > 0 ? employee[0] : null;
 
-  const [employeeId, setEmployeeId] = useState("");
+  const [employeeNumber, setEmployeeNumber] = useState("");
   const [timeIn, setTimeIn] = useState(null);
   const [timeOut, setTimeOut] = useState(null);
   const [workingHours, setWorkingHours] = useState(null);
+  const [status, setStatus] = useState("");
 
   const handleTimeIn = async (e) => {
     e.preventDefault();
@@ -19,13 +20,13 @@ function Attendance({ employee }) {
       const response = await axios.post(
         "http://localhost:4000/api/attendance/in",
         {
-          employeeId,
+          employeeNumber,
         }
       );
       const { time_in: recordedTimeIn } = response.data;
       alert("Attendance Time In recorded successfully.");
       setTimeIn(recordedTimeIn);
-      setEmployeeId("");
+      setEmployeeNumber("");
     } catch (err) {
       if (err.response && err.response.status === 409) {
         alert("Attendance Time In already recorded for today.");
@@ -42,13 +43,13 @@ function Attendance({ employee }) {
       const response = await axios.put(
         "http://localhost:4000/api/attendance/out",
         {
-          employeeId,
+          employeeNumber,
         }
       );
       const { time_out: recordedTimeOut } = response.data;
       alert("Attendance Time Out recorded successfully.");
       setTimeOut(recordedTimeOut);
-      setEmployeeId("");
+      setEmployeeNumber("");
 
       if (timeIn && recordedTimeOut) {
         const diffInMs =
@@ -56,11 +57,25 @@ function Attendance({ employee }) {
         const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
         setWorkingHours(workingHours);
 
+        let newStatus = "";
+        if (workingHours >= 8) {
+          newStatus = "Present";
+        } else if (workingHours >= 4) {
+          newStatus = "Undertime";
+        } else {
+          newStatus = "Absent";
+        }
+        setStatus(newStatus);
+
         await axios.put("http://localhost:4000/api/attendance", {
-          employeeId,
+          employeeNumber,
           timeOut: recordedTimeOut,
           workingHours,
+          status: newStatus,
         });
+
+        // Reset the timeIn state to null
+        setTimeIn(null);
       }
     } catch (err) {
       if (err.response && err.response.status === 400) {
@@ -80,16 +95,40 @@ function Attendance({ employee }) {
         {/* Sidebar */}
         <Sidebar2 />
         <div class="mx-auto w-[400px] mt-40">
-          {employeeData.employee_number}
           <form class="flex-1 flex-wrap flex-col p-20">
+            {/* Display Time In */}
+            {timeIn && !timeOut && (
+              <div className="text-center mb-4">
+                <p className="text-lg font-semibold text-green-500">Time In</p>
+                <p className="text-2xl font-semibold">
+                  Date: {new Date(timeIn).toLocaleDateString()}
+                </p>
+                <p className="text-2xl font-semibold">
+                  Time: {new Date(timeIn).toLocaleTimeString()}
+                </p>
+              </div>
+            )}
+            {/* Display Time Out */}
+            {timeOut && (
+              <div className="text-center mb-4">
+                <p className="text-lg   font-semibold text-red-500">Time Out</p>
+                <p className="text-2xl font-semibold">
+                  Date: {new Date(timeOut).toLocaleDateString()}
+                </p>
+                <p className="text-2xl font-semibold">
+                  Time: {new Date(timeOut).toLocaleTimeString()}
+                </p>
+              </div>
+            )}
+
             <div className="mb-4">
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="employeeId"
+                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight fCD ocus:outline-none focus:shadow-outline"
+                id="employeeNumber"
                 type="text"
-                placeholder="Enter your ID"
-                value={employeeId}
-                onChange={(e) => setEmployeeId(e.target.value)}
+                placeholder="Enter your employee number"
+                value={employeeNumber}
+                onChange={(e) => setEmployeeNumber(e.target.value)}
                 style={{ fontSize: "24px" }}
               />
             </div>
