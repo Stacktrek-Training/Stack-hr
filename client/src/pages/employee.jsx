@@ -5,7 +5,7 @@ import Delete_Employee from "../components/delete_employee";
 import axios from "axios";
 import ViewEmployee from "../components/view_employee";
 import AddEmployee from "../components/add_employee";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 import Navbar from "../components/navbar";
 const Employee = ({ employee }) => {
   // for getting all employees
@@ -35,7 +35,7 @@ const Employee = ({ employee }) => {
             <h1 className="text-3xl font-bold text-gray-700">Employees</h1>
           </div>
           {/* Add Employee */}
-          <div className="mb-5 flex ">
+          <div className="mb-7 flex ">
             <AddEmployee />
           </div>
           {/* Tables For employee */}
@@ -68,12 +68,10 @@ const Employee = ({ employee }) => {
                 {employees.map((employee) => (
                   <tr
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    key={employee.employee_id}
-                  >
+                    key={employee.employee_id}>
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                    >
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                       {employee.employee_number}
                     </th>
                     <td class="px-6 py-4 capitalize">
@@ -95,8 +93,7 @@ const Employee = ({ employee }) => {
           </div>
           <div
             className="mt-2 flex justify-center
-          "
-          ></div>
+          "></div>
         </div>
       </div>
     </div>

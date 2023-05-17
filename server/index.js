@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const pool = require("./database");
 const app = express();
+const moment = require('moment');
 
 app.use(cors());
 app.use(express.json());
@@ -853,33 +854,8 @@ app.get("/employee/:id", async (req, res) => {
     console.error(error.message);
   }
 });
-/*app.get("/expense", async (req, res) => {
-  try {
-    const { employee_name, username, password } = req.body;
-    const insertEmp = await pool.query(
-      // DATABASE COLUMN NAME
-      `INSERT INTO "LOGIN"(employee_name,username,password)VALUES($1,$2,$3) RETURNING *`,
-      [employee_name, username, password]
-    );
-    res.json("Inserted data");
-  } catch (error) {
-    console.error(error.message);
-  }
-});*/
 
-//get expense id
-app.get("/expense/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const getEXP = await pool.query(
-      `SELECT * FROM "EXPENSES" WHERE expense_id=$1`,
-      [id]
-    );
-    res.json(getEXP.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
+
 //add expense data
 app.post("/expense", async (req, res) => {
   try {
@@ -937,15 +913,68 @@ app.put("/expense/:id", async (req, res) => {
     console.error(error.message);
   }
 });
-//read
-app.get("/expenses", async (req, res) => {
+//read expense
+app.get("/expense/:id", async (req, res) => {
   try {
-    const getData = await pool.query(`SELECT * FROM "EXPENSES"`);
-    res.json(getData.rows);
+    const { id } = req.params;
+    const getExp = await pool.query(
+      `SELECT * FROM "EXPENSES" WHERE employee_id=$1`,
+      [id]
+    );
+    res.json(getExp.rows);
   } catch (error) {
     console.error(error.message);
   }
 });
+
+//expense total amount
+/*app.get("/total/:id/:month", async (req, res) => {
+  try {
+    const { id, month } = req.params;
+    const currentMonth = moment().month() + 1;
+    const getTotalExpenses = await pool.query(
+      `SELECT amount AS total_amount FROM "EXPENSES" WHERE employee_id=$1 AND EXTRACT(MONTH FROM "date") = $2`,
+      [id, month]
+    );
+    const { total_amount } = getTotalExpenses.rows[0];
+    res.json({ total_amount });
+  } catch (error) {
+    console.error(error.message);
+  }
+});*/
+
+//expense connected to employees
+app.get("/sum/:id/:month", async (req, res) => {
+  try {
+    const { id, month } = req.params;
+    const getTotalExpenses = await pool.query(`
+      SELECT
+        e.first_name,
+        e.middle_name,
+        e.last_name,
+        e.reimbursed_limit,
+        SUM(ex.amount) AS total_amount
+      FROM
+        "EMPLOYEES" e
+      LEFT JOIN
+        "EXPENSES" ex ON e.employee_id = ex.employee_id
+      WHERE
+        e.employee_id = $1 AND EXTRACT(MONTH FROM ex.date) = $2
+      GROUP BY
+        e.first_name,
+        e.middle_name,
+        e.last_name,
+        e.reimbursed_limit
+    `, [id, month]);
+
+    const { first_name, middle_name, last_name, reimbursed_limit, total_amount } = getTotalExpenses.rows[0];
+    res.json({ first_name, middle_name, last_name, reimbursed_limit, total_amount });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+
 app.get("/api/cities/:country", async (req, res) => {
   try {
     const { country } = req.params;
@@ -962,7 +991,7 @@ app.get("/api/cities/:country", async (req, res) => {
 
 // create a POST route for recording time in
 app.post("/api/attendance/in", async (req, res) => {
-  const { employeeId } = req.body;
+  const { employeeNumber } = req.body;
 
   try {
     // get the current date and time
@@ -970,8 +999,8 @@ app.post("/api/attendance/in", async (req, res) => {
 
     // check if the employee has already timed in today
     const attendance = await pool.query(
-      "SELECT time_in FROM attendance WHERE employee_id = $1 AND DATE(time_in) = $2",
-      [employeeId, now.toISOString().slice(0, 10)]
+      "SELECT time_in FROM attendance WHERE employee_number = $1 AND DATE(time_in) = $2",
+      [employeeNumber, now.toISOString().slice(0, 10)]
     );
 
     if (attendance.rowCount > 0) {
@@ -982,8 +1011,8 @@ app.post("/api/attendance/in", async (req, res) => {
 
     // insert the attendance record for time in
     const result = await pool.query(
-      "INSERT INTO attendance (employee_id, time_in) VALUES ($1, $2) RETURNING *",
-      [employeeId, now]
+      "INSERT INTO attendance (employee_number, time_in) VALUES ($1, $2) RETURNING *",
+      [employeeNumber, now]
     );
 
     res.status(200).json(result.rows[0]);
@@ -998,7 +1027,7 @@ app.post("/employeeAttendance", async (req, res) => {
   try {
     const { date } = req.body;
     const getAttendance = await pool.query(
-      `SELECT a.*, e.middle_name,e.last_name,e.first_name,e.employee_number FROM "attendance" a JOIN "EMPLOYEES" e ON a.employee_id =  e.employee_id WHERE DATE(time_in) = $1 ORDER BY time_in DESC`,
+      `SELECT a.*, e.middle_name,e.last_name,e.first_name,e.employee_number FROM "attendance" a JOIN "EMPLOYEES" e ON a.employee_number =  e.employee_number WHERE DATE(time_in) = $1 ORDER BY time_in DESC`,
       [date]
     );
     res.json(getAttendance.rows);
@@ -1009,16 +1038,16 @@ app.post("/employeeAttendance", async (req, res) => {
 
 // create a PUT route for recording time out
 app.put("/api/attendance/out", async (req, res) => {
-  const { employeeId } = req.body;
+  const { employeeNumber, status } = req.body;
 
   try {
-    // get the current date and time
+    // Get the current date and time
     const now = new Date();
 
-    // check if the employee has already timed out today or has not timed in
+    // Check if the employee has already timed out today or has not timed in
     const attendance = await pool.query(
-      "SELECT time_in, time_out FROM attendance WHERE employee_id = $1 AND DATE(time_in) = $2",
-      [employeeId, now.toISOString().slice(0, 10)]
+      "SELECT time_in, time_out FROM attendance WHERE employee_number = $1 AND DATE(time_in) = $2",
+      [employeeNumber, now.toISOString().slice(0, 10)]
     );
 
     if (attendance.rowCount === 0) {
@@ -1033,15 +1062,21 @@ app.put("/api/attendance/out", async (req, res) => {
         .send("Attendance Time Out already recorded for today.");
     }
 
-    // update the attendance record for time out and working hours
+    // Update the attendance record for time out and working hours
     const timeIn = new Date(attendance.rows[0].time_in);
     const timeOut = now;
     const diffInMs = timeOut.getTime() - timeIn.getTime();
     const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
 
     const result = await pool.query(
-      "UPDATE attendance SET time_out = $1, working_hours = $2 WHERE employee_id = $3 AND DATE(time_in) = $4 RETURNING *",
-      [timeOut, workingHours, employeeId, now.toISOString().slice(0, 10)]
+      "UPDATE attendance SET time_out = $1, working_hours = $2, status = $3 WHERE employee_number = $4 AND DATE(time_in) = $5 RETURNING *",
+      [
+        timeOut,
+        workingHours,
+        status, // Use the status value in the update query
+        employeeNumber,
+        now.toISOString().slice(0, 10),
+      ]
     );
 
     res.status(200).json(result.rows[0]);
