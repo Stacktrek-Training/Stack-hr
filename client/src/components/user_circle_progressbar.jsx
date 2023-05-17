@@ -5,8 +5,7 @@ import "./../progressbar.js";
 
 function CircleProgressbar(props) {
   const [reimburseLimit, setReimburseLimit] = useState(null);
-  const [expense, setExpense] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [totalExpenses, setTotalExpenses] = useState(null);
   const id = 1;
 
   useEffect(() => {
@@ -25,37 +24,19 @@ function CircleProgressbar(props) {
   }, [id]);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:4000/expenses/${id}`)
-      .then((response) => {
-        // Get the sum of the amount column
-        const sum = response.data.amount(
-          (total, expense) => total + expense.amount,
-          0
+    const fetchAmount = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/expenses/sum/${id}`
         );
+        setTotalExpenses(response.data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
 
-        // Set the expense and total amount state
-        setExpense(sum);
-        setTotalAmount(sum);
-      })
-      .catch((error) => console.error(error));
-  }, [id]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:4000/expenses/${id}`)
-  //     .then((response) => {
-  //       setExpense(response.);
-
-  //       //calculate total amount
-  //       let sum = 0;
-  //       response.data.forEach((expense) => {
-  //         sum += expense.d;
-  //       });
-  //       setTotalAmount(sum);
-  //     })
-  //     .catch((error) => console.error(error));
-  // }, [expense]);
+    fetchAmount();
+  }, []);
 
   return (
     <div class="progressBody block py-7 px-5">
@@ -91,7 +72,7 @@ function CircleProgressbar(props) {
       <div className="text-center">
         {" "}
         <h1>
-          {totalAmount}/{reimburseLimit}
+          {totalExpenses}/{reimburseLimit}
         </h1>{" "}
       </div>
     </div>

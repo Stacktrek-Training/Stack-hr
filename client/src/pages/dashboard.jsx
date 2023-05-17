@@ -1,6 +1,5 @@
 import React from "react";
 import "./../components/style.css";
-import Admin from "./admin_dashboard";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
 

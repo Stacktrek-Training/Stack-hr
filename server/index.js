@@ -906,6 +906,20 @@ app.post("/expense", async (req, res) => {
     console.error(error.message);
   }
 });
+//get total amount EXPENSES TABLE
+app.get("/expenses/sum", async (req, res) => {
+  try {
+    const query = `
+      SELECT SUM(amount) as total FROM "EXPENSES" WHERE date_trunc('month', date) = date_trunc('month', CURRENT_DATE);
+    `;
+    const result = await pool.query(query);
+    const sum = result.rows[0];
+    res.json({ sum });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 //update expense
 app.put("/expense/:id", async (req, res) => {
