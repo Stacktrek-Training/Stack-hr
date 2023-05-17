@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const pool = require("./database");
 const app = express();
+const moment = require('moment');
 
 app.use(cors());
 app.use(express.json());
@@ -12,7 +13,7 @@ app.post("/employee-login", async (req, res) => {
   try {
     const { employee_number, password } = req.body;
     const login = await pool.query(
-      `SELECT * FROM "EMPLOYEES" WHERE employee_number = $1 AND password = $2`,
+      `SELECT e.*, j.job_title FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id WHERE e.employee_number = $1 AND password = $2`,
       [employee_number, password]
     );
     if (login.rows.length === 1) {
@@ -853,33 +854,8 @@ app.get("/employee/:id", async (req, res) => {
     console.error(error.message);
   }
 });
-/*app.get("/expense", async (req, res) => {
-  try {
-    const { employee_name, username, password } = req.body;
-    const insertEmp = await pool.query(
-      // DATABASE COLUMN NAME
-      `INSERT INTO "LOGIN"(employee_name,username,password)VALUES($1,$2,$3) RETURNING *`,
-      [employee_name, username, password]
-    );
-    res.json("Inserted data");
-  } catch (error) {
-    console.error(error.message);
-  }
-});*/
 
-//get expense id
-app.get("/expense/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const getEXP = await pool.query(
-      `SELECT * FROM "EXPENSES" WHERE expense_id=$1`,
-      [id]
-    );
-    res.json(getEXP.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
+
 //add expense data
 app.post("/expense", async (req, res) => {
   try {
@@ -937,15 +913,67 @@ app.put("/expense/:id", async (req, res) => {
     console.error(error.message);
   }
 });
-//read
-app.get("/expenses", async (req, res) => {
+//read expense
+app.get("/expense/:id", async (req, res) => {
   try {
-    const getData = await pool.query(`SELECT * FROM "EXPENSES"`);
-    res.json(getData.rows);
+    const { id } = req.params;
+    const getExp = await pool.query(
+      `SELECT * FROM "EXPENSES" WHERE employee_id=$1`,
+      [id]
+    );
+    res.json(getExp.rows);
   } catch (error) {
     console.error(error.message);
   }
 });
+
+//expense total amount
+app.get("/total/:id/:month", async (req, res) => {
+  try {
+    const { id, month } = req.params;
+    const currentMonth = moment().month() + 1;
+    const getTotalExpenses = await pool.query(
+      `SELECT amount AS total_amount FROM "EXPENSES" WHERE employee_id=$1 AND EXTRACT(MONTH FROM "date") = $2`,
+      [id, month]
+    );
+    const { total_amount } = getTotalExpenses.rows[0];
+    res.json({ total_amount });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+//expense connected to employees
+app.get("/sum/:id/:month", async (req, res) => {
+  try {
+    const { id, month } = req.params;
+    const getTotalExpenses = await pool.query(`
+      SELECT
+        e.first_name,
+        e.middle_name,
+        e.last_name,
+        e.reimbursed_limit,
+        SUM(ex.amount) AS total_amount
+      FROM
+        "EMPLOYEES" e
+      LEFT JOIN
+        "EXPENSES" ex ON e.employee_id = ex.employee_id
+      WHERE
+        e.employee_id = $1 AND EXTRACT(MONTH FROM ex.date) = $2
+      GROUP BY
+        e.first_name,
+        e.middle_name,
+        e.last_name,
+        e.reimbursed_limit
+    `, [id, month]);
+
+    const { first_name, middle_name, last_name, reimbursed_limit, total_amount } = getTotalExpenses.rows[0];
+    res.json({ first_name, middle_name, last_name, reimbursed_limit, total_amount });
+  } catch (error) {
+    console.error(error.message);
+  }
+});
+
+
 app.get("/api/cities/:country", async (req, res) => {
   try {
     const { country } = req.params;
