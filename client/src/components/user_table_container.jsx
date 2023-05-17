@@ -3,7 +3,6 @@ import axios from "axios";
 
 function TableContainer({ employee }) {
   const [expenses, setExpenses] = useState([]);
-  const id = 1;
   useEffect(() => {
     axios
       .get(`http://localhost:4000/expense/${employee.employee_id}`)
