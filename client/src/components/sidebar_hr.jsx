@@ -167,32 +167,26 @@ const Sidebar = () => {
           class={` ${
             isDropdownOpen ? "" : "hidden "
           } z-10 dropdown  bg-orange-500 divide-y divide-gray-100   w-44 h-45    `}>
-          <ul class="py-2 text-sm text-center  text-white ">
+          <ul class="py-1 text-sm text-center  text-white ">
             <li>
-              <a
-                href="deduction"
-                className="block font-semibold  py-2 px-10   hover:bg-white hover:text-orange-500 hover:rounded-lg">
+              <a href="deduction" className="block font-semibold  py-2 px-10 ">
                 Deduction
               </a>
             </li>
             <li>
-              <a
-                href="pag-ibig"
-                className="block font-semibold  py-2 px-10  hover:bg-white hover:text-orange-500 hover:rounded-lg">
+              <a href="pag-ibig" className="block font-semibold  py-2 px-10 ">
                 Pag-Ibig
               </a>
             </li>
             <li>
               <a
                 href="philhealth"
-                className="block font-semibold  py-2 px-10   hover:bg-white hover:text-orange-500 hover:rounded-lg">
+                className="block font-semibold  py-2 px-10    ">
                 PhilHealth
               </a>
             </li>
             <li>
-              <a
-                href="sss"
-                className="block font-semibold  py-2 px-10  hover:bg-white hover:text-orange-500 hover:rounded-lg">
+              <a href="sss" className="block font-semibold  py-2 px-10 ">
                 SSS
               </a>
             </li>

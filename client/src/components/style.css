@@ -62,8 +62,13 @@
 }
 .dropdown {
   position: absolute;
-  left: 12rem;
+  left: 13rem;
   top: 23rem;
+  border-radius: 0 15px 15px 0;
+}
+.dropdown ul li a:hover {
+  background: rgb(231, 231, 231);
+  color: rgb(255 90 31);
   border-radius: 0 15px 15px 0;
 }
 .avatar {
@@ -201,4 +206,10 @@
   scroll-behavior: smooth;
   height: 30rem;
   width: 25rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .my-div {
+    display: none;
+  }
 }

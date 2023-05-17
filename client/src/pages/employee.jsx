@@ -79,12 +79,7 @@ const Employee = ({ employee }) => {
                       {employee.middle_name}
                     </td>
                     <td class="px-6 py-4">{employee.job_title}</td>
-                    <td class="px-6 py-4 capitalize">
-                      {`${employee.baranggay}${", "}${
-                        employee.municipality
-                      }${", "}
-                      ${employee.province}`}
-                    </td>
+                    <td class="px-6 py-4 capitalize">{employee.address}</td>
                     <td class="px-6 py-4">{employee.mobile_number}</td>
                     <td class=" py-4 px-2 flex gap-2 text-center">
                       <ViewEmployee employee={employee} />

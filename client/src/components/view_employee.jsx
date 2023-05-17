@@ -132,18 +132,7 @@ const ViewEmployee = ({ employee }) => {
                       class="block  text-sm font-semibold text-gray-900 dark:text-white ">
                       Address
                     </label>
-                    <span>
-                      {" "}
-                      {`${employee.baranggay} ${employee.municipality}, ${employee.city} ${employee.province}`}
-                    </span>
-                  </div>
-                  <div className="mb-2">
-                    <label
-                      for="zipcode"
-                      class="block  text-sm font-semibold text-gray-900 dark:text-white">
-                      Zipcode
-                    </label>
-                    <span> {employee.zipcode}</span>
+                    <span> {employee.address}</span>
                   </div>
                 </div>
                 <div>
