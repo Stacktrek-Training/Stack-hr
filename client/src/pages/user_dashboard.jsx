@@ -16,10 +16,10 @@ const User = () => (
         <ContainerDashboard />
       </div>
       <div className="bg-white h-20"></div>
-      <div className="flex justify-end mr-20">
+      <div className="flex justify-end m-5 md:mr-20">
         <ButtonAddNew />
       </div>
-      <div className="mx-20">
+      <div className="p-2 md:mx-20">
         <TableContainer />
       </div>
     </div>

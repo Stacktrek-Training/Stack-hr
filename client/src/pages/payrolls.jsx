@@ -4,7 +4,9 @@ import Sidebar from "../components/sidebar";
 
 import Navbar from "../components/navbar";
 
-const Payroll = () => {
+const Payroll = ({ employee }) => {
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const formatter = new Intl.NumberFormat("en-PH", {
     style: "currency",
     currency: "PHP",
@@ -15,11 +17,14 @@ const Payroll = () => {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-20">
+        <div className="flex-1 p-12 mt-10">
+          <div className="flex justify-start mb-3">
+            <h1 className="text-3xl font-bold text-gray-700">Payroll</h1>
+          </div>
           <div className="mb-5 flex ">{/* Add Salaries */}</div>
           <div class="relative Table overflow-x-scroll max-w-5xl shadow-md sm:rounded-lg">
             <table class="sticky top-0 text-center  Data">

@@ -17,7 +17,7 @@ app.post("/employee-login", async (req, res) => {
     );
     if (login.rows.length === 1) {
       const employee = login.rows;
-      console.log(`Employee ${employee.employee_id} logged in`);
+      console.log(`Employee ${employee} logged in`);
       res.json(employee);
     } else {
       res.status(401).send("Invalid number or password.");
@@ -984,7 +984,7 @@ app.post("/employeeAttendance", async (req, res) => {
   try {
     const { date } = req.body;
     const getAttendance = await pool.query(
-      `SELECT a.*, e.middle_name,e.last_name,e.first_name,e.employee_number FROM "attendance" a JOIN "EMPLOYEES" e ON a.employee_id =  e.employee_id WHERE DATE(time_in) = $1`,
+      `SELECT a.*, e.middle_name,e.last_name,e.first_name,e.employee_number FROM "attendance" a JOIN "EMPLOYEES" e ON a.employee_id =  e.employee_id WHERE DATE(time_in) = $1 ORDER BY time_in DESC`,
       [date]
     );
     res.json(getAttendance.rows);

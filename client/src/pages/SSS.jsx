@@ -9,7 +9,9 @@ import AddDeduction from "../components/add_deduction_sss";
 import axios from "axios";
 import EditDeductionSSS from "../components/edit_deduction_sss";
 
-const SSS = () => {
+const SSS = ({ employee }) => {
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const formatter = new Intl.NumberFormat("en-PH", {
     style: "currency",
     currency: "PHP",
@@ -34,7 +36,7 @@ const SSS = () => {
     <div className="h-screen relative ">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
