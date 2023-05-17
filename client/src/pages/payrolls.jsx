@@ -4,7 +4,9 @@ import Sidebar from "../components/sidebar_hr";
 
 import Navbar from "../components/navbar";
 
-const Payroll = () => {
+const Payroll = ({ employee }) => {
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const formatter = new Intl.NumberFormat("en-PH", {
     style: "currency",
     currency: "PHP",
@@ -15,17 +17,19 @@ const Payroll = () => {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-20 ml-14">
-          <div className="mb-5 flex text-3xl font-bold text-gray-700">
-            {" "}
-            Payroll
+        <div className="flex-1 p-12 mt-10">
+          <div className="flex justify-start mb-16">
+            <h1 className="text-3xl font-bold text-gray-700">Payroll</h1>
           </div>
-          <div class="relative Table overflow-x-scroll max-w-4xl shadow-md  sm:rounded-lg">
+          <div className="mb-5 flex ">{/* Add Salaries */}</div>
+          <div class="relative Tables overflow-x-scroll  shadow-md sm:rounded-lg mx-14">
             <table class="sticky top-0 text-center  Data">
+              <colgroup class="bg-gray-100"></colgroup>
+              <colgroup class="bg-gray-100"></colgroup>
               <colgroup class="bg-gray-100"></colgroup>
               <colgroup class="bg-gray-100"></colgroup>
               <colgroup class="bg-gray-100"></colgroup>
@@ -64,9 +68,14 @@ const Payroll = () => {
                   <th
                     rowspan="3"
                     class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
-                    JobRole
+                    Position
                   </th>
-
+                  <th
+                    colspan="2"
+                    scope="colgroup"
+                    class="w-1/2 border border-gray-300">
+                    Salary
+                  </th>
                   <th colspan="1" class="w-1/10 border border-gray-300 px-2">
                     {" "}
                     Monthly Base
@@ -140,14 +149,18 @@ const Payroll = () => {
                     class="w-1/10 border border-gray-300 px-2">
                     Bunos
                   </th>
-                  <th
-                    colspan="3"
-                    scope="colgroup"
-                    class="w-1/10 border border-gray-300 px-2">
-                    Deduction
-                  </th>
                 </tr>
                 <tr>
+                  <th
+                    scope="col"
+                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    13th
+                  </th>
+                  <th
+                    scope="col"
+                    class="w-1/12 border border-gray-300 capitalize px-2">
+                    15th
+                  </th>
                   <th
                     scope="col"
                     class="w-1/12 border border-gray-300 capitalize px-2">
@@ -181,7 +194,7 @@ const Payroll = () => {
                   <th
                     scope="col"
                     class="w-1/12 border border-gray-300 capitalize px-2">
-                    Social Insurance
+                    SSS
                   </th>
                   <th
                     scope="col"
@@ -203,19 +216,6 @@ const Payroll = () => {
                     class="w-1/12 border border-gray-300 capitalize px-2">
                     13th Month
                   </th>
-                  <th
-                    scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
-                    Social Insurance
-                  </th>
-                  <th
-                    scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2">
-                    PhilHealth
-                  </th>
-                  <th
-                    scope="col"
-                    class="w-1/12 border border-gray-300 capitalize px-2"></th>
                 </tr>
               </thead>
               <tbody className="text-gray-900">
@@ -229,16 +229,16 @@ const Payroll = () => {
                   <td class="w-1/21 px-2 py-4 capitalize border border-gray-300">
                     Full Stack
                   </td>
-                  <td class="   border border-gray-300">40000</td>
-                  <td class=" border border-gray-300">-1585.45</td>
-                  <td class=" border border-gray-300">19.62</td>
-                  <td class=" border border-gray-300">381.82</td>
-                  <td class=" border border-gray-300">3.78</td>
-                  <td class=" border border-gray-300">38796.36</td>
+                  <td class=" border border-gray-300 px-4">40000</td>
+                  <td class=" border border-gray-300 px-4">-1585.45</td>
+                  <td class=" border border-gray-300 px-4">19.62</td>
+                  <td class=" border border-gray-300 px-4">381.82</td>
+                  <td class=" border border-gray-300 px-4">3.78</td>
+                  <td class=" border border-gray-300 px-4">38796.36</td>
                   <td class=" border border-gray-300 px-4">-960</td>
-                  <td class=" border border-gray-300">-600</td>
-                  <td class=" border border-gray-300">-1500</td>
-                  <td class=" border border-gray-300">35736.36</td>
+                  <td class=" border border-gray-300 px-4">-600</td>
+                  <td class=" border border-gray-300 px-4">-1500</td>
+                  <td class=" border border-gray-300 px-4">35736.36</td>
                   <td class=" border border-gray-300 px-4">-300.91</td>
                   <td class=" border border-gray-300 px-4">10000</td>
                   <td class=" border border-gray-300 px-4">-10000</td>
@@ -247,7 +247,6 @@ const Payroll = () => {
                   <td class=" border border-gray-300 px-4">3207.96</td>
                   <td class=" border border-gray-300 px-4">-90</td>
                   <td class=" border border-gray-300 px-4">-600</td>
-                  <td class=" border border-gray-300 px-4">-3180</td>
                 </tr>
               </tbody>
             </table>

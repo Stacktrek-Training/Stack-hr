@@ -3,11 +3,42 @@
   padding: 0;
   font-family: Montserrat;
 }
+/* For WebKit-based browsers (Chrome, Safari, Opera) */
+::-webkit-scrollbar {
+  width: auto; /* Set the width of the scroll bar */
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Set the background color of the scroll bar track */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(255 90 31); /* Set the color of the scroll bar handle */
+  border-radius: 50px 50px 50px 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(
+    240,
+    124,
+    81
+  ); /* Set the color of the scroll bar handle on hover */
+}
 
 .Table {
   z-index: 0;
   max-height: 60vh;
   overflow-y: auto;
+}
+.Tables {
+  z-index: 0;
+  max-height: 60vh;
+  overflow-y: auto;
+  max-width: 60rem;
 }
 .Form {
   z-index: auto;
@@ -31,8 +62,9 @@
 }
 .dropdown {
   position: absolute;
-  left: 15.1rem;
-  top: 25rem;
+  left: 12rem;
+  top: 23rem;
+  border-radius: 0 15px 15px 0;
 }
 .avatar {
   height: 50px;
@@ -52,7 +84,7 @@
   background-image: url(../assets/stacktrek.png);
   background-repeat: no-repeat;
   background-size: 30%;
-  margin-top: 5rem;
+  margin-top: 2rem;
   margin-left: -10rem;
   z-index: 10;
 }
@@ -63,7 +95,7 @@
 .LoginForm input {
   height: 3rem;
 }
-.LoginForm a {
+.LoginForm button {
   margin-left: 14rem;
   border-radius: 20px 0px 12px 20px;
 }

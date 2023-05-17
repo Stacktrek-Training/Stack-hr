@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./../components/style.css";
 import EditSalary from "../components/edit_salaries";
-import StatusSalaries from "../components/status_salaries";
 import Sidebar from "../components/sidebar_hr";
 import axios from "axios";
 import Navbar from "../components/navbar";
 import AddSalaries from "../components/add_salaries";
 
-const Salaries = () => {
+const Salaries = ({ employee }) => {
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const [salaries, setSalaries] = useState([]);
 
   useEffect(() => {
@@ -40,11 +41,14 @@ const Salaries = () => {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-20">
+        <div className="flex-1 p-12 mt-10">
+          <div className="flex justify-start mb-3">
+            <h1 className="text-3xl font-bold text-gray-700">Salaries</h1>
+          </div>
           <div className="mb-5 flex ">
             {/* Add Salaries */}
             <AddSalaries />

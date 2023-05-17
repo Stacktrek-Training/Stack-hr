@@ -9,7 +9,9 @@ import Navbar from "../components/navbar";
 import AddDeductionPagIbig from "../components/add_deduction_pagibig";
 import EditDeductionPagIbig from "../components/edit_deduction_pagibig";
 
-const PAGIBIG = () => {
+const PAGIBIG = ({ employee }) => {
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const formatter = new Intl.NumberFormat("en-PH", {
     style: "currency",
     currency: "PHP",
@@ -30,7 +32,7 @@ const PAGIBIG = () => {
     <div className="h-screen relative ">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
 

@@ -7,8 +7,10 @@ import ViewEmployee from "../components/view_employee";
 import AddEmployee from "../components/add_employee";
 import Sidebar from "../components/sidebar_hr";
 import Navbar from "../components/navbar";
-const Employee = () => {
+const Employee = ({ employee }) => {
   // for getting all employees
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
@@ -24,13 +26,16 @@ const Employee = () => {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0 screen:h-screen overflow-auto screen:max-w-screen">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-20 ">
+        <div className="flex-1 p-12 mt-10 ">
+          <div className="flex justify-start mb-3">
+            <h1 className="text-3xl font-bold text-gray-700">Employees</h1>
+          </div>
           {/* Add Employee */}
-          <div className="mb-5 flex ">
+          <div className="mb-7 flex ">
             <AddEmployee />
           </div>
           {/* Tables For employee */}

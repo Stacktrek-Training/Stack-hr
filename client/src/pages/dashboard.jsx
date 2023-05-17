@@ -4,12 +4,15 @@ import Admin from "./admin_dashboard";
 import Sidebar from "../components/sidebar_hr";
 import Navbar from "../components/navbar";
 
-const Dashboard = () => {
+const Dashboard = ({ employee }) => {
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
+  console.log(employee);
   return (
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />

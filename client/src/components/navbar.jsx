@@ -3,7 +3,8 @@ import image2 from "./../assets/User-Icon.jpg";
 import "./../components/style.css";
 import classNames from "classnames";
 
-const Navbar = () => {
+const Navbar = ({ employee }) => {
+  console.log(employee);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
@@ -17,20 +18,20 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`bg-gray-200 border-b-slate-300 border-b-2 dark:bg-  fixed w-full ${navbarClasses}`}>
+      className={`bg-gray-200 border-b-slate-300 border-b-2  fixed w-full ${navbarClasses}`}>
       {" "}
       {/* Use absolute position for the navbar */}
       <div className="p-2 px-2 flex justify-end items-center pr-10 mx-auto">
         <div class="font-bold text-black pl-5 ">
-          <div className="mr-2">Sunny Virgo</div>
+          <div className="mr-2">{`${employee.first_name} ${employee.last_name}`}</div>
         </div>
         <div>
           <a
             type="button"
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="Button  flex justify-left cursor-pointer ">
+            className=" flex justify-left cursor-pointer ">
             <img
-              class="avatar rounded-full hover:ring-2 hover:ring-gray-400 focus:ring-1 "
+              class="avatar rounded-full h-7 w-7 hover:ring-2 hover:ring-gray-400 focus:ring-1 "
               src={image2}
               alt="User dropdown"
             />
@@ -38,7 +39,7 @@ const Navbar = () => {
           <div
             className={`${
               isDropdownOpen ? "" : "hidden "
-            } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-999 text-center Form`}>
+            } absolute z-50 right-2 top-7 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-999 text-center Form`}>
             <h1 className=" px-4 py-2 text-sm text-gray-700 cursor-default hover:text-gray-900 border-b border-solid border-gray-200">
               Sunny Virgo
               <p className="pt-2"> Admin</p>

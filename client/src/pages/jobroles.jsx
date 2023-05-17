@@ -6,7 +6,9 @@ import AddJobRoles from "../components/add_jobroles";
 import EditJobRoles from "../components/edit_jobroles";
 import axios from "axios";
 
-const JobRoles = () => {
+const JobRoles = ({ employee }) => {
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const [jobrole, setJobrole] = useState([]);
 
   useEffect(() => {
@@ -21,11 +23,14 @@ const JobRoles = () => {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-20">
+        <div className="flex-1 p-12 mt-10">
+          <div className="flex justify-start mb-3">
+            <h1 className="text-3xl font-bold text-gray-700">Job Roles</h1>
+          </div>
           <div className="mb-5 flex ">
             {/* Add Job Role */}
             <AddJobRoles />
@@ -38,7 +43,7 @@ const JobRoles = () => {
                     #
                   </th>
                   <th scope="col" class="px-6 py-3">
-                    Job Role
+                    Position
                   </th>
 
                   <th scope="col" class="px-6 py-3">
