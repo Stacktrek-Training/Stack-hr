@@ -20,9 +20,20 @@ const Login = ({ onLogin }) => {
         }
       );
       const employee = response.data;
+
       localStorage.setItem("employee", JSON.stringify(employee)); // Store employee data in localStorage
-      window.location.href = "/employee_dashboard";
-      onLogin(employee);
+      const employeeData = employee && employee.length > 0 ? employee[0] : null;
+      console.log(employeeData.job_title);
+      if (
+        employeeData.job_title === "Admin" ||
+        employeeData.job_title === "admin"
+      ) {
+        window.location.href = "/dashboard";
+        onLogin(employee);
+      } else {
+        window.location.href = "/employee_dashboard";
+        onLogin(employee);
+      }
     } catch (error) {
       setError(error.response.data);
     }

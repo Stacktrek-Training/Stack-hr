@@ -12,7 +12,7 @@ app.post("/employee-login", async (req, res) => {
   try {
     const { employee_number, password } = req.body;
     const login = await pool.query(
-      `SELECT * FROM "EMPLOYEES" WHERE employee_number = $1 AND password = $2`,
+      `SELECT e.*, j.job_title FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id WHERE e.employee_number = $1 AND password = $2`,
       [employee_number, password]
     );
     if (login.rows.length === 1) {

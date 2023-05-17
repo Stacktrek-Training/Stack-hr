@@ -63,8 +63,8 @@
 .LoginForm input {
   height: 3rem;
 }
-.LoginForm a {
-  margin-left: 14rem;
+.LoginForm button {
+  margin-left: 12rem;
   border-radius: 20px 0px 12px 20px;
 }
 .Font {
