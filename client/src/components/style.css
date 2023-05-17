@@ -5,7 +5,7 @@
 }
 /* For WebKit-based browsers (Chrome, Safari, Opera) */
 ::-webkit-scrollbar {
-  width: auto; /* Set the width of the scroll bar */
+  width: 4px; /* Set the width of the scroll bar */
   height: 5px;
 }
 

@@ -39,10 +39,10 @@ const Navbar = ({ employee }) => {
           <div
             className={`${
               isDropdownOpen ? "" : "hidden "
-            } absolute z-50 right-2 top-7 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-999 text-center Form`}>
-            <h1 className=" px-4 py-2 text-sm text-gray-700 cursor-default hover:text-gray-900 border-b border-solid border-gray-200">
+            } absolute z-50 right-2 top-7 mt-2 py-2 w-52 bg-white rounded-md font-bold   shadow-lg z-999 text-center Form`}>
+            <h1 className=" px-4 py-2 text-sm font-bold text-gray-700 cursor-default hover:text-gray-900 border-b border-solid border-gray-200">
               {`${employee.first_name} ${employee.last_name}`}
-              <p className="pt-2"> {employee.job_title}</p>
+              <p className="pt-2 font-normal"> {employee.job_title}</p>
             </h1>
 
             <a
