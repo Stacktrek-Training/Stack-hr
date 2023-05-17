@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const pool = require("./database");
 const app = express();
-const moment = require('moment');
+const moment = require("moment");
 
 app.use(cors());
 app.use(express.json());
@@ -855,7 +855,6 @@ app.get("/employee/:id", async (req, res) => {
   }
 });
 
-
 //add expense data
 app.post("/expense", async (req, res) => {
   try {
@@ -946,7 +945,8 @@ app.get("/total/:id/:month", async (req, res) => {
 app.get("/sum/:id/:month", async (req, res) => {
   try {
     const { id, month } = req.params;
-    const getTotalExpenses = await pool.query(`
+    const getTotalExpenses = await pool.query(
+      `
       SELECT
         e.first_name,
         e.middle_name,
@@ -964,15 +964,28 @@ app.get("/sum/:id/:month", async (req, res) => {
         e.middle_name,
         e.last_name,
         e.reimbursed_limit
-    `, [id, month]);
+    `,
+      [id, month]
+    );
 
-    const { first_name, middle_name, last_name, reimbursed_limit, total_amount } = getTotalExpenses.rows[0];
-    res.json({ first_name, middle_name, last_name, reimbursed_limit, total_amount });
+    const {
+      first_name,
+      middle_name,
+      last_name,
+      reimbursed_limit,
+      total_amount,
+    } = getTotalExpenses.rows[0];
+    res.json({
+      first_name,
+      middle_name,
+      last_name,
+      reimbursed_limit,
+      total_amount,
+    });
   } catch (error) {
     console.error(error.message);
   }
 });
-
 
 app.get("/api/cities/:country", async (req, res) => {
   try {

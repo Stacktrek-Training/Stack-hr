@@ -54,7 +54,7 @@ function App() {
           {employee && <Attendance employee={employee} />}
         </Route>
         <Route path="/expense">
-          <User />
+          {employee && <User employee={employee} />}
         </Route>
         <Route path="/payroll">
           {employee && <Payroll employee={employee} />}
