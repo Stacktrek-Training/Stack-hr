@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function TableContainer() {
+function TableContainer({ employee }) {
   const [expenses, setExpenses] = useState([]);
   const id = 1;
   useEffect(() => {
     axios
-      .get(`http://localhost:4000/expense/${id}`)
+      .get(`http://localhost:4000/expense/${employee.employee_id}`)
       .then((response) => {
         setExpenses(response.data);
       })

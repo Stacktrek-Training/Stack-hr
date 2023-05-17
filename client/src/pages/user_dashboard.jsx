@@ -23,7 +23,7 @@ const User = ({ employee }) => {
           <ButtonAddNew employee={employeeData} />
         </div>
         <div className="p-2 md:mx-20">
-          <TableContainer />
+          <TableContainer employee={employeeData} />
         </div>
       </div>
     </div>
