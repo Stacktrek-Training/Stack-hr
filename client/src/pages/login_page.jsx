@@ -26,7 +26,8 @@ const Login = () => {
           <a
             href="/dashboard"
             type="submit"
-            class="text-white cursor:pointer bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:outline-none  font-medium  text-sm px-20 py-2.5 text-center ">
+            class="text-white cursor:pointer bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:outline-none  font-medium  text-sm px-20 py-2.5 text-center "
+          >
             Login
           </a>
         </form>{" "}

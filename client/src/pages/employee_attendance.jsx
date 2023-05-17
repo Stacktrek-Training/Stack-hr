@@ -71,14 +71,38 @@ function Attendance() {
 
   return (
     <div className="h-screen relative">
-      {" "}
       {/* Navbar */}
       <Navbar />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar2 />
-        <div class="mx-auto w-[400px] mt-40">
-          <form class="flex-1 flex-wrap flex-col p-20">
+        <div className="mx-auto w-[400px] mt-40">
+          <form className="flex-1 flex-wrap flex-col p-20">
+            {/* Display Time In */}
+            {timeIn && !timeOut && (
+              <div className="text-center mb-4">
+                <p className="text-2xl font-semibold text-green-500">Time In</p>
+                <p className="text-2xl font-semibold">
+                  Date: {new Date(timeIn).toLocaleDateString()}
+                </p>
+                <p className="text-2xl font-semibold">
+                  Time: {new Date(timeIn).toLocaleTimeString()}
+                </p>
+              </div>
+            )}
+
+            {/* Display Time Out */}
+            {timeOut && (
+              <div className="text-center mb-4">
+                <p className="text-2xl font-semibold text-red-500">Time Out</p>
+                <p className="text-2xl font-semibold">
+                  Date: {new Date(timeOut).toLocaleDateString()}
+                </p>
+                <p className="text-2xl font-semibold">
+                  Time: {new Date(timeOut).toLocaleTimeString()}
+                </p>
+              </div>
+            )}
             <div className="mb-4">
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
