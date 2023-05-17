@@ -928,7 +928,7 @@ app.get("/expense/:id", async (req, res) => {
 });
 
 //expense total amount
-app.get("/total/:id/:month", async (req, res) => {
+/*app.get("/total/:id/:month", async (req, res) => {
   try {
     const { id, month } = req.params;
     const currentMonth = moment().month() + 1;
@@ -941,7 +941,8 @@ app.get("/total/:id/:month", async (req, res) => {
   } catch (error) {
     console.error(error.message);
   }
-});
+});*/
+
 //expense connected to employees
 app.get("/sum/:id/:month", async (req, res) => {
   try {
