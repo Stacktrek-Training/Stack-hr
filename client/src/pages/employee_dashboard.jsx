@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./../components/style.css";
 import Sidebar2 from "../components/sidebar_employee";
 import Navbar from "../components/navbar";
@@ -6,9 +6,31 @@ import Navbar from "../components/navbar";
 const EmployeeDashboard = ({ employee }) => {
   console.log(employee);
   const employeeData = employee && employee.length > 0 ? employee[0] : null;
-  // Assuming you have variables for totalAbsences and daysAttended
-  const totalAbsences = 5;
-  const daysAttended = 20;
+  const [totalAbsences, setTotalAbsences] = useState(0);
+  const [daysAttended, setDaysAttended] = useState(0);
+
+  useEffect(() => {
+    // Fetch the attendance data from your backend API
+    fetchAttendanceData()
+      .then((data) => {
+        setTotalAbsences(data.totalAbsences);
+        setDaysAttended(data.daysAttended);
+      })
+      .catch((error) => {
+        console.log("Error fetching attendance data:", error);
+      });
+  }, []);
+
+  // Function to fetch attendance data from the backend API
+  const fetchAttendanceData = async () => {
+    try {
+      const response = await fetch("/api/attendance"); // Replace "/api/attendance" with the appropriate API endpoint
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error("Failed to fetch attendance data");
+    }
+  };
 
   return (
     <div className="h-screen relative">
@@ -23,7 +45,7 @@ const EmployeeDashboard = ({ employee }) => {
             <div>
               <h1 className="font-extrabold text-4xl">
                 Welcome {employeeData.first_name}
-              </h1>
+              </h1><br></br>
               {/* Display other employee properties */}
             </div>
           )}
