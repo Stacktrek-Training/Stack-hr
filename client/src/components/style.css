@@ -63,8 +63,8 @@
 .LoginForm input {
   height: 3rem;
 }
-.LoginForm a {
-  margin-left: 14rem;
+.LoginForm button {
+  margin-left: 12rem;
   border-radius: 20px 0px 12px 20px;
 }
 .Font {
@@ -169,4 +169,10 @@
   scroll-behavior: smooth;
   height: 30rem;
   width: 25rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .my-div {
+    display: none;
+  }
 }

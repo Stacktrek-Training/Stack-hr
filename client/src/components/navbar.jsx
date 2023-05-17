@@ -44,8 +44,8 @@ const Navbar = ({ employee }) => {
             } absolute right-2 top-10 mt-2 py-2 w-52 bg-white rounded-md  font-bold shadow-lg z-999 text-center Form`}
           >
             <h1 className=" px-4 py-2 text-sm text-gray-700 cursor-default hover:text-gray-900 border-b border-solid border-gray-200">
-              Sunny Virgo
-              <p className="pt-2"> Admin</p>
+              {`${employee.first_name} ${employee.last_name}`}
+              <p className="pt-2"> {employee.job_title}</p>
             </h1>
 
             <a
