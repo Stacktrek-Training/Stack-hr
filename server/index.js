@@ -13,12 +13,12 @@ app.post("/employee-login", async (req, res) => {
   try {
     const { employee_number, password } = req.body;
     const login = await pool.query(
-      `SELECT * FROM "EMPLOYEES" WHERE employee_number = $1 AND password = $2`,
+      `SELECT e.*, j.job_title FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id WHERE e.employee_number = $1 AND password = $2`,
       [employee_number, password]
     );
     if (login.rows.length === 1) {
       const employee = login.rows;
-      console.log(`Employee ${employee.employee_id} logged in`);
+      console.log(`Employee ${employee} logged in`);
       res.json(employee);
     } else {
       res.status(401).send("Invalid number or password.");
@@ -58,10 +58,7 @@ app.post("/employee", async (req, res) => {
       first_name,
       middle_name,
       last_name,
-      province,
-      municipality,
-      baranggay,
-      zipcode,
+      address,
       mobile_number,
       telephone_number,
       work_email,
@@ -119,15 +116,12 @@ app.post("/employee", async (req, res) => {
     }
 
     const insertEmployee = await pool.query(
-      `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,province,municipality,baranggay,zipcode,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,gender,marital_status,birthday,employee_number,password)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,CURRENT_TIMESTAMP,$17,$18,$19,$20,$21) RETURNING *`,
+      `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,address,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,gender,marital_status,birthday,employee_number,password)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,CURRENT_TIMESTAMP,$14,$15,$16,$17,$18) RETURNING *`,
       [
         first_name,
         middle_name,
         last_name,
-        province,
-        municipality,
-        baranggay,
-        zipcode,
+        address,
         mobile_number,
         telephone_number,
         work_email,
@@ -157,10 +151,7 @@ app.put("/employee/:id", async (req, res) => {
       first_name,
       middle_name,
       last_name,
-      province,
-      municipality,
-      baranggay,
-      zipcode,
+      address,
       mobile_number,
       telephone_number,
       work_email,
@@ -175,15 +166,12 @@ app.put("/employee/:id", async (req, res) => {
       birthday,
     } = req.body;
     const updateEmp = await pool.query(
-      `UPDATE "EMPLOYEES" SET first_name=$1,middle_name=$2,last_name=$3,province=$4,municipality=$5,baranggay=$6,zipcode=$7,mobile_number=$8,telephone_number=$9,work_email=$10,personal_email=$11,emergency_contact_person=$12,emergency_contact_email=$13,emergency_contact_number=$14,relationship=$15,job_title=$16,date_updated=CURRENT_TIMESTAMP,gender=$17,marital_status=$18,birthday=$19 WHERE employee_id =$20`,
+      `UPDATE "EMPLOYEES" SET first_name=$1,middle_name=$2,last_name=$3,address=$4,mobile_number=$5,telephone_number=$6,work_email=$7,personal_email=$8,emergency_contact_person=$9,emergency_contact_email=$10,emergency_contact_number=$11,relationship=$12,job_title=$13,date_updated=CURRENT_TIMESTAMP,gender=$14,marital_status=$15,birthday=$16 WHERE employee_id =$17`,
       [
         first_name,
         middle_name,
         last_name,
-        province,
-        municipality,
-        baranggay,
-        zipcode,
+        address,
         mobile_number,
         telephone_number,
         work_email,
@@ -907,6 +895,20 @@ app.post("/expense", async (req, res) => {
     console.error(error.message);
   }
 });
+//get total amount EXPENSES TABLE
+app.get("/expenses/sum", async (req, res) => {
+  try {
+    const query = `
+      SELECT SUM(amount) as total FROM "EXPENSES" WHERE date_trunc('month', date) = date_trunc('month', CURRENT_DATE);
+    `;
+    const result = await pool.query(query);
+    const sum = result.rows[0];
+    res.json({ sum });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
 
 //update expense
 app.put("/expense/:id", async (req, res) => {
@@ -1014,7 +1016,7 @@ app.post("/employeeAttendance", async (req, res) => {
   try {
     const { date } = req.body;
     const getAttendance = await pool.query(
-      `SELECT a.*, e.middle_name,e.last_name,e.first_name,e.employee_number FROM "attendance" a JOIN "EMPLOYEES" e ON a.employee_id =  e.employee_id WHERE DATE(time_in) = $1`,
+      `SELECT a.*, e.middle_name,e.last_name,e.first_name,e.employee_number FROM "attendance" a JOIN "EMPLOYEES" e ON a.employee_id =  e.employee_id WHERE DATE(time_in) = $1 ORDER BY time_in DESC`,
       [date]
     );
     res.json(getAttendance.rows);

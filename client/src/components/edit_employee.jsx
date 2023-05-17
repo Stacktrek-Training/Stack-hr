@@ -18,10 +18,7 @@ const EditEmployee = ({ employee }) => {
   const [first_name, setFirstName] = useState(employee.first_name);
   const [middle_name, setMiddleName] = useState(employee.middle_name);
   const [last_name, setLastName] = useState(employee.last_name);
-  const [province, setProvince] = useState(employee.province);
-  const [municipality, setMunicipality] = useState(employee.municipality);
-  const [baranggay, setBaranggay] = useState(employee.baranggay);
-  const [zipcode, setZipcode] = useState(employee.zipcode);
+  const [address, setAddress] = useState(employee.address);
   const [mobile_number, setMobileNumber] = useState(employee.mobile_number);
   const [telephone_number, setTelephoneNumber] = useState(
     employee.telephone_number
@@ -52,10 +49,7 @@ const EditEmployee = ({ employee }) => {
         first_name: first_name,
         middle_name: middle_name,
         last_name: last_name,
-        province: province,
-        municipality: municipality,
-        baranggay: baranggay,
-        zipcode: zipcode,
+        address: address,
         mobile_number: mobile_number,
         telephone_number: telephone_number,
         work_email: work_email,
@@ -300,55 +294,14 @@ const EditEmployee = ({ employee }) => {
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Province
+                    Complete Address
                   </label>
                   <input
                     type="text"
-                    value={province}
+                    value={address}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Province"
-                    onChange={(e) => setProvince(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Municipality
-                  </label>
-                  <input
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Municipality"
-                    value={municipality}
-                    onChange={(e) => setMunicipality(e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Baranggay
-                  </label>
-                  <input
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Baranggay"
-                    value={baranggay}
-                    onChange={(e) => setBaranggay(e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Zip Code
-                  </label>
-                  <input
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="  Zip Code"
-                    onInput={OnlyNumber}
-                    maxLength={4}
-                    value={zipcode}
-                    onChange={(e) => setZipcode(e.target.value)}
-                    required
+                    placeholder="Complete Address"
+                    onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
                 <div>

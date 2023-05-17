@@ -4,7 +4,10 @@ import axios from "axios";
 import Sidebar2 from "../components/sidebar2";
 import Navbar from "../components/navbar";
 
-function Attendance() {
+function Attendance({ employee }) {
+  console.log(employee);
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const [employeeId, setEmployeeId] = useState("");
   const [timeIn, setTimeIn] = useState(null);
   const [timeOut, setTimeOut] = useState(null);
@@ -71,13 +74,13 @@ function Attendance() {
 
   return (
     <div className="h-screen relative">
-      {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar2 />
         <div class="mx-auto w-[400px] mt-40">
+          {employeeData.employee_number}
           <form class="flex-1 flex-wrap flex-col p-20">
             <div className="mb-4">
               <input

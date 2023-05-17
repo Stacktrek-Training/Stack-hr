@@ -7,8 +7,10 @@ import ViewEmployee from "../components/view_employee";
 import AddEmployee from "../components/add_employee";
 import Sidebar from "../components/sidebar";
 import Navbar from "../components/navbar";
-const Employee = () => {
+const Employee = ({ employee }) => {
   // for getting all employees
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
@@ -24,11 +26,14 @@ const Employee = () => {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0 screen:h-screen overflow-auto screen:max-w-screen">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-20 ">
+        <div className="flex-1 p-12 mt-10 ">
+          <div className="flex justify-start mb-3">
+            <h1 className="text-3xl font-bold text-gray-700">Employees</h1>
+          </div>
           {/* Add Employee */}
           <div className="mb-5 flex ">
             <AddEmployee />
@@ -76,12 +81,7 @@ const Employee = () => {
                       {employee.middle_name}
                     </td>
                     <td class="px-6 py-4">{employee.job_title}</td>
-                    <td class="px-6 py-4 capitalize">
-                      {`${employee.baranggay}${", "}${
-                        employee.municipality
-                      }${", "}
-                      ${employee.province}`}
-                    </td>
+                    <td class="px-6 py-4 capitalize">{employee.address}</td>
                     <td class="px-6 py-4">{employee.mobile_number}</td>
                     <td class=" py-4 px-2 flex gap-2 text-center">
                       <ViewEmployee employee={employee} />
