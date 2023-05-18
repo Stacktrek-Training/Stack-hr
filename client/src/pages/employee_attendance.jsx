@@ -37,17 +37,20 @@ function Attendance({ employee }) {
     }
   };
 
+  // Handler for recording time out
   const handleTimeOut = async (e) => {
     e.preventDefault();
+
     try {
       const response = await axios.put(
         "http://localhost:4000/api/attendance/out",
         {
           employeeNumber,
-          status,
         }
       );
+
       const { time_out: recordedTimeOut } = response.data;
+
       alert("Attendance Time Out recorded successfully.");
       setTimeOut(recordedTimeOut);
       setEmployeeNumber("");
@@ -57,8 +60,7 @@ function Attendance({ employee }) {
         return;
       }
 
-      const diffInMs =
-        new Date(recordedTimeOut).getTime() - new Date(timeIn).getTime();
+      const diffInMs = new Date(recordedTimeOut) - new Date(timeIn);
       const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
       setWorkingHours(workingHours);
 
@@ -90,7 +92,6 @@ function Attendance({ employee }) {
       }
     }
   };
-
   return (
     <div className="h-screen relative">
       {/* Navbar */}

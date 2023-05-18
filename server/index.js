@@ -858,11 +858,11 @@ app.get("/employee/:id", async (req, res) => {
 //add expense data
 app.post("/expense", async (req, res) => {
   try {
-    const { category, amount, receipt, date, employee_id } = req.body;
+    const { category, amount, receipt, date } = req.body;
     const insertExp = await pool.query(
       // DATABASE COLUMN NAME
-      `INSERT INTO "EXPENSES"(category,amount,receipt,date_inserted,date,employee_id)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4, $5) RETURNING *`,
-      [category, amount, receipt, date, employee_id]
+      `INSERT INTO "EXPENSES"(category,amount,receipt,date_inserted,date)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4) RETURNING *`,
+      [category, amount, receipt, date]
     );
     res.json("Inserted data");
   } catch (error) {
@@ -1049,25 +1049,45 @@ app.post("/employeeAttendance", async (req, res) => {
   }
 });
 
-// create a PUT route for recording time out
+// PUT route for recording time out
 app.put("/api/attendance/out", async (req, res) => {
-  const { employeeNumber, status } = req.body;
+  const { employeeNumber } = req.body;
 
   try {
-    // Rest of the code...
+    const now = new Date();
 
-    // Update the attendance record for time out and working hours
+    // Fetch the attendance record for the employee and current date
+    const attendance = await pool.query(
+      "SELECT * FROM attendance WHERE employee_number = $1 AND DATE(time_in) = $2",
+      [employeeNumber, now.toISOString().slice(0, 10)]
+    );
+
+    if (attendance.rows.length === 0) {
+      // Attendance record not found
+      res.status(400).send("Employee has not timed in.");
+      return;
+    }
+
     const timeIn = new Date(attendance.rows[0].time_in);
     const timeOut = now;
-    const diffInMs = timeOut.getTime() - timeIn.getTime();
+    const diffInMs = timeOut - timeIn;
     const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
+
+    let newStatus = "";
+    if (workingHours >= 8) {
+      newStatus = "Present";
+    } else if (workingHours >= 4) {
+      newStatus = "Undertime";
+    } else {
+      newStatus = "Absent";
+    }
 
     const result = await pool.query(
       "UPDATE attendance SET time_out = $1, working_hours = $2, status = $3 WHERE employee_number = $4 AND DATE(time_in) = $5 RETURNING *",
       [
         timeOut,
         workingHours,
-        status, // Use the status value in the update query
+        newStatus,
         employeeNumber,
         now.toISOString().slice(0, 10),
       ]
