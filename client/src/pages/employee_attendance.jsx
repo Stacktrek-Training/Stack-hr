@@ -13,20 +13,25 @@ function Attendance({ employee }) {
   const [timeOut, setTimeOut] = useState(null);
   const [workingHours, setWorkingHours] = useState(null);
   const [status, setStatus] = useState("");
-
+  const id = employeeData.employee_id;
   const handleTimeIn = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:4000/api/attendance/in",
-        {
-          employeeNumber,
-        }
-      );
-      const { time_in: recordedTimeIn } = response.data;
-      alert("Attendance Time In recorded successfully.");
-      setTimeIn(recordedTimeIn);
-      setEmployeeNumber("");
+      if (employeeNumber === employeeData.employee_number) {
+        const response = await axios.post(
+          "http://localhost:4000/api/attendance/in",
+          {
+            employeeNumber,
+            id,
+          }
+        );
+        const { time_in: recordedTimeIn } = response.data;
+        alert("Attendance Time In recorded successfully.");
+        setTimeIn(recordedTimeIn);
+        setEmployeeNumber("");
+      } else {
+        alert("Employee number is not yours");
+      }
     } catch (err) {
       if (err.response && err.response.status === 409) {
         alert("Attendance Time In already recorded for today.");
@@ -42,53 +47,53 @@ function Attendance({ employee }) {
     e.preventDefault();
 
     try {
-      const response = await axios.put(
-        "http://localhost:4000/api/attendance/out",
-        {
-          employeeNumber,
+      if (employeeNumber === employeeData.employee_number) {
+        const response = await axios.put(
+          "http://localhost:4000/api/attendance/out",
+          {
+            employeeNumber,
+          }
+        );
+
+        const { time_out: recordedTimeOut } = response.data;
+
+        setTimeOut(recordedTimeOut);
+        setEmployeeNumber("");
+
+        if (timeOut) {
+          alert("You have already timed out for today.");
+          return;
         }
-      );
 
-      const { time_out: recordedTimeOut } = response.data;
+        const diffInMs = new Date(recordedTimeOut) - new Date(timeIn);
+        const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
+        setWorkingHours(workingHours);
 
-      alert("Attendance Time Out recorded successfully.");
-      setTimeOut(recordedTimeOut);
-      setEmployeeNumber("");
+        let newStatus = "";
+        if (workingHours >= 8) {
+          newStatus = "Present";
+        } else if (workingHours >= 4) {
+          newStatus = "Undertime";
+        } else {
+          newStatus = "Absent";
+        }
+        setStatus(newStatus);
 
-      if (timeOut) {
-        alert("You have already timed out for today.");
-        return;
-      }
-
-      const diffInMs = new Date(recordedTimeOut) - new Date(timeIn);
-      const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
-      setWorkingHours(workingHours);
-
-      let newStatus = "";
-      if (workingHours >= 8) {
-        newStatus = "Present";
-      } else if (workingHours >= 4) {
-        newStatus = "Undertime";
+        await axios.put("http://localhost:4000/api/attendance", {
+          employeeNumber,
+          timeOut: recordedTimeOut,
+          workingHours,
+          status: newStatus,
+        });
+        alert("Attendance Time Out recorded successfully.");
+        // Reset the timeIn state to null
+        setTimeIn(null);
       } else {
-        newStatus = "Absent";
+        alert("Employee number is not yours");
       }
-      setStatus(newStatus);
-
-      await axios.put("http://localhost:4000/api/attendance", {
-        employeeNumber,
-        timeOut: recordedTimeOut,
-        workingHours,
-        status: newStatus,
-      });
-
-      // Reset the timeIn state to null
-      setTimeIn(null);
     } catch (err) {
       if (err.response && err.response.status === 400) {
         alert("Employee has already timed out today or has not timed in.");
-      } else {
-        console.error(err.message);
-        alert("Error recording Attendance Time Out.");
       }
     }
   };

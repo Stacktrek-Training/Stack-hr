@@ -1004,7 +1004,7 @@ app.get("/api/cities/:country", async (req, res) => {
 
 // create a POST route for recording time in
 app.post("/api/attendance/in", async (req, res) => {
-  const { employeeNumber } = req.body;
+  const { employeeNumber, id } = req.body;
 
   try {
     // get the current date and time
@@ -1024,8 +1024,8 @@ app.post("/api/attendance/in", async (req, res) => {
 
     // insert the attendance record for time in
     const result = await pool.query(
-      "INSERT INTO attendance (employee_number, time_in) VALUES ($1, $2) RETURNING *",
-      [employeeNumber, now]
+      "INSERT INTO attendance (employee_number, time_in,employee_id) VALUES ($1, $2,$3) RETURNING *",
+      [employeeNumber, now, id]
     );
 
     res.status(200).json(result.rows[0]);
