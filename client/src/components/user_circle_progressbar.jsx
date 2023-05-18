@@ -35,7 +35,7 @@ function CircleProgressbar({ employee }) {
         setDashOffset(Math.floor(472 - 472 * (percent / 100)));
       })
       .catch((error) => console.error(error));
-  }, [employee, reimburseLimit]);
+  }, [employee, reimburseLimit, totalAmount, percent]);
 
   return (
     <div className="progressBody block py-7 px-5">
