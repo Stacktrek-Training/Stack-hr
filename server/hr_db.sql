@@ -16,7 +16,9 @@ CREATE TABLE "PAGIBIG_DEDUCTIONS" (deduction_id SERIAL PRIMARY KEY, salary_range
 CREATE TABLE "DEDUCTIONS" (deduction_id SERIAL PRIMARY KEY, employee_id INTEGER, monthly_salary DECIMAL, philhealth_deduction DECIMAL, sss_deduction DECIMAL, pagibig_deduction DECIMAL, date_created DATE, date_updated DATE);
 
 
-CREATE DATABASE "STACK-HR";
+-- Add column in salaries
+ALTER TABLE "SALARIES" ADD COLUMN rate_type VARCHAR;
+ALTER TABLE "SALARIES" ADD COLUMN hours_required DECIMAL;
 -- stackExpense
 
  CREATE table "CATEGORIES" (category_id SERIAL PRIMARY KEY, category_name VARCHAR);

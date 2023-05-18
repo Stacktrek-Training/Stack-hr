@@ -20,7 +20,7 @@ const User = ({ employee }) => {
         </div>
         <div className="bg-white h-20"></div>
         <div className="flex justify-end m-5 md:mr-20">
-          <ButtonAddNew />
+          <ButtonAddNew employee={employeeData} />
         </div>
         <div className="p-2 md:mx-20">
           <TableContainer />
