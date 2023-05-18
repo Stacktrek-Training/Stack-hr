@@ -44,6 +44,7 @@ function Attendance({ employee }) {
         "http://localhost:4000/api/attendance/out",
         {
           employeeNumber,
+          status,
         }
       );
       const { time_out: recordedTimeOut } = response.data;
@@ -51,32 +52,35 @@ function Attendance({ employee }) {
       setTimeOut(recordedTimeOut);
       setEmployeeNumber("");
 
-      if (timeIn && recordedTimeOut) {
-        const diffInMs =
-          new Date(recordedTimeOut).getTime() - new Date(timeIn).getTime();
-        const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
-        setWorkingHours(workingHours);
-
-        let newStatus = "";
-        if (workingHours >= 8) {
-          newStatus = "Present";
-        } else if (workingHours >= 4) {
-          newStatus = "Undertime";
-        } else {
-          newStatus = "Absent";
-        }
-        setStatus(newStatus);
-
-        await axios.put("http://localhost:4000/api/attendance", {
-          employeeNumber,
-          timeOut: recordedTimeOut,
-          workingHours,
-          status: newStatus,
-        });
-
-        // Reset the timeIn state to null
-        setTimeIn(null);
+      if (timeOut) {
+        alert("You have already timed out for today.");
+        return;
       }
+
+      const diffInMs =
+        new Date(recordedTimeOut).getTime() - new Date(timeIn).getTime();
+      const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
+      setWorkingHours(workingHours);
+
+      let newStatus = "";
+      if (workingHours >= 8) {
+        newStatus = "Present";
+      } else if (workingHours >= 4) {
+        newStatus = "Undertime";
+      } else {
+        newStatus = "Absent";
+      }
+      setStatus(newStatus);
+
+      await axios.put("http://localhost:4000/api/attendance", {
+        employeeNumber,
+        timeOut: recordedTimeOut,
+        workingHours,
+        status: newStatus,
+      });
+
+      // Reset the timeIn state to null
+      setTimeIn(null);
     } catch (err) {
       if (err.response && err.response.status === 400) {
         alert("Employee has already timed out today or has not timed in.");
@@ -121,15 +125,15 @@ function Attendance({ employee }) {
               </div>
             )}
 
-            <div className="mb-4">
+            <div className="mb-4 w-200">
               <input
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight fCD ocus:outline-none focus:shadow-outline"
+                className="shadow appearance-none border rounded w-full h-12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 id="employeeNumber"
                 type="text"
                 placeholder="Enter your employee number"
                 value={employeeNumber}
                 onChange={(e) => setEmployeeNumber(e.target.value)}
-                style={{ fontSize: "24px" }}
+                style={{ fontSize: "14px" }}
               />
             </div>
 
@@ -137,13 +141,15 @@ function Attendance({ employee }) {
               <button
                 className="bg-green-400 hover:bg-green-500 hover:text-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-lg"
                 type="submit"
-                onClick={handleTimeIn}>
+                onClick={handleTimeIn}
+              >
                 Time In
               </button>
               <button
                 className="bg-red-500 hover:bg-red-600 hover:text-black text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-lg"
                 type="submit"
-                onClick={handleTimeOut}>
+                onClick={handleTimeOut}
+              >
                 Time Out
               </button>
             </div>

@@ -1054,26 +1054,7 @@ app.put("/api/attendance/out", async (req, res) => {
   const { employeeNumber, status } = req.body;
 
   try {
-    // Get the current date and time
-    const now = new Date();
-
-    // Check if the employee has already timed out today or has not timed in
-    const attendance = await pool.query(
-      "SELECT time_in, time_out FROM attendance WHERE employee_number = $1 AND DATE(time_in) = $2",
-      [employeeNumber, now.toISOString().slice(0, 10)]
-    );
-
-    if (attendance.rowCount === 0) {
-      return res
-        .status(400)
-        .send("Employee has already timed out today or has not timed in.");
-    }
-
-    if (attendance.rows[0].time_out !== null) {
-      return res
-        .status(409)
-        .send("Attendance Time Out already recorded for today.");
-    }
+    // Rest of the code...
 
     // Update the attendance record for time out and working hours
     const timeIn = new Date(attendance.rows[0].time_in);
