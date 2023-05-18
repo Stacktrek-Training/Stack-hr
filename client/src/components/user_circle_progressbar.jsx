@@ -6,6 +6,8 @@ import "./../progressbar.js";
 function CircleProgressbar({ employee }) {
   const [reimburseLimit, setReimburseLimit] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [dashOffset, setDashOffset] = useState(0);
+  const [percent, setPercent] = useState(0);
 
   useEffect(() => {
     const fetchEmployee = async () => {
@@ -29,16 +31,23 @@ function CircleProgressbar({ employee }) {
       .get(`http://localhost:4000/sum/${employee}/${currentMonth}`)
       .then((response) => {
         setTotalAmount(response.data.total_amount);
+        setPercent((totalAmount / reimburseLimit) * 100);
+        setDashOffset(Math.floor(472 - 472 * (percent / 100)));
       })
       .catch((error) => console.error(error));
-  }, [employee]);
+  }, [employee, reimburseLimit, totalAmount, percent]);
+
+  const formattedTotalAmount = new Intl.NumberFormat().format(totalAmount);
+  const formattedReimburseLimit = new Intl.NumberFormat().format(
+    reimburseLimit
+  );
 
   return (
     <div className="progressBody block py-7 px-5">
       <div className="skill mb-5 ">
         <div className="outer">
           <div className="inner">
-            <div id="number"></div>
+            <div id="number">%{Math.floor(percent)}</div>
           </div>
         </div>
 
@@ -61,12 +70,13 @@ function CircleProgressbar({ employee }) {
             cy="80"
             r="70"
             strokeLinecap="round"
+            style={{ "--dash-offset": dashOffset }}
           />
         </svg>
       </div>
       <div className="text-center">
         <h1>
-          {totalAmount}/{reimburseLimit}
+          {formattedTotalAmount}/{formattedReimburseLimit}
         </h1>
       </div>
     </div>
