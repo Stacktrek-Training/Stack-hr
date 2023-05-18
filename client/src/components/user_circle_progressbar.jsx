@@ -3,16 +3,15 @@ import axios from "axios";
 import "./../components/style.css";
 import "./../progressbar.js";
 
-function CircleProgressbar(props) {
+function CircleProgressbar({ employee }) {
   const [reimburseLimit, setReimburseLimit] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
-  const id = 1;
 
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/employee/${id}`
+          `http://localhost:4000/employee/${employee}`
         );
         setReimburseLimit(response.data[0].reimbursed_limit);
       } catch (error) {
@@ -21,21 +20,18 @@ function CircleProgressbar(props) {
     };
 
     fetchEmployee();
-  }, [id]);
+  }, [employee]);
 
   useEffect(() => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // add 1 to convert to 1-based index
     axios
-      .get(`http://localhost:4000/expense/${id}`)
+      .get(`http://localhost:4000/sum/${employee}/${currentMonth}`)
       .then((response) => {
-        // Calculate total amount
-        let sum = 0;
-        response.data.forEach((expense) => {
-          sum += expense.total_amount;
-        });
-        setTotalAmount(sum);
+        setTotalAmount(response.data.total_amount);
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [employee]);
 
   return (
     <div className="progressBody block py-7 px-5">
@@ -69,7 +65,9 @@ function CircleProgressbar(props) {
         </svg>
       </div>
       <div className="text-center">
-        <h1>/{reimburseLimit}</h1>
+        <h1>
+          {totalAmount}/{reimburseLimit}
+        </h1>
       </div>
     </div>
   );
