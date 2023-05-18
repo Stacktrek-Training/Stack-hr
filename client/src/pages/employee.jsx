@@ -68,10 +68,12 @@ const Employee = ({ employee }) => {
                 {employees.map((employee) => (
                   <tr
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                    key={employee.employee_id}>
+                    key={employee.employee_id}
+                  >
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
                       {employee.employee_number}
                     </th>
                     <td class="px-6 py-4 capitalize">
@@ -93,7 +95,8 @@ const Employee = ({ employee }) => {
           </div>
           <div
             className="mt-2 flex justify-center
-          "></div>
+          "
+          ></div>
         </div>
       </div>
     </div>
