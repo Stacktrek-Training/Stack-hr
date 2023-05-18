@@ -37,6 +37,11 @@ function CircleProgressbar({ employee }) {
       .catch((error) => console.error(error));
   }, [employee, reimburseLimit, totalAmount, percent]);
 
+  const formattedTotalAmount = new Intl.NumberFormat().format(totalAmount);
+  const formattedReimburseLimit = new Intl.NumberFormat().format(
+    reimburseLimit
+  );
+
   return (
     <div className="progressBody block py-7 px-5">
       <div className="skill mb-5 ">
@@ -71,7 +76,7 @@ function CircleProgressbar({ employee }) {
       </div>
       <div className="text-center">
         <h1>
-          {totalAmount}/{reimburseLimit}
+          {formattedTotalAmount}/{formattedReimburseLimit}
         </h1>
       </div>
     </div>
