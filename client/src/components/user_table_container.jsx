@@ -35,7 +35,7 @@ function TableContainer({ employee }) {
           </thead>
           <tbody>
             {expenses.map((expense) => (
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-300">
                 <td class="w-4 p-4"></td>
                 <th
                   scope="row"
