@@ -10,13 +10,13 @@ const Sidebar2 = () => {
   }, []);
 
   return (
-    <div className="side bg-orange-500  text-white w-64">
+    <div className="side bg-orange-500  text-white w-52">
       <ul className="ul">
         <div className="image p-6 ">
           <img src={image1} alt="logo" />
         </div>
         <a href="/employee_dashboard">
-          <li className="py-3 mt-5 pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
+          <li className="py-3 mt-2 px-2 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -30,7 +30,7 @@ const Sidebar2 = () => {
           </li>
         </a>
         <a href="/employee_attendance">
-          <li className="py-3 mt-5  pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
+          <li className="py-3 mt-2 px-2 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -46,11 +46,11 @@ const Sidebar2 = () => {
               <circle cx="12" cy="12" r="2.5" fill="currentColor" />
             </svg>
 
-            <p className="block font-bold text-l pl-7">Time in/Time out</p>
+            <p className="block font-bold text-xl pl-7">Attendance</p>
           </li>
         </a>
         <a href="/employee_leave">
-          <li className="py-3 mt-5  pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
+          <li className="py-3 mt-2 px-2 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
