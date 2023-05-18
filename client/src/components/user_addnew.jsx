@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./../components/style.css";
 import axios from "axios";
 
-function AddNew({ visible, onClose }) {
+function AddNew({ visible, onClose, employee }) {
   const handleOnClose = (e) => {
     if (e.target.id === "container") onClose();
   };
@@ -20,6 +20,7 @@ function AddNew({ visible, onClose }) {
         date: date,
         category: category,
         amount: amount,
+        employee_id: employee,
       })
       .then((response) => {
         console.log(response.data);

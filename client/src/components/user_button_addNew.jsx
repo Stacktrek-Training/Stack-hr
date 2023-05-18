@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import AddNew from "./user_addnew";
 
-function ButtonAddNew() {
+function ButtonAddNew({ employee }) {
   const [showAddNew, setShowAddNew] = useState(false);
 
   const handleOnClose = () => setShowAddNew(false);
@@ -15,7 +15,11 @@ function ButtonAddNew() {
         Add New
       </button>
       <div>
-        <AddNew onClose={handleOnClose} visible={showAddNew} />
+        <AddNew
+          employee={employee.employee_id}
+          onClose={handleOnClose}
+          visible={showAddNew}
+        />
       </div>
     </div>
   );

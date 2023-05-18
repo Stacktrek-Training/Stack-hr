@@ -9,8 +9,8 @@ function ContainerDashboard({ employee }) {
       <div className="md:flex">
         <div>
           <div className="flex-1 mx-10 relative align-middle text-center p-1 shadow-2xl">
-            <span className="font-bold transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
-              April{id}
+            <span className="font-bold">
+              {new Date().toLocaleString("default", { month: "long" })}
             </span>
             {/* Right side: container */}
             <div className=" Box md:flex align-middle text-center">
