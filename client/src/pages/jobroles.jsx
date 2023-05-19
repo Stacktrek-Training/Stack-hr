@@ -29,13 +29,13 @@ const JobRoles = ({ employee }) => {
         <Sidebar />
         <div className="flex-1 p-12 mt-10">
           <div className="flex justify-start mb-3">
-            <h1 className="text-3xl font-bold text-gray-700">Job Roles</h1>
+            <h1 className="text-3xl font-bold text-gray-700">Position</h1>
           </div>
           <div className="mb-5 flex ">
             {/* Add Job Role */}
             <AddJobRoles />
           </div>
-          <div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
+          <div class="relative Table overflow-x-auto shadow-md rounded-lg">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 text-center uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>

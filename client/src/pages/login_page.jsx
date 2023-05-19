@@ -40,14 +40,15 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className=" grid grid-cols-2  background h-screen ">
+    <div className=" md:grid  md:grid-cols-2 background h-screen   ">
       <div className="logo"> </div>
       <div className="LoginForm w-9/12">
-        <form className=" p-10 rounded-xl" onSubmit={handleSubmit}>
+        <form className=" p-5 rounded-xl" onSubmit={handleSubmit}>
+          <div className=" font-medium text-5xl mb-14 text-center "> LOGIN</div>
           <div class="mb-6 ">
             <input
               type="text"
-              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-200 focus:border-gray-200 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+              class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-200 focus:border-gray-200 block w-full p-2.5 "
               placeholder="Employee Number"
               value={employeeNumber}
               onChange={(e) => setEmployeeNumber(e.target.value)}
@@ -68,12 +69,11 @@ const Login = ({ onLogin }) => {
           <button
             href="/dashboard"
             type="submit"
-            class="text-white cursor:pointer bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:outline-none  font-medium  text-sm px-20 py-2.5 text-center "
-          >
+            class="text-white cursor:pointer bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:outline-none  font-medium w-full  text-sm px-20 py-2.5 text-center ">
             Login
           </button>
         </form>{" "}
-        <div className="text-xl stack h-32"> </div>
+        <div className="text-xl stack h-32 "> </div>
       </div>
     </div>
   );

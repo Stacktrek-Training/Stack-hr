@@ -1074,10 +1074,8 @@ app.put("/api/attendance/out", async (req, res) => {
     const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
 
     let newStatus = "";
-    if (workingHours >= 8) {
+    if (workingHours >= 1) {
       newStatus = "Present";
-    } else if (workingHours >= 4) {
-      newStatus = "Undertime";
     } else {
       newStatus = "Absent";
     }
@@ -1098,6 +1096,38 @@ app.put("/api/attendance/out", async (req, res) => {
     console.error(err.message);
     res.status(500).send("Server error while recording Attendance Time Out.");
   }
+});
+
+// API endpoint to fetch attendance data for an employee by employee number
+app.get("/api/attendancetotal/:employeeNumber", (req, res) => {
+  const employeeNumber = req.params.employeeNumber;
+
+  Employee.findOne({ employee_number: employeeNumber }, (err, employee) => {
+    if (err) {
+      console.error("Error fetching employee data:", err);
+      return res.status(500).json({ error: "Failed to fetch employee data" });
+    }
+
+    if (!employee) {
+      return res.status(404).json({ error: "Employee not found" });
+    }
+
+    const totalAbsences = employee.attendance.reduce(
+      (acc, record) => acc + (record.status === "absent" ? 1 : 0),
+      0
+    );
+    const daysAttended = employee.attendance.reduce(
+      (acc, record) => acc + (record.status === "present" ? 1 : 0),
+      0
+    );
+
+    const attendanceData = {
+      totalAbsences,
+      daysAttended,
+    };
+
+    res.json(attendanceData);
+  });
 });
 
 app.listen(4000, () => {

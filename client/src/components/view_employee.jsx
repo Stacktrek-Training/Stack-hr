@@ -173,10 +173,13 @@ const ViewEmployee = ({ employee }) => {
                   <div className="mb-2">
                     <label
                       for="emcontactperson"
-                      class="block  text-sm font-semibold text-gray-900 dark:text-white">
+                      class="block  text-sm font-semibold text-gray-900 dark:text-white ">
                       Emergency Contact Person
                     </label>
-                    <span> {employee.emergency_contact_person}</span>
+                    <span className="capitalize">
+                      {" "}
+                      {employee.emergency_contact_person}
+                    </span>
                   </div>
                   <div className="mb-2">
                     <label
@@ -184,7 +187,7 @@ const ViewEmployee = ({ employee }) => {
                       class="block  text-sm font-semibold text-gray-900 dark:text-white">
                       Relationship
                     </label>
-                    <span> {employee.relationship}</span>
+                    <span className="capitalize"> {employee.relationship}</span>
                   </div>
                   <div className="mb-2">
                     <label

@@ -70,10 +70,8 @@ function Attendance({ employee }) {
         setWorkingHours(workingHours);
 
         let newStatus = "";
-        if (workingHours >= 8) {
+        if (workingHours >= 1) {
           newStatus = "Present";
-        } else if (workingHours >= 4) {
-          newStatus = "Undertime";
         } else {
           newStatus = "Absent";
         }
@@ -104,7 +102,7 @@ function Attendance({ employee }) {
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar2 />
-        <div class="mx-auto w-[400px] mt-40">
+        <div class="mx-auto w-[400px] mt-40 ">
           <form class="flex-1 flex-wrap flex-col p-20">
             {/* Display Time In */}
             {timeIn && !timeOut && (
