@@ -70,10 +70,8 @@ function Attendance({ employee }) {
         setWorkingHours(workingHours);
 
         let newStatus = "";
-        if (workingHours >= 8) {
+        if (workingHours >= 1) {
           newStatus = "Present";
-        } else if (workingHours >= 4) {
-          newStatus = "Undertime";
         } else {
           newStatus = "Absent";
         }
