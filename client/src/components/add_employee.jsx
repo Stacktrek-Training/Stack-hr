@@ -22,11 +22,7 @@ const AddEmployee = () => {
   const [first_name, setFirstName] = useState("");
   const [middle_name, setMiddleName] = useState("");
   const [last_name, setlastName] = useState("");
-  const [province, setProvince] = useState("");
-  const [city, setCity] = useState("");
-  const [municipality, setMunicipality] = useState("");
-  const [baranggay, setBaranggay] = useState("");
-  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
   const [mobile_number, setMobileNumber] = useState("");
   const [telephone_number, setTelephoneNumber] = useState("");
   const [work_email, setWorkEmail] = useState("");
@@ -46,10 +42,7 @@ const AddEmployee = () => {
         first_name: first_name,
         middle_name: middle_name,
         last_name: last_name,
-        province: province,
-        municipality: municipality,
-        baranggay: baranggay,
-        zipcode: zipcode,
+        address: address,
         mobile_number: mobile_number,
         telephone_number: telephone_number,
         work_email: work_email,
@@ -271,10 +264,10 @@ const AddEmployee = () => {
 
                 <div>
                   <label
-                    for="Job roles"
+                    for="Position"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     {" "}
-                    Job Roles
+                    Position
                   </label>
 
                   <select
@@ -282,7 +275,7 @@ const AddEmployee = () => {
                     onChange={(e) => setJobTitle(e.target.value)}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                     <option value="" disabled selected hidden>
-                      Job Role
+                      Position
                     </option>
                     {job_roles.map((job_role) => (
                       <option
@@ -296,56 +289,15 @@ const AddEmployee = () => {
                 </div>
                 <div>
                   <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Province/City
+                    Address
                   </label>
                   <input
                     type="text"
-                    value={province}
+                    value={address}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Province"
+                    placeholder=" Address"
                     required
-                    onChange={(e) => setProvince(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Municipality
-                  </label>
-                  <input
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Municipality"
-                    value={municipality}
-                    onChange={(e) => setMunicipality(e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Baranggay
-                  </label>
-                  <input
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Baranggay"
-                    value={baranggay}
-                    onChange={(e) => setBaranggay(e.target.value)}
-                    required
-                  />
-                </div>
-                <div>
-                  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Zip Code
-                  </label>
-                  <input
-                    type="text"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="  Zip Code"
-                    onInput={OnlyNumber}
-                    maxLength={4}
-                    value={zipcode}
-                    onChange={(e) => setZipcode(e.target.value)}
-                    required
+                    onChange={(e) => setAddress(e.target.value)}
                   />
                 </div>
                 <div>

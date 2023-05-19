@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import EditLimitModal from "./user_edit_limit_modal";
 
-function EditLimitButton() {
+function EditLimitButton({ employee }) {
   const [showEditLimitModal, setshowEditLimitModal] = useState(false);
 
   const handleOnClose = () => setshowEditLimitModal(false);
@@ -16,7 +16,11 @@ function EditLimitButton() {
       </button>
 
       <div>
-        <EditLimitModal onClose={handleOnClose} visible={showEditLimitModal} />
+        <EditLimitModal
+          employee={employee}
+          onClose={handleOnClose}
+          visible={showEditLimitModal}
+        />
       </div>
     </div>
   );

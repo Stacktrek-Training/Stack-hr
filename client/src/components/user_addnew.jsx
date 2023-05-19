@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./../components/style.css";
 import axios from "axios";
 
-function AddNew({ visible, onClose }) {
+function AddNew({ visible, onClose, employee }) {
   const handleOnClose = (e) => {
     if (e.target.id === "container") onClose();
   };
@@ -14,21 +14,63 @@ function AddNew({ visible, onClose }) {
   const [amount, setamount] = useState("");
   const [receipt, setReceipt] = useState("");
 
-  const handleSave = () => {
+  const [reimburseLimit, setReimburseLimit] = useState(null);
+  const [totalAmount, setTotalAmount] = useState(0);
+
+  useEffect(() => {
+    const fetchEmployee = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:4000/employee/${employee}`
+        );
+        setReimburseLimit(response.data[0].reimbursed_limit);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    fetchEmployee();
+  }, [employee]);
+
+  useEffect(() => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // add 1 to convert to 1-based index
+    axios
+      .get(`http://localhost:4000/sum/${employee}/${currentMonth}`)
+      .then((response) => {
+        setTotalAmount(response.data.total_amount);
+      })
+      .catch((error) => console.error(error));
+  }, [employee]);
+
+  const handleSave = (e) => {
+    e.preventDefault();
+
+    if (!date || !category || !amount) {
+      // Add form validation here, display an error message, or prevent form submission
+      return;
+    }
+
     axios
       .post("http://localhost:4000/expense", {
         date: date,
         category: category,
         amount: amount,
+        employee_id: employee,
       })
       .then((response) => {
         console.log(response.data);
+        setTotalAmount(
+          (prevTotalAmount) => prevTotalAmount + parseFloat(amount)
+        );
+        onClose();
       })
       .catch((error) => {
         console.error(error.message);
+        // Handle error here or display an error message
       });
   };
-
+  const availableFunds = reimburseLimit - totalAmount;
   return (
     <div
       id="container"
@@ -61,7 +103,8 @@ function AddNew({ visible, onClose }) {
             {/* Date picker */}
             <div className="w-full md:w-auto mb-2 md:mb-0 md:mr-2 mt-5">
               <label class="block mb-2 font-bold">
-                Available Funds: <span class="text-orange-500">₱8900</span>
+                Available Funds:{" "}
+                <span class="text-orange-500">₱{availableFunds}</span>
               </label>
 
               <label class="block mb-2 font-bold" for="date">

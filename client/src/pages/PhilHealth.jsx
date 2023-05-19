@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import "./../components/style.css";
 // import ShowDescription from "../components/hide_desc";
 // import EditDeduction from "../components/edit_deduction";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 import Navbar from "../components/navbar";
 // import ShowTable from "../components/show_table";
 import AddDeductionPhilHealth from "../components/add_deduction_philhealth";
 import EditDeductionPhilHealth from "../components/edit_deduction_philhealth";
 import axios from "axios";
 
-const PhilHealth = () => {
+const PhilHealth = ({ employee }) => {
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const formatter = new Intl.NumberFormat("en-PH", {
     style: "currency",
     currency: "PHP",
@@ -32,7 +34,7 @@ const PhilHealth = () => {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
@@ -72,10 +74,12 @@ const PhilHealth = () => {
                 {philhealths.map((philhealth, index) => (
                   <tr
                     key={philhealth.deduction_id}
-                    class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  >
                     <th
                       scope="row"
-                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                    >
                       {index + 1}
                     </th>
                     <td class="px-6 py-4 capitalize">

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import profilePicture from "./../assets/profilepic.png";
 
-const ExpenseNavbar = () => {
+const ExpenseNavbar = ({ employee }) => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   const toggleSidebar = () => {
@@ -35,7 +35,9 @@ const ExpenseNavbar = () => {
               src={profilePicture}
               alt="Profile"
             />
-            <span className="text-gray-700 font-bold">Gil Benedict Chiu</span>
+            <span className="text-gray-700 font-bold">
+              {employee.first_name} {employee.last_name}
+            </span>
           </div>
           {/* Right side: menu button */}
           <div className="md:hidden">

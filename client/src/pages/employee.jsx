@@ -5,10 +5,12 @@ import Delete_Employee from "../components/delete_employee";
 import axios from "axios";
 import ViewEmployee from "../components/view_employee";
 import AddEmployee from "../components/add_employee";
-import Sidebar from "../components/sidebar";
+import Sidebar from "../components/sidebar_hr";
 import Navbar from "../components/navbar";
-const Employee = () => {
+const Employee = ({ employee }) => {
   // for getting all employees
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
+
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
@@ -24,7 +26,7 @@ const Employee = () => {
     <div className="h-screen relative">
       {" "}
       {/* Navbar */}
-      <Navbar />
+      <Navbar employee={employeeData} />
       <div className="flex h-screen bg-gray-200 m-0 screen:h-screen overflow-auto screen:max-w-screen">
         {/* Sidebar */}
         <Sidebar />
@@ -33,12 +35,12 @@ const Employee = () => {
             <h1 className="text-3xl font-bold text-gray-700">Employees</h1>
           </div>
           {/* Add Employee */}
-          <div className="mb-5 flex ">
+          <div className="mb-7 flex ">
             <AddEmployee />
           </div>
           {/* Tables For employee */}
 
-          <div className="relative Table overflow-x-auto shadow-md ">
+          <div className="relative Table overflow-x-auto shadow-md rounded-lg ">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
                 <tr>
@@ -79,12 +81,7 @@ const Employee = () => {
                       {employee.middle_name}
                     </td>
                     <td class="px-6 py-4">{employee.job_title}</td>
-                    <td class="px-6 py-4 capitalize">
-                      {`${employee.baranggay}${", "}${
-                        employee.municipality
-                      }${", "}
-                      ${employee.province}`}
-                    </td>
+                    <td class="px-6 py-4 capitalize">{employee.address}</td>
                     <td class="px-6 py-4">{employee.mobile_number}</td>
                     <td class=" py-4 px-2 flex gap-2 text-center">
                       <ViewEmployee employee={employee} />

@@ -3,19 +3,18 @@ import axios from "axios";
 import "./../components/style.css";
 import CircleProgressbar from "./user_circle_progressbar";
 
-function EditLimitModal({ visible, onClose, props }) {
+function EditLimitModal({ visible, onClose, employee }) {
   const handleOnClose = (e) => {
     if (e.target.id === "editlimitcontainer") onClose();
   };
   if (!visible) return null;
 
   const [reimburseLimit, setReimburseLimit] = useState(null);
-  const id = 1;
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/employee/${id}`
+          `http://localhost:4000/employee/${employee}`
         );
         setReimburseLimit(response.data[0].reimbursed_limit);
       } catch (error) {
@@ -24,11 +23,7 @@ function EditLimitModal({ visible, onClose, props }) {
     };
 
     fetchEmployee();
-  }, [id]);
-
-  if (reimburseLimit === null) {
-    return <div>Loading...</div>;
-  }
+  }, [{ employee }]);
 
   return (
     <div
@@ -70,7 +65,7 @@ function EditLimitModal({ visible, onClose, props }) {
 
             {/* Circle progress bar */}
             <div class="flex justify-center items-center">
-              <CircleProgressbar />
+              <CircleProgressbar employee={employee} />
             </div>
 
             {/* Amount input */}

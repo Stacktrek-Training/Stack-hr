@@ -3,89 +3,151 @@
   padding: 0;
   font-family: Montserrat;
 }
-
-.Table {
-  z-index: 0;
-  max-height: 60vh;
-  overflow-y: auto;
-}
-.Form {
-  z-index: auto;
-  position: relative;
-}
-.search_icon {
-  position: absolute;
-  right: 180px;
-}
-.Data {
-  font-size: 10px;
-}
-.side {
-  z-index: 10;
-}
-.image {
-  margin-top: -100px;
-}
-.ul {
-  margin-top: 100px;
-}
-.dropdown {
-  position: absolute;
-  left: 15.1rem;
-  top: 25rem;
-}
-.avatar {
-  height: 50px;
-  width: 50px;
-}
-.background {
-  background-image: url(../assets/Background.png);
-  background-size: cover;
-}
-.logo {
-  background-image: url(../assets/logo.png);
-  background-repeat: no-repeat;
-  margin-top: 2rem;
-  margin-left: 2rem;
-}
-.stack {
-  background-image: url(../assets/stacktrek.png);
-  background-repeat: no-repeat;
-  background-size: 30%;
-  margin-top: 5rem;
-  margin-left: -10rem;
-  z-index: 10;
-}
-.LoginForm {
-  margin-top: 10rem;
-  margin-left: 5rem;
-}
-.LoginForm input {
-  height: 3rem;
-}
-.LoginForm a {
-  margin-left: 14rem;
-  border-radius: 20px 0px 12px 20px;
-}
-.Font {
-  font-size: 50px;
-}
-/* Modal Styles */
-.Modal {
-  opacity: 0;
-  transform: translateY(50%);
-  animation: scroll-in 0.5s ease-out forwards;
-  scroll-behavior: smooth;
+/* For WebKit-based browsers (Chrome, Safari, Opera) */
+::-webkit-scrollbar {
+  width: 4px; /* Set the width of the scroll bar */
+  height: 5px;
 }
 
-@keyframes scroll-in {
-  0% {
-    opacity: 0;
-    transform: translateY(-50%);
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Set the background color of the scroll bar track */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(255 90 31); /* Set the color of the scroll bar handle */
+  border-radius: 50px 50px 50px 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(
+    240,
+    124,
+    81
+  ); /* Set the color of the scroll bar handle on hover */
+}
+@media screen and (min-width: 300px) and (max-width: 1026px) {
+  .stack {
+    background-image: url(../assets/stacktrek.png);
+    background-repeat: no-repeat;
+    background-size: 100px;
+    margin-top: 4rem;
+    background-position-x: center;
+    background-position-y: bottom;
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+  .LoginForm {
+    margin-left: 3rem;
+    margin-right: 2rem;
+    padding-top: 5rem;
+    max-height: 100vh;
+    overflow-y: hidden;
+  }
+  .LoginForm input {
+    height: 3rem;
+  }
+  .LoginForm button {
+    border-radius: 20px 0px 20px 20px;
+  }
+}
+@media screen and (min-width: 1026px) {
+  .background {
+    background-image: url(../assets/Background.png);
+    background-size: cover;
+  }
+  .Table {
+    z-index: 0;
+    max-height: 60vh;
+    overflow-y: auto;
+  }
+  .Tables {
+    z-index: 0;
+    max-height: 60vh;
+    overflow-y: auto;
+    max-width: 66rem;
+  }
+  .Form {
+    z-index: auto;
+    position: relative;
+  }
+  .search_icon {
+    position: absolute;
+    right: 180px;
+  }
+  .Data {
+    font-size: 10px;
+  }
+  .side {
+    z-index: 10;
+  }
+  .image {
+    margin-top: -100px;
+  }
+  .ul {
+    margin-top: 100px;
+  }
+  .dropdown {
+    position: absolute;
+    left: 13rem;
+    top: 23rem;
+    border-radius: 0 15px 15px 0;
+  }
+  .dropdown ul li a:hover {
+    background: rgb(231, 231, 231);
+    color: rgb(255 90 31);
+    border-radius: 0 15px 15px 0;
+  }
+  .avatar {
+    height: 50px;
+    width: 50px;
+  }
+
+  .logo {
+    background-image: url(../assets/logo.png);
+    background-repeat: no-repeat;
+    margin-top: 2rem;
+    margin-left: 2rem;
+  }
+  .stack {
+    background-image: url(../assets/stacktrek.png);
+    background-repeat: no-repeat;
+    background-position-y: bottom;
+    background-size: 30%;
+    margin-top: 2rem;
+    margin-left: -10rem;
+    z-index: 10;
+  }
+  .LoginForm {
+    margin-top: 10rem;
+    margin-left: 5rem;
+  }
+  .LoginForm input {
+    height: 3rem;
+  }
+  .LoginForm button {
+    border-radius: 20px 0px 20px 20px;
+  }
+  .Font {
+    font-size: 50px;
+  }
+  /* Modal Styles */
+  .Modal {
+    opacity: 0;
+    transform: translateY(50%);
+    animation: scroll-in 0.5s ease-out forwards;
+    scroll-behavior: smooth;
+  }
+
+  @keyframes scroll-in {
+    0% {
+      opacity: 0;
+      transform: translateY(-50%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
 
@@ -158,7 +220,7 @@
 
 @keyframes circleAnim {
   100% {
-    stroke-dashoffset: 165;
+    stroke-dashoffset: var(--dash-offset);
   }
 }
 
@@ -169,4 +231,10 @@
   scroll-behavior: smooth;
   height: 30rem;
   width: 25rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .my-div {
+    display: none;
+  }
 }
