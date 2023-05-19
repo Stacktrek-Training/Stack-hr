@@ -858,11 +858,11 @@ app.get("/employee/:id", async (req, res) => {
 //add expense data
 app.post("/expense", async (req, res) => {
   try {
-    const { category, amount, receipt, date, employee_id } = req.body;
+    const { category, amount, receipt, date } = req.body;
     const insertExp = await pool.query(
       // DATABASE COLUMN NAME
-      `INSERT INTO "EXPENSES"(category,amount,receipt,date_inserted,date,employee_id)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4, $5) RETURNING *`,
-      [category, amount, receipt, date, employee_id]
+      `INSERT INTO "EXPENSES"(category,amount,receipt,date_inserted,date)VALUES($1, $2, $3, CURRENT_TIMESTAMP, $4) RETURNING *`,
+      [category, amount, receipt, date]
     );
     res.json("Inserted data");
   } catch (error) {
@@ -1004,7 +1004,7 @@ app.get("/api/cities/:country", async (req, res) => {
 
 // create a POST route for recording time in
 app.post("/api/attendance/in", async (req, res) => {
-  const { employeeNumber } = req.body;
+  const { employeeNumber, id } = req.body;
 
   try {
     // get the current date and time
@@ -1024,8 +1024,8 @@ app.post("/api/attendance/in", async (req, res) => {
 
     // insert the attendance record for time in
     const result = await pool.query(
-      "INSERT INTO attendance (employee_number, time_in) VALUES ($1, $2) RETURNING *",
-      [employeeNumber, now]
+      "INSERT INTO attendance (employee_number, time_in,employee_id) VALUES ($1, $2,$3) RETURNING *",
+      [employeeNumber, now, id]
     );
 
     res.status(200).json(result.rows[0]);
@@ -1049,44 +1049,43 @@ app.post("/employeeAttendance", async (req, res) => {
   }
 });
 
-// create a PUT route for recording time out
+// PUT route for recording time out
 app.put("/api/attendance/out", async (req, res) => {
-  const { employeeNumber, status } = req.body;
+  const { employeeNumber } = req.body;
 
   try {
-    // Get the current date and time
     const now = new Date();
 
-    // Check if the employee has already timed out today or has not timed in
+    // Fetch the attendance record for the employee and current date
     const attendance = await pool.query(
-      "SELECT time_in, time_out FROM attendance WHERE employee_number = $1 AND DATE(time_in) = $2",
+      "SELECT * FROM attendance WHERE employee_number = $1 AND DATE(time_in) = $2",
       [employeeNumber, now.toISOString().slice(0, 10)]
     );
 
-    if (attendance.rowCount === 0) {
-      return res
-        .status(400)
-        .send("Employee has already timed out today or has not timed in.");
+    if (attendance.rows.length === 0) {
+      // Attendance record not found
+      res.status(400).send("Employee has not timed in.");
+      return;
     }
 
-    if (attendance.rows[0].time_out !== null) {
-      return res
-        .status(409)
-        .send("Attendance Time Out already recorded for today.");
-    }
-
-    // Update the attendance record for time out and working hours
     const timeIn = new Date(attendance.rows[0].time_in);
     const timeOut = now;
-    const diffInMs = timeOut.getTime() - timeIn.getTime();
+    const diffInMs = timeOut - timeIn;
     const workingHours = (diffInMs / (1000 * 60 * 60)).toFixed(2);
+
+    let newStatus = "";
+    if (workingHours >= 1) {
+      newStatus = "Present";
+    } else {
+      newStatus = "Absent";
+    }
 
     const result = await pool.query(
       "UPDATE attendance SET time_out = $1, working_hours = $2, status = $3 WHERE employee_number = $4 AND DATE(time_in) = $5 RETURNING *",
       [
         timeOut,
         workingHours,
-        status, // Use the status value in the update query
+        newStatus,
         employeeNumber,
         now.toISOString().slice(0, 10),
       ]
@@ -1097,6 +1096,38 @@ app.put("/api/attendance/out", async (req, res) => {
     console.error(err.message);
     res.status(500).send("Server error while recording Attendance Time Out.");
   }
+});
+
+// API endpoint to fetch attendance data for an employee by employee number
+app.get("/api/attendancetotal/:employeeNumber", (req, res) => {
+  const employeeNumber = req.params.employeeNumber;
+
+  Employee.findOne({ employee_number: employeeNumber }, (err, employee) => {
+    if (err) {
+      console.error("Error fetching employee data:", err);
+      return res.status(500).json({ error: "Failed to fetch employee data" });
+    }
+
+    if (!employee) {
+      return res.status(404).json({ error: "Employee not found" });
+    }
+
+    const totalAbsences = employee.attendance.reduce(
+      (acc, record) => acc + (record.status === "absent" ? 1 : 0),
+      0
+    );
+    const daysAttended = employee.attendance.reduce(
+      (acc, record) => acc + (record.status === "present" ? 1 : 0),
+      0
+    );
+
+    const attendanceData = {
+      totalAbsences,
+      daysAttended,
+    };
+
+    res.json(attendanceData);
+  });
 });
 
 app.listen(4000, () => {

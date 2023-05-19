@@ -1,40 +1,27 @@
 import React, { useEffect, useState } from "react";
-import "./../components/style.css";
+import axios from "axios";
 import Sidebar2 from "../components/sidebar_employee";
 import Navbar from "../components/navbar";
 
 const EmployeeDashboard = ({ employee }) => {
-  console.log(employee);
   const employeeData = employee && employee.length > 0 ? employee[0] : null;
   const [totalAbsences, setTotalAbsences] = useState(0);
   const [daysAttended, setDaysAttended] = useState(0);
-  const [totalUndertime, setDaysUndertime] = useState(0);
-  const [totalLeave, setDaysLeave] = useState(0);
 
   useEffect(() => {
-    // Fetch the attendance data from your backend API
-    fetchAttendanceData()
-      .then((data) => {
-        setTotalAbsences(data.totalAbsences);
-        setDaysAttended(data.daysAttended);
-        setDaysUndertime(data.totalUndertime);
-        setDaysLeave(data.totalLeave);
-      })
-      .catch((error) => {
-        console.log("Error fetching attendance data:", error);
-      });
-  }, []);
-
-  // Function to fetch attendance data from the backend API
-  const fetchAttendanceData = async () => {
-    try {
-      const response = await fetch("/api/attendance"); // Replace "/api/attendance" with the appropriate API endpoint
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      throw new Error("Failed to fetch attendance data");
+    if (employeeData) {
+      axios
+        .get(`/api/attendancetotal/${employeeData.employee_number}`)
+        .then((response) => {
+          const { totalAbsences, daysAttended } = response.data;
+          setTotalAbsences(totalAbsences);
+          setDaysAttended(daysAttended);
+        })
+        .catch((error) => {
+          console.log("Error fetching attendance data:", error);
+        });
     }
-  };
+  }, [employeeData]);
 
   return (
     <div className="h-screen relative">
@@ -70,20 +57,6 @@ const EmployeeDashboard = ({ employee }) => {
             </div>
           </div>
           <br /> <br /> {/* Line break */}
-          <div className="grid grid-cols-2 gap-8">
-            <div className="bg-gray-300 p-12 rounded-lg border border-black">
-              <h2 className="text-3xl font-bold text-black mb-8">
-                Total Undertime
-              </h2>
-              <p className="text-4xl text-yellow-400">{totalUndertime}</p>
-            </div>
-            <div className="bg-gray-300 p-12 rounded-lg border border-black">
-              <h2 className="text-3xl font-bold text-black mb-8">
-                Total Leave
-              </h2>
-              <p className="text-4xl text-blue-500">{totalLeave}</p>
-            </div>
-          </div>
         </div>
       </div>
     </div>

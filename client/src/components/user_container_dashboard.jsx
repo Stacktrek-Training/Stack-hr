@@ -3,7 +3,6 @@ import CircleProgressbar from "../components/user_circle_progressbar";
 import EditLimitButton from "./user_edit_limit_button";
 
 function ContainerDashboard({ employee }) {
-  const id = employee.employee_id;
   return (
     <div className="mx-0.5 BoxMonth">
       <div className="md:flex">
@@ -15,7 +14,7 @@ function ContainerDashboard({ employee }) {
             {/* Right side: container */}
             <div className=" Box md:flex align-middle text-center">
               <div class="flex justify-center items-center">
-                <CircleProgressbar />
+                <CircleProgressbar employee={employee.employee_id} />
               </div>{" "}
               {/* Top 3 */}
               <div className="my-div p-10 mt-5">
@@ -43,7 +42,7 @@ function ContainerDashboard({ employee }) {
                     <div className="h-full bg-blue-500 rounded-full animate-pulse"></div>
                   </div>
                 </div>
-                <EditLimitButton />
+                <EditLimitButton employee={employee.employee_id} />
               </div>
             </div>
           </div>

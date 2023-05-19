@@ -3,16 +3,17 @@ import axios from "axios";
 import "./../components/style.css";
 import "./../progressbar.js";
 
-function CircleProgressbar(props) {
+function CircleProgressbar({ employee }) {
   const [reimburseLimit, setReimburseLimit] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
-  const id = 1;
+  const [dashOffset, setDashOffset] = useState(0);
+  const [percent, setPercent] = useState(0);
 
   useEffect(() => {
     const fetchEmployee = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/employee/${id}`
+          `http://localhost:4000/employee/${employee}`
         );
         setReimburseLimit(response.data[0].reimbursed_limit);
       } catch (error) {
@@ -21,28 +22,32 @@ function CircleProgressbar(props) {
     };
 
     fetchEmployee();
-  }, [id]);
+  }, [employee]);
 
   useEffect(() => {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // add 1 to convert to 1-based index
     axios
-      .get(`http://localhost:4000/expense/${id}`)
+      .get(`http://localhost:4000/sum/${employee}/${currentMonth}`)
       .then((response) => {
-        // Calculate total amount
-        let sum = 0;
-        response.data.forEach((expense) => {
-          sum += expense.total_amount;
-        });
-        setTotalAmount(sum);
+        setTotalAmount(response.data.total_amount);
+        setPercent((totalAmount / reimburseLimit) * 100);
+        setDashOffset(Math.floor(472 - 472 * (percent / 100)));
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [employee, reimburseLimit, totalAmount, percent]);
+
+  const formattedTotalAmount = new Intl.NumberFormat().format(totalAmount);
+  const formattedReimburseLimit = new Intl.NumberFormat().format(
+    reimburseLimit
+  );
 
   return (
     <div className="progressBody block py-7 px-5">
       <div className="skill mb-5 ">
         <div className="outer">
           <div className="inner">
-            <div id="number"></div>
+            <div id="number">%{Math.floor(percent)}</div>
           </div>
         </div>
 
@@ -65,11 +70,14 @@ function CircleProgressbar(props) {
             cy="80"
             r="70"
             strokeLinecap="round"
+            style={{ "--dash-offset": dashOffset }}
           />
         </svg>
       </div>
       <div className="text-center">
-        <h1>/{reimburseLimit}</h1>
+        <h1>
+          {formattedTotalAmount}/{formattedReimburseLimit}
+        </h1>
       </div>
     </div>
   );
