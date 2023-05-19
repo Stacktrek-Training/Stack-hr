@@ -90,7 +90,7 @@ function CircleProgressbar({ employee }) {
       </div>
       <div className="text-center">
         <h1>
-          {formattedTotalAmount}/{formattedReimburseLimit}
+          ₱{formattedTotalAmount}/₱{formattedReimburseLimit}
         </h1>
       </div>
     </div>
