@@ -21,38 +21,46 @@ const Payroll = ({ employee }) => {
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-10">
-          <div className="flex justify-start mb-16">
+        <div className="flex-1 p-12  mt-10">
+          <div className="flex justify-start mb-5">
             <h1 className="text-3xl font-bold text-gray-700">Payroll</h1>
           </div>
-          <div className="mb-5 flex ">{/* Add Salaries */}</div>
-          <div class="relative Tables overflow-x-scroll  shadow-md sm:rounded-lg mx-14">
+          <div className="mb-5 flex justify-end w-full ">
+            {" "}
+            {/* Add Salaries */}{" "}
+            <form action="">
+              <div className=" ">
+                <input
+                  type="date"
+                  className=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-30  pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+              </div>
+            </form>{" "}
+          </div>
+          <div class="relative Tables overflow-x-scroll  w-full  shadow-md sm:rounded-lg ">
             <table class="sticky top-0 text-center  Data">
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+              <colgroup class="bg-white"></colgroup>
+
               <thead className=" text-gray-700 font-semibold uppercase">
                 <tr>
                   <th

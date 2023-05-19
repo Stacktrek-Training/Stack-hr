@@ -40,7 +40,7 @@ const Employee = ({ employee }) => {
           </div>
           {/* Tables For employee */}
 
-          <div className="relative Table overflow-x-auto shadow-md ">
+          <div className="relative Table overflow-x-auto shadow-md rounded-lg ">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
                 <tr>
