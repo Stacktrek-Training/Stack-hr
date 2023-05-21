@@ -75,7 +75,7 @@ function App() {
           {employee && <JobRoles employee={employee} />}
         </Route>
         <Route path="/expense-admin">
-          <Admin />
+          {employee && <Admin employee={employee} />}
         </Route>
       </Switch>
     </BrowserRouter>

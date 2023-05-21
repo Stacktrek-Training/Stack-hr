@@ -5,8 +5,9 @@ import profilePicture from "./../assets/profilepic.png";
 import UserList from "../components/admin_user_list";
 import UserGrid from "../components/admin_user_grid";
 
-const Admin = () => {
+const Admin = ({ employee }) => {
   const [isListView, setIsListView] = useState(false);
+  const employeeData = employee && employee.length > 0 ? employee[0] : null;
   const userListData = [
     "1. Gil Benedict Chiu",
     "2. Veronica Castillo",
@@ -20,7 +21,8 @@ const Admin = () => {
   return (
     <div>
       <div>
-        <ExpenseNavbar />
+        {" "}
+        <ExpenseNavbar employee={employeeData} />
       </div>
       <div>
         <div className="border-4 border-orange-400 h-72 w-120 mt-32 mr-16 ml-16 flex-1 mx-10 relative bg-white align-middle text-center  shadow-2xl rounded-3xl">
