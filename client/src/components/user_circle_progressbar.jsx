@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./../components/style.css";
-import "./../progressbar.js";
 
 function CircleProgressbar({ employee }) {
   const [reimburseLimit, setReimburseLimit] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
   const [dashOffset, setDashOffset] = useState(0);
   const [percent, setPercent] = useState(0);
+  const [counter, setCounter] = useState(0);
 
   useEffect(() => {
     const fetchEmployee = async () => {
@@ -37,6 +37,20 @@ function CircleProgressbar({ employee }) {
       .catch((error) => console.error(error));
   }, [employee, reimburseLimit, totalAmount, percent]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (counter === Math.floor(percent)) {
+        clearInterval(interval);
+      } else {
+        setCounter((prevCounter) => prevCounter + 1);
+      }
+    }, 30);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [counter, percent]);
+
   const formattedTotalAmount = new Intl.NumberFormat().format(totalAmount);
   const formattedReimburseLimit = new Intl.NumberFormat().format(
     reimburseLimit
@@ -47,7 +61,7 @@ function CircleProgressbar({ employee }) {
       <div className="skill mb-5 ">
         <div className="outer">
           <div className="inner">
-            <div id="number">%{Math.floor(percent)}</div>
+            <div id="percentnumber">{counter}%</div>
           </div>
         </div>
 
@@ -76,7 +90,7 @@ function CircleProgressbar({ employee }) {
       </div>
       <div className="text-center">
         <h1>
-          {formattedTotalAmount}/{formattedReimburseLimit}
+          ₱{formattedTotalAmount}/₱{formattedReimburseLimit}
         </h1>
       </div>
     </div>
