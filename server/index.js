@@ -1099,35 +1099,36 @@ app.put("/api/attendance/out", async (req, res) => {
 });
 
 // API endpoint to fetch attendance data for an employee by employee number
-app.get("/api/attendancetotal/:employeeNumber", (req, res) => {
-  const employeeNumber = req.params.employeeNumber;
+app.post("/api/attendancetotal/:employee_number", (req, res) => {
+  const employeeNumber = req.params.employee_number;
 
-  Employee.findOne({ employee_number: employeeNumber }, (err, employee) => {
-    if (err) {
-      console.error("Error fetching employee data:", err);
-      return res.status(500).json({ error: "Failed to fetch employee data" });
+  pool.query(
+    `SELECT COUNT(*) FILTER (WHERE status = 'Present') AS present_count, COUNT(*) FILTER (WHERE status = 'Absent') AS absent_count FROM attendance WHERE employee_number = $1`,
+    [employeeNumber],
+    (err, result) => {
+      if (err) {
+        console.error("Error fetching attendance data:", err);
+        return res
+          .status(500)
+          .json({ error: "Failed to fetch attendance data" });
+      }
+
+      if (result.rows.length === 0) {
+        return res
+          .status(404)
+          .json({ error: "Employee not found in attendance table" });
+      }
+
+      const { present_count, absent_count } = result.rows[0];
+
+      const attendanceStatus = {
+        present_count,
+        absent_count,
+      };
+
+      res.json(attendanceStatus);
     }
-
-    if (!employee) {
-      return res.status(404).json({ error: "Employee not found" });
-    }
-
-    const totalAbsences = employee.attendance.reduce(
-      (acc, record) => acc + (record.status === "absent" ? 1 : 0),
-      0
-    );
-    const daysAttended = employee.attendance.reduce(
-      (acc, record) => acc + (record.status === "present" ? 1 : 0),
-      0
-    );
-
-    const attendanceData = {
-      totalAbsences,
-      daysAttended,
-    };
-
-    res.json(attendanceData);
-  });
+  );
 });
 
 app.listen(4000, () => {
