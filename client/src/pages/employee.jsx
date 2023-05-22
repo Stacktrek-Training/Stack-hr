@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./../components/style.css";
 import EditEmployee from "../components/edit_employee";
-import Delete_Employee from "../components/delete_employee";
 import axios from "axios";
 import ViewEmployee from "../components/view_employee";
 import AddEmployee from "../components/add_employee";
@@ -40,7 +39,7 @@ const Employee = ({ employee }) => {
           </div>
           {/* Tables For employee */}
 
-          <div className="relative Table overflow-x-auto shadow-md ">
+          <div className="relative Table overflow-x-auto shadow-md rounded-lg ">
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
                 <tr>
@@ -86,7 +85,6 @@ const Employee = ({ employee }) => {
                     <td class=" py-4 px-2 flex gap-2 text-center">
                       <ViewEmployee employee={employee} />
                       <EditEmployee employee={employee} />
-                      <Delete_Employee employee={employee} />
                     </td>
                   </tr>
                 ))}

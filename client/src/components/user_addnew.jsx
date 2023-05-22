@@ -43,7 +43,14 @@ function AddNew({ visible, onClose, employee }) {
       .catch((error) => console.error(error));
   }, [employee]);
 
-  const handleSave = () => {
+  const handleSave = (e) => {
+    e.preventDefault();
+
+    if (!date || !category || !amount) {
+      // Add form validation here, display an error message, or prevent form submission
+      return;
+    }
+
     axios
       .post("http://localhost:4000/expense", {
         date: date,
@@ -53,10 +60,14 @@ function AddNew({ visible, onClose, employee }) {
       })
       .then((response) => {
         console.log(response.data);
-        window.location.reload();
+        setTotalAmount(
+          (prevTotalAmount) => prevTotalAmount + parseFloat(amount)
+        );
+        onClose();
       })
       .catch((error) => {
         console.error(error.message);
+        // Handle error here or display an error message
       });
   };
   const availableFunds = reimburseLimit - totalAmount;

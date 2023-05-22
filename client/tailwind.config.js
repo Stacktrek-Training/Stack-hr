@@ -6,7 +6,11 @@ export default {
     "./index.html",
   ],
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        sm: "300px",
+      },
+    },
   },
   plugins: [require("flowbite/plugin"), require("tw-elements/dist/plugin.cjs")],
   darkMode: "class",

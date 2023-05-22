@@ -102,7 +102,7 @@ function Attendance({ employee }) {
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar2 />
-        <div class="mx-auto w-[400px] mt-40">
+        <div class="mx-auto w-[400px] mt-40 ">
           <form class="flex-1 flex-wrap flex-col p-20">
             {/* Display Time In */}
             {timeIn && !timeOut && (
