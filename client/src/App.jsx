@@ -18,14 +18,14 @@ import Admin from "./pages/admin_dashboard";
 
 function App() {
   const [employee, setEmployee] = useState(() => {
-    const storedEmployee = localStorage.getItem("employee");
+    const storedEmployee = sessionStorage.getItem("employee");
     return storedEmployee ? JSON.parse(storedEmployee) : [];
   });
 
   const handleLogin = (employeeData) => {
     console.log(employeeData);
     setEmployee(employeeData);
-    localStorage.setItem("employee", JSON.stringify(employeeData));
+    sessionStorage.setItem("employee", JSON.stringify(employeeData));
   };
 
   console.log(employee);
