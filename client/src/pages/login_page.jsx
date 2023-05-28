@@ -74,7 +74,7 @@ const Login = ({ onLogin }) => {
             Login
           </button>
         </form>{" "}
-        <div className="text-xl stack h-32 "> </div>
+        <div className="text-xl stack h-36"> </div>
       </div>
     </div>
   );
