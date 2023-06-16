@@ -69,11 +69,12 @@ const Login = ({ onLogin }) => {
           <button
             href="/dashboard"
             type="submit"
-            class="text-white cursor:pointer bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:outline-none  font-medium w-full  text-sm px-20 py-2.5 text-center ">
+            class="text-white cursor:pointer bg-orange-500 hover:bg-orange-400 focus:ring-4 focus:outline-none  font-medium w-full  text-sm px-20 py-2.5 text-center "
+          >
             Login
           </button>
         </form>{" "}
-        <div className="text-xl stack h-32 "> </div>
+        <div className="text-xl stack h-36"> </div>
       </div>
     </div>
   );

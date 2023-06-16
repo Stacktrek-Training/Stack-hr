@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import profilePicture from "./../assets/profilepic.png";
+import UserRow from "./../components/admin_rows.jsx";
 
 function UserList() {
-  const progress = 50; // Set the progress value dynamically based on your data
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get("http://localhost:4000/employee");
+        setUsers(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="mt-2 mr-8 ml-3 mb-8">
@@ -12,53 +27,23 @@ function UserList() {
             <tr>
               <th scope="col" className="p-4"></th>
               <th scope="col" className="px-6 py-3 text-white">
-                USERNAME
+                FULL NAME
               </th>
               <th scope="col" className="px-12 py-3 text-white">
-                WORK
+                JOB TITLE
               </th>
               <th scope="col" className="px-10 py-3 text-white">
                 PROGRESS
               </th>
               <th scope="col" className="px-7 py-3 text-white">
-                TOTAL
+                REIMBURSE LIMIT
               </th>
             </tr>
           </thead>
           <tbody>
-            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-              <td className="p-4"></td>
-              <th
-                scope="row"
-                className="px-0.2 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-              >
-                <div className="flex items-center">
-                  <img
-                    className="w-8 rounded-full"
-                    src={profilePicture}
-                    alt="Profile"
-                  />
-                  <div className="ml-2">
-                    <strong>Gil Benedict Chiu</strong>
-                  </div>
-                </div>
-              </th>
-
-              <td className="px-12 py-4">Admin</td>
-              <td className="px-6 py-4">
-                <div className="flex items-center">
-                  <progress
-                    className="w-1/4 h-2 rounded bg-blue-400"
-                    value={progress}
-                    max="100"
-                  />
-                  <span className="ml-2">{`${progress}%`}</span>
-                </div>
-              </td>
-              <td className="px-8 py-4">
-                <button className="rounded-sm text-blue-400">view</button>{" "}
-              </td>
-            </tr>
+            {users.map((user) => (
+              <UserRow key={user.id} user={user} />
+            ))}
           </tbody>
         </table>
       </div>
