@@ -3,6 +3,7 @@ CREATE DATABASE "STACK-HR";
 
 CREATE TABLE "JOB_ROLES" (job_role_id SERIAL PRIMARY KEY, job_title VARCHAR, date_created DATE, date_updated DATE);
 
+
 CREATE TABLE "attendance" ( attendance_id SERIAL PRIMARY KEY, time_in TIMESTAMP NOT NULL,time_out TIMESTAMP, working_hours DECIMAL, status VARCHAR, employee_id INTEGER REFERENCES "EMPLOYEES" (employee_id),employee_number VARCHAR);
 
 CREATE TABLE "SALARIES" (salary_id SERIAL PRIMARY KEY, salary DECIMAL, status INTEGER, date_created DATE, date_updated DATE, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id));
