@@ -3,6 +3,11 @@ CREATE DATABASE "STACK-HR";
 
 CREATE TABLE "JOB_ROLES" (job_role_id SERIAL PRIMARY KEY, job_title VARCHAR, date_created DATE, date_updated DATE);
 
+INSERT INTO "JOB_ROLES" ("job_title", "date_created") VALUES ('Admin',CURRENT_TIMESTAMP);
+
+CREATE TABLE "EMPLOYEES" (employee_id SERIAL PRIMARY KEY,first_name VARCHAR,middle_name VARCHAR,last_name VARCHAR,address VARCHAR,mobile_number VARCHAR,telephone_number VARCHAR,work_email VARCHAR,personal_email VARCHAR,emergency_contact_person VARCHAR,emergency_contact_email VARCHAR,emergency_contact_number VARCHAR,relationship VARCHAR,job_title INTEGER,date_created DATE,date_updated DATE, gender VARCHAR,marital_status VARCHAR,birthday DATE,employee_number VARCHAR,password VARCHAR);
+
+INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,address,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,gender,marital_status,birthday,employee_number,password)VALUES('Xavier Xavier', 'Trek','Stack','jaro, iloilo City','09091234567','09091234567','xavier@gamil.com','xavier@gamil.com','Rubeth Joy','rubeth@gmail.com','09123456789','Wife',1,CURRENT_TIMESTAMP,'MALE','MARRIED','1999-09-19' ,'ST-0001','admin');
 
 CREATE TABLE "attendance" ( attendance_id SERIAL PRIMARY KEY, time_in TIMESTAMP NOT NULL,time_out TIMESTAMP, working_hours DECIMAL, status VARCHAR, employee_id INTEGER REFERENCES "EMPLOYEES" (employee_id),employee_number VARCHAR);
 
