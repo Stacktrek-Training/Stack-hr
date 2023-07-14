@@ -14,37 +14,25 @@ const EditDeductionSSS = ({ sss }) => {
   };
   const [salary_range_1, setRange1] = useState(sss.salary_range_1);
   const [salary_range_2, setRange2] = useState(sss.salary_range_2);
-  const [employee_contribution_sss, setEmployeeSSS] = useState(
-    sss.employee_contribution_sss
-  );
-  const [employer_contribution_sss, setEmployerSSS] = useState(
-    sss.employer_contribution_sss
-  );
-  const [employee_contribution_ec, setEMployeeEC] = useState(
-    sss.employee_contribution_ec
-  );
-  const [employer_contribution_ec, setEMployerEC] = useState(
-    sss.employer_contribution_ec
-  );
-  const [employee_contribution_mpf, setEMployeeMPF] = useState(
-    sss.employee_contribution_mpf
-  );
-  const [employer_contribution_mpf, setEMployerMPF] = useState(
-    sss.employer_contribution_mpf
-  );
+  const [employee_contribution_sss, setEmployeeSSS] = useState(sss.employee_contribution_sss);
+  const [employer_contribution_sss, setEmployerSSS] = useState(sss.employer_contribution_sss);
+  const [employee_contribution_ec, setEMployeeEC] = useState(sss.employee_contribution_ec);
+  const [employer_contribution_ec, setEMployerEC] = useState(sss.employer_contribution_ec);
+  const [employee_contribution_mpf, setEMployeeMPF] = useState(sss.employee_contribution_mpf);
+  const [employer_contribution_mpf, setEMployerMPF] = useState(sss.employer_contribution_mpf);
   const [id, setId] = useState(sss.deduction_id);
 
   const editSSS = async () => {
     await axios
       .put(`http://localhost:4000/sss/${id}`, {
-        salary_range_1: salary_range_1,
-        salary_range_2: salary_range_2,
-        employee_contribution_sss: employee_contribution_sss,
-        employer_contribution_sss: employer_contribution_sss,
-        employee_contribution_ec: employee_contribution_ec,
-        employer_contribution_ec: employer_contribution_ec,
-        employee_contribution_mpf: employee_contribution_mpf,
-        employer_contribution_mpf: employer_contribution_mpf,
+        salary_range_1: parseFloat(salary_range_1),
+        salary_range_2: parseFloat(salary_range_2),
+        employee_contribution_sss: parseFloat(employee_contribution_sss),
+        employer_contribution_sss: parseFloat(employer_contribution_sss),
+        employee_contribution_ec: parseFloat(employee_contribution_ec),
+        employer_contribution_ec: parseFloat(employer_contribution_ec),
+        employee_contribution_mpf: parseFloat(employee_contribution_mpf),
+        employer_contribution_mpf: parseFloat(employer_contribution_mpf),
       })
       .then((response) => {
         editSSS(response.data);
@@ -151,11 +139,11 @@ const EditDeductionSSS = ({ sss }) => {
                     htmlFor="employee-name"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Social Security (%)
+                    Social Security
                   </label>
                   <input
                     onInput={OnlyNumber}
-                    maxLength={5}
+                    maxLength={20}
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
@@ -167,7 +155,7 @@ const EditDeductionSSS = ({ sss }) => {
                 <div>
                   <input
                     onInput={OnlyNumber}
-                    maxLength={5}
+                    maxLength={20}
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employer"
@@ -176,16 +164,18 @@ const EditDeductionSSS = ({ sss }) => {
                     required
                   />
                 </div>
+                
                 <div>
                   <label
                     htmlFor="employee-name"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Employees Compensation
+                    Employee's Compensation
                   </label>
                   <input
                     onInput={OnlyNumber}
                     type="text"
+                    maxLength={20}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
                     value={employee_contribution_ec}
@@ -195,10 +185,11 @@ const EditDeductionSSS = ({ sss }) => {
                 </div>
                 <div>
                   <input
-                    onInput={OnlyNumber}
                     type="text"
+                    onInput={OnlyNumber}
+                    maxLength={20}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Employeer"
+                    placeholder="Employer"
                     value={employer_contribution_ec}
                     onChange={(e) => setEMployerEC(e.target.value)}
                     required
@@ -206,12 +197,12 @@ const EditDeductionSSS = ({ sss }) => {
                 </div>
                 <div>
                   <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Mandatory Provident Fund (%)
+                    Mandatory Provident Fund (WISP)
                   </label>
                   <input
                     type="text"
                     onInput={OnlyNumber}
-                    maxLength={5}
+                    maxLength={20}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
                     value={employee_contribution_mpf}
@@ -222,10 +213,10 @@ const EditDeductionSSS = ({ sss }) => {
                 <div>
                   <input
                     type="text"
-                    maxLength={5}
+                    maxLength={20}
                     onInput={OnlyNumber}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Employeer"
+                    placeholder="Employer"
                     value={employer_contribution_mpf}
                     onChange={(e) => setEMployerMPF(e.target.value)}
                     required

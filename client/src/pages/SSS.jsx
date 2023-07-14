@@ -34,59 +34,47 @@ const SSS = ({ employee }) => {
 
   return (
     <div className="h-screen relative ">
-      {" "}
       {/* Navbar */}
       <Navbar employee={employeeData} />
+      
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-20">
+        
+        <div className="flex-1 p-12 mt-10">
           <div className=" flex justify-between mb-2">
             {" "}
             {/* <ShowTable /> */}
           </div>
+
           <div className="mb-5  ">
             <AddDeduction />
           </div>
-          <div class="relative Table  shadow-md rounded-lg ">
-            <table class="sticky top-0 text-center  Data">
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
+
+          <div class="relative Table shadow-md rounded-lg ">
+            <table class="sticky top-0 text-center Data">
               <thead className=" text-gray-700 font-semibold uppercase">
                 <tr>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300 bg-gray-100">
                     #
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300 bg-gray-100">
                     Range of Compensation
                   </th>
 
                   <th
-                    colspan="9"
+                    colspan="12"
                     scope="colgroup"
-                    class="w-2/4 border border-gray-300">
+                    class="w-2/4 border border-gray-300 bg-gray-100">
                     Employer - Employee
                   </th>
                   <th
                     rowspan="3"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300 bg-gray-100">
                     Action
                   </th>
                 </tr>
@@ -94,57 +82,78 @@ const SSS = ({ employee }) => {
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/4 border border-gray-300">
-                    Social Security
+                    class="w-1/4 border border-gray-300 bg-gray-100">
+                    Social Security Contribution
                   </th>
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/4 border border-gray-300">
-                    Employees Compensation
+                    class="w-1/4 border border-gray-300 bg-gray-100">
+                    Employee's Compensation
                   </th>
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-1/4 border border-gray-300">
-                    Mandatory Provident Fund
+                    class="w-1/4 border border-gray-300 bg-gray-100">
+                    Mandatory Provident Fund (WISP)
+                  </th>
+
+                  <th
+                    colspan="3"
+                    scope="colgroup"
+                    class="w-1/4 border border-gray-300 bg-gray-100">
+                    TOTAL
                   </th>
                 </tr>
 
                 <tr>
-                  <th scope="col" class="w-1/12 border border-gray-300">
-                    ER (%)
-                  </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
-                    EE (%)
-                  </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
-                    TOTAL
-                  </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
                     ER
                   </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
                     EE
                   </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
                     TOTAL
                   </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
-                    ER (%)
+
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
+                    ER
                   </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
-                    EE (%)
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
+                    EE
                   </th>
-                  <th scope="col" class="w-1/12 border border-gray-300">
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
+                    TOTAL
+                  </th>
+                  
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
+                    ER
+                  </th>
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
+                    EE
+                  </th>
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
+                    TOTAL
+                  </th>
+
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
+                    ER
+                  </th>
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
+                    EE
+                  </th>
+                  <th scope="col" class="w-1/12 border border-gray-300 bg-gray-100">
                     TOTAL
                   </th>
                 </tr>
               </thead>
+
               <tbody className="text-gray-900">
+                {/*Salary Range*/}
                 {SSS.map((sss, index) => (
                   <tr
-                    className="border border-gray-300 "
+                    className="border border-gray-300 bg-white"
                     key={sss.deduction_id}>
                     <td className="border border-gray-300">{index + 1}</td>
 
@@ -156,58 +165,103 @@ const SSS = ({ employee }) => {
                       }`}
                     </td>
 
-                    <td class="w-1/12 px-6 py-4 capitalize border border-gray-300">{`${
-                      sss.employer_contribution_sss
-                    }${"%"}`}</td>
-                    <td class="w-1/12 border border-gray-300">{`${
-                      sss.employee_contribution_sss
-                    }${"%"}`}</td>
-                    <td class="w-1/12 border border-gray-300">
-                      {`${
-                        parseFloat(sss.employee_contribution_sss) +
-                        parseFloat(sss.employer_contribution_sss)
-                      }${"%"}`}
+                    {/*Social Security Contribution*/}
+                    <td class="w-1/12 px-6 py-4 capitalize border border-gray-300 bg-white">
+                      {`${formatter.format(sss.employer_contribution_sss)}`}
                     </td>
-                    <td class="w-1/12 border border-gray-300">{`${
+
+                    <td class="w-1/12 border border-gray-300 bg-white">
+                      {`${formatter.format(sss.employee_contribution_sss)}`}
+                      </td>                    
+                    
+                    <td class="w-1/12 border border-gray-300 bg-white">
+                      {`${
+                        formatter.format(
+                          parseFloat(sss.employee_contribution_sss) +
+                          parseFloat(sss.employer_contribution_sss)
+                        )
+                      }`}
+                    </td>
+                    
+                    {/*Employee's Compensation*/}
+                    <td class="w-1/12 border border-gray-300 bg-white">{`${
                       sss.employer_contribution_ec == 0
                         ? "_"
                         : formatter.format(sss.employer_contribution_ec)
                     }`}</td>
-                    <td class="w-1/12 border border-gray-300">
+                    <td class="w-1/12 border border-gray-300 bg-white">
                       {sss.employee_contribution_ec == 0
                         ? "_"
                         : formatter.format(sss.employee_contribution_ec)}
                     </td>
-                    <td class="w-1/12 border border-gray-300">{`${
+                    <td class="w-1/12 border border-gray-300 bg-white">{`${
                       sss.employer_contribution_ec &&
                       sss.employee_contribution_ec === 0
                         ? "_"
                         : formatter.format(
                             parseFloat(sss.employer_contribution_ec) +
-                              parseFloat(sss.employee_contribution_ec)
+                            parseFloat(sss.employee_contribution_ec)
                           )
                     }`}</td>
-                    <td class="w-1/12 border border-gray-300">
+                    
+                    {/*Mandatory Provident Fund (WISP)*/}
+                    <td class="w-1/12 border border-gray-300 bg-white">
                       {sss.employer_contribution_mpf == 0
                         ? "_"
-                        : `${sss.employer_contribution_mpf}${"%"}`}
-                    </td>
-                    <td class="w-1/12 border border-gray-300">
+                        : `${formatter.format(sss.employer_contribution_mpf)}`}
+                    </td>   
+                    <td class="w-1/12 border border-gray-300 bg-white">
                       {sss.employee_contribution_mpf == 0
                         ? "_"
-                        : `${sss.employee_contribution_mpf}${"%"}`}
+                        : `${formatter.format(sss.employee_contribution_mpf)}`}
                     </td>
-                    <td class="w-1/12 border border-gray-300">
+                    <td class="w-1/12 border border-gray-300 bg-white">
                       {sss.employer_contribution_mpf &&
                       sss.employee_contribution_mpf === 0
                         ? "_"
-                        : `${
+                        : formatter.format(
                             parseFloat(sss.employer_contribution_mpf) +
                             parseFloat(sss.employee_contribution_mpf)
-                          }${"%"}`}
+                          )}
                     </td>
 
-                    <td class="w-1/12 border border-gray-300 px-4">
+                    {/*TOTAL*/}
+                    <td class="w-1/12 border border-gray-300 bg-white">
+                      {sss.employer_contribution_mpf &&
+                      sss.employee_contribution_mpf === 0
+                        ? "_"
+                        : formatter.format(
+                            parseFloat(sss.employer_contribution_sss) +
+                            parseFloat(sss.employer_contribution_ec) +
+                            parseFloat(sss.employer_contribution_mpf)
+                         )}
+                    </td>
+
+                    <td class="w-1/12 border border-gray-300 bg-white">
+                      {sss.employer_contribution_mpf &&
+                      sss.employee_contribution_mpf === 0
+                        ? "_"
+                        : formatter.format(
+                            parseFloat(sss.employee_contribution_sss) +
+                            parseFloat(sss.employee_contribution_ec) +
+                            parseFloat(sss.employee_contribution_mpf)
+                          )}
+                    </td>
+                    <td class="w-1/12 border border-gray-300 bg-white">
+                      {sss.employer_contribution_mpf &&
+                      sss.employee_contribution_mpf === 0
+                        ? "_"
+                        : formatter.format(
+                            parseFloat(sss.employer_contribution_sss) +
+                            parseFloat(sss.employer_contribution_ec) +
+                            parseFloat(sss.employer_contribution_mpf) +
+                            parseFloat(sss.employee_contribution_sss) +
+                            parseFloat(sss.employee_contribution_ec) +
+                            parseFloat(sss.employee_contribution_mpf)
+                          )}
+                    </td>
+
+                    <td class="w-1/12 border border-gray-300 px-4 bg-white">
                       <EditDeductionSSS sss={sss} />
                     </td>
                   </tr>

@@ -23,6 +23,7 @@ const Deduction = ({ employee }) => {
       .then((response) => {
         setDeduction(response.data);
       })
+      
       .catch((error) => {
         console.error(error.message);
       });

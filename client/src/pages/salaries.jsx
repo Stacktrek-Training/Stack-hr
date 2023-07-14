@@ -49,6 +49,7 @@ const Salaries = ({ employee }) => {
           <div className="flex justify-start mb-3">
             <h1 className="text-3xl font-bold text-gray-700">Salaries</h1>
           </div>
+          
           <div className="mb-5 flex ">
             {/* Add Salaries */}
             <AddSalaries />
@@ -77,34 +78,38 @@ const Salaries = ({ employee }) => {
                   </th>
                 </tr>
               </thead>
+
               <tbody>
                 {salaries.map((salary, index) => {
                   return (
                     <tr
                       class="bg-white border-b text-center dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                       key={salary.salary_id}>
+                        
                       <th
                         scope="row"
                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {index + 1}
                       </th>
+
                       <td class="px-6 py-4 capitalize">
-                        {salary.last_name}, {salary.first_name}{" "}
+                        {salary.last_name}{", "}{salary.first_name}{" "}
                         {salary.middle_name}
                       </td>
+                      
                       <td class="px-6 py-4">
                         {formatter.format(salary.salary)}
                       </td>
+                      
                       <td class="px-6 py-4">{salary.rate_type}</td>
-                      <td class="px-6 py-4">{`${
-                        salary.hours_required
-                      } ${"Hours"}`}</td>
+                      
+                      <td class="px-6 py-4">{`${salary.hours_required} ${"Hours"}`}</td>
+                      
                       <td class=" px-6 py-4">
                         <EditSalary salaries={salary} />
                       </td>
                     </tr>
-                  );
-                })}
+                  );})}
               </tbody>
             </table>
           </div>

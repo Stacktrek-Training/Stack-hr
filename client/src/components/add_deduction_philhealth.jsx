@@ -5,9 +5,11 @@ const AddDeductionPhilHealth = () => {
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
+
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+  
   const OnlyNumber = (event) => {
     event.target.value = event.target.value.replace(/[^0-9.]/gi, "");
   };
@@ -18,9 +20,9 @@ const AddDeductionPhilHealth = () => {
   const addPhilhealth = async () => {
     await axios
       .post("http://localhost:4000/philhealth", {
-        salary_range_1: salary_range_1,
-        salary_range_2: salary_range_2,
-        monthly_total_contribution: monthly_total_contribution,
+        salary_range_1: parseFloat(salary_range_1),
+        salary_range_2: parseFloat(salary_range_2),
+        monthly_total_contribution: parseFloat(monthly_total_contribution),
       })
       .then((response) => {
         console.log(response.data);

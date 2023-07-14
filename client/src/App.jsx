@@ -9,6 +9,7 @@ import Deduction from "./pages/deduction";
 import PhilHealth from "./pages/PhilHealth";
 import SSS from "./pages/SSS";
 import PAGIBIG from "./pages/PAG-IBIG";
+import WITHHOLDING_TAX from "./pages/withholding_tax";
 import EmployeeDashboard from "./pages/employee_dashboard";
 import Attendance from "./pages/employee_attendance";
 import JobRoles from "./pages/jobroles";
@@ -36,15 +37,19 @@ function App() {
         <Route exact path="/">
           <Login onLogin={handleLogin} />
         </Route>
+        
         <Route path="/dashboard">
           {employee && <Dashboard employee={employee} />}
         </Route>
+        
         <Route path="/employee">
           {employee && <Employee employee={employee} />}
         </Route>
+        
         <Route path="/attendance_hr">
           {employee && <AttendanceHr employee={employee} />}
         </Route>
+        
         <Route path="/employee_dashboard">
           {employee && <EmployeeDashboard employee={employee} />}
         </Route>
@@ -52,28 +57,43 @@ function App() {
         <Route path="/employee_attendance">
           {employee && <Attendance employee={employee} />}
         </Route>
+        
         <Route path="/expense">
           {employee && <User employee={employee} />}
         </Route>
+        
         <Route path="/payroll">
           {employee && <Payroll employee={employee} />}
         </Route>
+        
         <Route path="/salaries">
           {employee && <Salaries employee={employee} />}
         </Route>
+        
         <Route path="/deduction">
           {employee && <Deduction employee={employee} />}
         </Route>
+        
         <Route path="/philhealth">
           {employee && <PhilHealth employee={employee} />}
         </Route>
-        <Route path="/sss">{employee && <SSS employee={employee} />}</Route>
+        
+        <Route path="/sss">
+          {employee && <SSS employee={employee} />}
+        </Route>
+        
         <Route path="/pag-ibig">
           {employee && <PAGIBIG employee={employee} />}
         </Route>
+
+        <Route path="/withholding_tax">
+          {employee && <WITHHOLDING_TAX employee={employee} />}
+        </Route>
+
         <Route path="/jobroles">
           {employee && <JobRoles employee={employee} />}
         </Route>
+
         <Route path="/expense-admin">
           {employee && <Admin employee={employee} />}
         </Route>

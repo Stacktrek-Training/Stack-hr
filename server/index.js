@@ -7,117 +7,66 @@ const moment = require("moment");
 app.use(cors());
 app.use(express.json());
 
-//for employee
-//for log in
-app.post("/employee-login", async (req, res) => {
-  try {
-    const { employee_number, password } = req.body;
-    const login = await pool.query(
-      `SELECT e.*, j.job_title FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id WHERE e.employee_number = $1 AND password = $2`,
-      [employee_number, password]
-    );
-    if (login.rows.length === 1) {
-      const employee = login.rows;
-      console.log(`Employee ${employee} logged in`);
-      res.json(employee);
-    } else {
-      res.status(401).send("Invalid number or password.");
-    }
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//get all employees
-app.get("/employee", async (req, res) => {
-  try {
-    const getEmployee = await pool.query(
-      `SELECT e.*, j.job_title, j.job_role_id FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id ORDER BY employee_id ASC`
-    );
-    res.json(getEmployee.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//get employee by id
-app.get("/employee/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const getEMP = await pool.query(
-      `SELECT * FROM "EMPLOYEES" WHERE employee_id=$1`,
-      [id]
-    );
-    res.json(getEMP.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-// add employee
-app.post("/employee", async (req, res) => {
-  try {
-    const {
-      first_name,
-      middle_name,
-      last_name,
-      address,
-      mobile_number,
-      telephone_number,
-      work_email,
-      personal_email,
-      emergency_contact_person,
-      emergency_contact_email,
-      emergency_contact_number,
-      relationship,
-      job_title,
-      gender,
-      marital_status,
-      birthday,
-    } = req.body;
 
-    //for generating password
 
-    const crypto = require("crypto");
+//LOGIN PAGE
+  app.post("/employee-login", async (req, res) => {
+    try {
+      const { employee_number, password } = req.body;
+      const login = await pool.query(
+        `SELECT e.*, j.job_title FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id WHERE e.employee_number = $1 AND password = $2`,
+        [employee_number, password]
+      );
 
-    function generateRandomPassword() {
-      // Generate a random password with 2 letters and 1 symbol
-      const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      const symbols = "!@#$%^&*()_-+=";
-      let password = "";
-      password += letters[Math.floor(Math.random() * letters.length)];
-      password += letters[Math.floor(Math.random() * letters.length)];
-      password += symbols[Math.floor(Math.random() * symbols.length)];
-      for (let i = 0; i < 5; i++) {
-        password += letters[Math.floor(Math.random() * letters.length)];
+      if (login.rows.length === 1) {
+        const employee = login.rows;
+        console.log(`Employee ${employee} logged in`);
+        res.json(employee);
       }
-      // Shuffle the password characters randomly
-      password = password
-        .split("")
-        .sort(() => Math.random() - 0.5)
-        .join("");
-      return password;
-    }
-
-    const password = generateRandomPassword();
-
-    // Get the latest employee number from the database
-    const { rows } = await pool.query(
-      `SELECT employee_number FROM "EMPLOYEES" ORDER BY employee_id DESC LIMIT 1`
-    );
-    let code = "";
-    if (rows.length > 0) {
-      const latestEmployeeNumber = rows[0].employee_number;
-      if (latestEmployeeNumber) {
-        const counter = parseInt(latestEmployeeNumber.substring(3), 10);
-        code = "ST-" + ("0000" + (counter + 1)).slice(-4);
-      } else {
-        code = "ST-0001";
+      
+      else {
+        res.status(401).send("Invalid number or password.");
       }
-    } else {
-      code = "ST-0001";
     }
+    
+    catch (error) {
+      console.error(error.message);
+    }
+  });
 
-    const insertEmployee = await pool.query(
-      `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,address,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,gender,marital_status,birthday,employee_number,password)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,CURRENT_TIMESTAMP,$14,$15,$16,$17,$18) RETURNING *`,
-      [
+
+//EMPLOYEES: GET ALL EMPLOYEES
+  app.get("/employee", async (req, res) => {
+    try {
+      const getEmployee = await pool.query(
+        `SELECT e.*, j.job_title, j.job_role_id FROM "EMPLOYEES" e JOIN "JOB_ROLES" j ON e.job_title = j.job_role_id ORDER BY employee_id ASC`
+      );
+      res.json(getEmployee.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//EMPLOYEES: GET EMPLOYEES
+  app.get("/employee/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const getEMP = await pool.query(
+        `SELECT * FROM "EMPLOYEES" WHERE employee_id=$1`,
+        [id]
+      );
+      res.json(getEMP.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//EMPLOYEES: ADD EMPLOYEE
+  app.post("/employee", async (req, res) => {
+    try {
+      const {
         first_name,
         middle_name,
         last_name,
@@ -134,40 +83,90 @@ app.post("/employee", async (req, res) => {
         gender,
         marital_status,
         birthday,
-        code,
-        password,
-      ]
-    );
-    res.json("Inserted data");
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-// edit employee
-app.put("/employee/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const {
-      first_name,
-      middle_name,
-      last_name,
-      address,
-      mobile_number,
-      telephone_number,
-      work_email,
-      personal_email,
-      emergency_contact_person,
-      emergency_contact_email,
-      emergency_contact_number,
-      relationship,
-      job_title,
-      gender,
-      marital_status,
-      birthday,
-    } = req.body;
-    const updateEmp = await pool.query(
-      `UPDATE "EMPLOYEES" SET first_name=$1,middle_name=$2,last_name=$3,address=$4,mobile_number=$5,telephone_number=$6,work_email=$7,personal_email=$8,emergency_contact_person=$9,emergency_contact_email=$10,emergency_contact_number=$11,relationship=$12,job_title=$13,date_updated=CURRENT_TIMESTAMP,gender=$14,marital_status=$15,birthday=$16 WHERE employee_id =$17`,
-      [
+      } = req.body;
+
+
+      //PASSWORD GENERATOR
+        const crypto = require("crypto");
+
+
+      function generateRandomPassword() {
+        //GENERATING A RANDOM PASSWORD
+          const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          const symbols = "!@#$%^&*()_-+=";
+          let password = "";
+          password += letters[Math.floor(Math.random() * letters.length)];
+          password += letters[Math.floor(Math.random() * letters.length)];
+          password += symbols[Math.floor(Math.random() * symbols.length)];
+          for (let i = 0; i < 5; i++) {
+            password += letters[Math.floor(Math.random() * letters.length)];
+        }
+
+
+        //RANDOMLY SHUFFLE THE PASSWORD CHARACTERS
+          password = password
+            .split("")
+            .sort(() => Math.random() - 0.5)
+            .join("");
+          return password;
+      }
+
+      const password = generateRandomPassword();
+
+      //GETTING THE LATEST EMPLOYEE NUMBER FROM THE DATABASE
+        const { rows } = await pool.query(
+          `SELECT employee_number FROM "EMPLOYEES" ORDER BY employee_id DESC LIMIT 1`
+        );
+        let code = "";
+        if (rows.length > 0) {
+          const latestEmployeeNumber = rows[0].employee_number;
+          if (latestEmployeeNumber) {
+            const counter = parseInt(latestEmployeeNumber.substring(3), 10);
+            code = "ST-" + ("0000" + (counter + 1)).slice(-4);
+          } else {
+            code = "ST-0001";
+          }
+        } else {
+          code = "ST-0001";
+        }
+      
+
+      //INSERTING THE EMPLOYEE IN THE DATABASE
+        const insertEmployee = await pool.query(
+          `INSERT INTO "EMPLOYEES"(first_name,middle_name,last_name,address,mobile_number,telephone_number,work_email,personal_email,emergency_contact_person,emergency_contact_email,emergency_contact_number,relationship,job_title,date_created,gender,marital_status,birthday,employee_number,password)VALUES($1, $2, $3, $4, $5,$6,$7,$8,$9,$10,$11,$12,$13,CURRENT_TIMESTAMP,$14,$15,$16,$17,$18) RETURNING *`,
+          [
+            first_name,
+            middle_name,
+            last_name,
+            address,
+            mobile_number,
+            telephone_number,
+            work_email,
+            personal_email,
+            emergency_contact_person,
+            emergency_contact_email,
+            emergency_contact_number,
+            relationship,
+            job_title,
+            gender,
+            marital_status,
+            birthday,
+            code,
+            password,
+          ]
+        );
+          res.json("Inserted data");
+        } catch (error) {
+          console.error(error.message);
+        }
+  });
+
+
+//EMPLOYEES: ADD EMPLOYEE
+  app.put("/employee/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const {
         first_name,
         middle_name,
         last_name,
@@ -184,15 +183,37 @@ app.put("/employee/:id", async (req, res) => {
         gender,
         marital_status,
         birthday,
-        id,
-      ]
-    );
-    res.json(updateEmp.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//delete employee
+      } = req.body;
+      const updateEmp = await pool.query(
+        `UPDATE "EMPLOYEES" SET first_name=$1,middle_name=$2,last_name=$3,address=$4,mobile_number=$5,telephone_number=$6,work_email=$7,personal_email=$8,emergency_contact_person=$9,emergency_contact_email=$10,emergency_contact_number=$11,relationship=$12,job_title=$13,date_updated=CURRENT_TIMESTAMP,gender=$14,marital_status=$15,birthday=$16 WHERE employee_id =$17`,
+        [
+          first_name,
+          middle_name,
+          last_name,
+          address,
+          mobile_number,
+          telephone_number,
+          work_email,
+          personal_email,
+          emergency_contact_person,
+          emergency_contact_email,
+          emergency_contact_number,
+          relationship,
+          job_title,
+          gender,
+          marital_status,
+          birthday,
+          id,
+        ]
+      );
+      res.json(updateEmp.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//EMPLOYEES: DELETE EMPLOYEE
 app.delete("/employee/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -213,551 +234,732 @@ app.delete("/employee/:id", async (req, res) => {
     console.error(error.message);
   }
 });
-//end of employee
 
-//job roles
-//create job role
-app.post("/jobroles", async (req, res) => {
-  try {
-    const { job_title } = req.body;
-    const createJobrole = await pool.query(
-      `INSERT INTO "JOB_ROLES" (job_title, date_created) VALUES ($1,CURRENT_TIMESTAMP) RETURNING *`,
-      [job_title]
-    );
-    res.json(createJobrole.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//read job role
-app.get("/jobroles", async (req, res) => {
-  try {
-    const getJobroles = await pool.query(`SELECT * FROM "JOB_ROLES"`);
-    res.json(getJobroles.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//update jobrole
 
-app.put("/jobroles/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { job_title } = req.body;
-    const updataJobrole = await pool.query(
-      `UPDATE "JOB_ROLES" SET job_title = $1, date_updated = CURRENT_TIMESTAMP WHERE job_role_id = $2`,
-      [job_title, id]
-    );
-    res.json("data updated");
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//delete jobrole
-app.delete("/jobroles/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    await pool.query(`DELETE FROM "JOB_ROLES" WHERE job_role_id = $1`, [id]);
-    res.json("data deleted");
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-
-//salaries
-
-//get data in employees that are not present in salaries
-app.get("/employees", async (req, res) => {
-  try {
-    const getEmp = await pool.query(`SELECT e.*
-FROM "EMPLOYEES" e
-LEFT JOIN "SALARIES" s
-ON e.employee_id = s.employee_id
-WHERE s.employee_id IS NULL`);
-    res.json(getEmp.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-
-app.get("/emp", async (req, res) => {
-  try {
-    const getEmp = await pool.query(`SELECT e.*
-FROM "EMPLOYEES" e
-LEFT JOIN "DEDUCTIONS" d
-ON e.employee_id = d.employee_id
-WHERE d.employee_id IS NULL`);
-    res.json(getEmp.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-// insert all dataa in salaries
-app.post("/salaries/", async (req, res) => {
-  try {
-    const { employee_id, salary, rate_type, required_hours } = req.body;
-    const insertSalary = await pool.query(
-      `INSERT INTO "SALARIES" (employee_id, salary, status, rate_type, hours_required, date_created) VALUES($1, $2, 1,$3,$4, CURRENT_TIMESTAMP) RETURNING *`,
-      [employee_id, salary, rate_type, required_hours]
-    );
-    res.json("Data Inserted");
-
-    const monthly_salary = salary * 20;
-
-    //get philhealth
-    const selectPhilhealth = await pool.query(
-      `SELECT monthly_total_contribution FROM "PHILHEALTH_DEDUCTIONS" WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
-      [monthly_salary]
-    );
-    const { monthly_total_contribution: monthly_total_contribution } =
-      selectPhilhealth.rows[0];
-    const employee_contribution = monthly_total_contribution * 0.5;
-    const philhealth_deduction = (employee_contribution / 100) * monthly_salary;
-    //get pagibig
-    const selectPagibig = await pool.query(
-      `SELECT employee_contribution FROM "PAGIBIG_DEDUCTIONS" WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
-      [monthly_salary]
-    );
-    const { employee_contribution: employee_contributions } =
-      selectPagibig.rows[0];
-    const pagibig_deduction = (employee_contributions / 100) * monthly_salary;
-    //get sss
-    const selectSSS = await pool.query(
-      `SELECT employee_contribution_sss, employee_contribution_ec, employee_contribution_mpf FROM "SSS_DEDUCTIONS" WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
-      [monthly_salary]
-    );
-    const {
-      employee_contribution_sss: employee_contribution_sss,
-      employee_contribution_ec: employee_contribution_ec,
-      employee_contribution_mpf: employee_contribution_mpf,
-    } = selectSSS.rows[0];
-
-    let month_salary_wisp = 0;
-    let rounded_salary_wisp = 0;
-    let mpf = 0;
-
-    if (monthly_salary >= 20250 && monthly_salary < 29750) {
-      month_salary_wisp = monthly_salary / 1000;
-      rounded_salary_wisp = Math.round(month_salary_wisp);
-
-      mpf = monthly_salary - rounded_salary_wisp;
-    } else if (monthly_salary >= 29750) {
-      rounded_salary_wisp = 20000;
-      mpf = monthly_salary - rounded_salary_wisp;
-    } else {
-      rounded_salary_wisp = monthly_salary;
-      mpf = 0;
+//JOB ROLE: ADD JOB ROLE
+  app.post("/jobroles", async (req, res) => {
+    try {
+      const { job_title } = req.body;
+      const createJobrole = await pool.query(
+        `INSERT INTO "JOB_ROLES" (job_title, date_created) VALUES ($1,CURRENT_TIMESTAMP) RETURNING *`,
+        [job_title]
+      );
+      res.json(createJobrole.rows);
+    } catch (error) {
+      console.error(error.message);
     }
+  });
 
-    const sss_deduction_sss =
-      (employee_contribution_sss / 100) * rounded_salary_wisp;
-    const sss_deduction_mpf = (employee_contribution_mpf / 100) * mpf;
-    const total_sss_deduction =
-      parseFloat(sss_deduction_sss) +
-      parseFloat(sss_deduction_mpf) +
-      parseFloat(employee_contribution_ec);
-    // Insert the new record into the DEDUCTIONS table with the fetched employee ID and monthly salary
-    const insertDeduction = await pool.query(
-      `INSERT INTO "DEDUCTIONS" (employee_id, monthly_salary,philhealth_deduction, pagibig_deduction, sss_deduction,date_created)
-       VALUES ($1, $2,$3,$4, $5, CURRENT_TIMESTAMP)
-       RETURNING *`,
-      [
-        employee_id,
-        monthly_salary,
-        philhealth_deduction,
-        pagibig_deduction,
-        total_sss_deduction,
-      ]
-    );
 
-    res.json(insertDeduction.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//get all data in salaries
-
-app.get("/salaries", async (req, res) => {
-  try {
-    const getSalaries =
-      await pool.query(`SELECT s.*, e.first_name, e.last_name, e.middle_name
-      FROM "SALARIES" s
-      JOIN "EMPLOYEES" e ON s.employee_id = e.employee_id`);
-    res.json(getSalaries.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//update data in salaries
-app.put("/salaries/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { salary, rate_type, required_hours } = req.body;
-    const updateSalary = await pool.query(
-      `UPDATE "SALARIES" SET salary = $1,rate_type=$3, hours_required=$4, date_updated = CURRENT_TIMESTAMP WHERE employee_id=$2`,
-      [salary, id, rate_type, required_hours]
-    );
-    res.json("Updated successfully");
-
-    //update deduction of employee
-    const monthly_salary = salary * 20;
-
-    //get philhealth
-    const selectPhilhealth = await pool.query(
-      `SELECT monthly_total_contribution FROM "PHILHEALTH_DEDUCTIONS" WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
-      [monthly_salary]
-    );
-    const { monthly_total_contribution: monthly_total_contribution } =
-      selectPhilhealth.rows[0];
-    const employee_contribution = monthly_total_contribution * 0.5;
-    const philhealth_deduction = (employee_contribution / 100) * monthly_salary;
-    //get pagibig
-    const selectPagibig = await pool.query(
-      `SELECT employee_contribution FROM "PAGIBIG_DEDUCTIONS" WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
-      [monthly_salary]
-    );
-    const { employee_contribution: employee_contributions } =
-      selectPagibig.rows[0];
-    const pagibig_deduction = (employee_contributions / 100) * monthly_salary;
-    //get sss
-    const selectSSS = await pool.query(
-      `SELECT employee_contribution_sss, employee_contribution_ec, employee_contribution_mpf FROM "SSS_DEDUCTIONS" WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
-      [monthly_salary]
-    );
-    const {
-      employee_contribution_sss: employee_contribution_sss,
-      employee_contribution_ec: employee_contribution_ec,
-      employee_contribution_mpf: employee_contribution_mpf,
-    } = selectSSS.rows[0];
-
-    let month_salary_wisp = 0;
-    let rounded_salary_wisp = 0;
-    let mpf = 0;
-
-    if (monthly_salary >= 20250 && monthly_salary < 29750) {
-      month_salary_wisp = monthly_salary / 1000;
-      rounded_salary_wisp = Math.round(month_salary_wisp);
-
-      mpf = monthly_salary - rounded_salary_wisp;
-    } else if (monthly_salary >= 29750) {
-      rounded_salary_wisp = 20000;
-      mpf = monthly_salary - rounded_salary_wisp;
-    } else {
-      rounded_salary_wisp = monthly_salary;
-      mpf = 0;
+//JOBROLE: GET JOBROLES
+  app.get("/jobroles", async (req, res) => {
+    try {
+      const getJobroles = await pool.query(`SELECT * FROM "JOB_ROLES"`);
+      res.json(getJobroles.rows);
+    } catch (error) {
+      console.error(error.message);
     }
+  });
 
-    const sss_deduction_sss =
-      (employee_contribution_sss / 100) * rounded_salary_wisp;
-    const sss_deduction_mpf = (employee_contribution_mpf / 100) * mpf;
-    const total_sss_deduction =
-      parseFloat(sss_deduction_sss) +
-      parseFloat(sss_deduction_mpf) +
-      parseFloat(employee_contribution_ec);
-    // Insert the new record into the DEDUCTIONS table with the fetched employee ID and monthly salary
-    const updatetDeduction = await pool.query(
-      `UPDATE "DEDUCTIONS" SET monthly_salary = $2,philhealth_deduction = $3, pagibig_deduction = $4, sss_deduction = $5,date_updated= CURRENT_TIMESTAMP WHERE employee_id = $1`,
-      [
-        id,
-        monthly_salary,
-        philhealth_deduction,
-        pagibig_deduction,
-        total_sss_deduction,
-      ]
-    );
 
-    res.json("data updated");
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-
-//get all deductions
-
-app.get("/deductions", async (req, res) => {
-  try {
-    const getSalaries =
-      await pool.query(`SELECT d.*, e.first_name, e.last_name, e.middle_name
-      FROM "DEDUCTIONS" d
-      JOIN "EMPLOYEES" e ON d.employee_id = e.employee_id`);
-    res.json(getSalaries.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//insert deduction
-app.post("/deductions/", async (req, res) => {
-  try {
-    const { employee_id } = req.body;
-
-    // Fetch the employee ID and monthly salary for the employee from the SALARY table
-    const fetchSalary = await pool.query(
-      `SELECT employee_id, salary FROM "SALARIES" WHERE employee_id = $1`,
-      [employee_id]
-    );
-
-    if (fetchSalary.rows.length === 0) {
-      return res.status(404).json("Employee not found");
+//JOBROLE: UPDATE JOBROLE
+  app.put("/jobroles/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { job_title } = req.body;
+      const updataJobrole = await pool.query(
+        `UPDATE "JOB_ROLES" SET job_title = $1, date_updated = CURRENT_TIMESTAMP WHERE job_role_id = $2`,
+        [job_title, id]
+      );
+      res.json("data updated");
+    } catch (error) {
+      console.error(error.message);
     }
+  });
 
-    // Retrieve the employee ID and monthly salary values from the query result
-    const { employee_id: fetched_employee_id, salary: salary } =
-      fetchSalary.rows[0];
-    const monthly_salary = salary * 20;
 
-    //get philhealth
-    const selectPhilhealth = await pool.query(
-      `SELECT monthly_total_contribution FROM "PHILHEALTH_DEDUCTIONS" WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
-      [monthly_salary]
-    );
-    const { monthly_total_contribution: monthly_total_contribution } =
-      selectPhilhealth.rows[0];
-    const employee_contribution = monthly_total_contribution * 0.5;
-    const philhealth_deduction = (employee_contribution / 100) * monthly_salary;
-    //get pagibig
-    const selectPagibig = await pool.query(
-      `SELECT employee_contribution FROM "PAGIBIG_DEDUCTIONS" WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
-      [monthly_salary]
-    );
-    const { employee_contribution: employee_contributions } =
-      selectPagibig.rows[0];
-    const pagibig_deduction = (employee_contributions / 100) * monthly_salary;
-    //get sss
-    const selectSSS = await pool.query(
-      `SELECT employee_contribution_sss, employee_contribution_ec, employee_contribution_mpf FROM "SSS_DEDUCTIONS" WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
-      [monthly_salary]
-    );
-    const {
-      employee_contribution_sss: employee_contribution_sss,
-      employee_contribution_ec: employee_contribution_ec,
-      employee_contribution_mpf: employee_contribution_mpf,
-    } = selectSSS.rows[0];
-
-    let month_salary_wisp = 0;
-    let rounded_salary_wisp = 0;
-    let mpf = 0;
-
-    if (monthly_salary >= 20250 && monthly_salary < 29750) {
-      month_salary_wisp = monthly_salary / 1000;
-      rounded_salary_wisp = Math.round(month_salary_wisp);
-
-      mpf = monthly_salary - rounded_salary_wisp;
-    } else if (monthly_salary >= 29750) {
-      rounded_salary_wisp = 20000;
-      mpf = monthly_salary - rounded_salary_wisp;
-    } else {
-      rounded_salary_wisp = monthly_salary;
-      mpf = 0;
+//JOB ROLE: DELETE JOBROLE
+  app.delete("/jobroles/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      await pool.query(`DELETE FROM "JOB_ROLES" WHERE job_role_id = $1`, [id]);
+      res.json("data deleted");
+    } catch (error) {
+      console.error(error.message);
     }
+  });
 
-    const sss_deduction_sss =
-      (employee_contribution_sss / 100) * rounded_salary_wisp;
-    const sss_deduction_mpf = (employee_contribution_mpf / 100) * mpf;
-    const total_sss_deduction =
-      parseFloat(sss_deduction_sss) +
-      parseFloat(sss_deduction_mpf) +
-      parseFloat(employee_contribution_ec);
-    // Insert the new record into the DEDUCTIONS table with the fetched employee ID and monthly salary
-    const insertDeduction = await pool.query(
-      `INSERT INTO "DEDUCTIONS" (employee_id, monthly_salary,philhealth_deduction, pagibig_deduction, sss_deduction,date_created)
-       VALUES ($1, $2,$3,$4, $5, CURRENT_TIMESTAMP)
-       RETURNING *`,
-      [
-        fetched_employee_id,
-        monthly_salary,
-        philhealth_deduction,
-        pagibig_deduction,
-        total_sss_deduction,
-      ]
-    );
 
-    res.json(insertDeduction.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
+//SALARY: GET EMPLOYEE DATA THAT ARE NOT PRESENT IN SALARIES TABLE
+  app.get("/employees", async (req, res) => {
+    try {
+      const getEmp = await pool.query(`SELECT e.*
+        FROM "EMPLOYEES" e
+        LEFT JOIN "SALARIES" s
+        ON e.employee_id = s.employee_id
+        WHERE s.employee_id IS NULL`);
+      res.json(getEmp.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
 
-//philhealth
-//add
-app.post("/philhealth/", async (req, res) => {
-  try {
-    const { salary_range_1, salary_range_2, monthly_total_contribution } =
-      req.body;
+  app.get("/emp", async (req, res) => {
+    try {
+      const getEmp = await pool.query(`SELECT e.*
+        FROM "EMPLOYEES" e
+        LEFT JOIN "DEDUCTIONS" d
+        ON e.employee_id = d.employee_id
+        WHERE d.employee_id IS NULL`);
+      res.json(getEmp.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
 
-    const insertPhilheath = await pool.query(
-      `INSERT INTO "PHILHEALTH_DEDUCTIONS" (salary_range_1, salary_range_2, monthly_total_contribution, date_created)VALUES($1,$2,$3,CURRENT_TIMESTAMP) RETURNING *`,
-      [salary_range_1, salary_range_2, monthly_total_contribution]
-    );
-    res.json(insertPhilheath.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//read
-app.get("/philhealth", async (req, res) => {
-  try {
-    const getAll = await pool.query(
-      `SELECT * FROM "PHILHEALTH_DEDUCTIONS" ORDER BY salary_range_1`
-    );
-    res.json(getAll.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//update
 
-app.put("/philhealth/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { salary_range_1, salary_range_2, monthly_total_contribution } =
-      req.body;
-    const updatePhilhealth = await pool.query(
-      `UPDATE "PHILHEALTH_DEDUCTIONS" SET salary_range_1 = $1, salary_range_2 = $2, monthly_total_contribution =$3, date_updated = CURRENT_TIMESTAMP WHERE deduction_id = $4`,
-      [salary_range_1, salary_range_2, monthly_total_contribution, id]
-    );
-    res.json("updated");
-  } catch (error) {
-    console.error(error.message);
-  }
-});
+//SALARY: ADD SALARY
+  app.post("/salaries/", async (req, res) => {
+    try {
+      const { employee_id, salary, rate_type, required_hours } = req.body;
+      const insertSalary = await pool.query(
+        `INSERT INTO "SALARIES" (employee_id, salary, status, rate_type, hours_required, date_created) VALUES($1, $2, 1,$3,$4, CURRENT_TIMESTAMP) RETURNING *`,
+        [employee_id, salary, rate_type, required_hours]
+      );
+      res.json("Data Inserted");
 
-//ang pag ibig
-//Create
-app.post("/pag-ibig", async (req, res) => {
-  try {
-    const {
-      salary_range_1,
-      salary_range_2,
-      employee_contribution,
-      employer_contribution,
-    } = req.body;
-    const insertRange = await pool.query(
-      `INSERT INTO "PAGIBIG_DEDUCTIONS" (salary_range_1, salary_range_2, employee_contribution, employer_contribution, date_created)VALUES($1, $2, $3, $4, CURRENT_TIMESTAMP) RETURNING *`,
-      [
-        salary_range_1,
-        salary_range_2,
-        employee_contribution,
-        employer_contribution,
-      ]
-    );
-    res.json(insertRange.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//read
-app.get("/pag-ibig", async (req, res) => {
-  try {
-    const getPagibig = await pool.query(`SELECT * FROM "PAGIBIG_DEDUCTIONS"`);
-    res.json(getPagibig.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//update
-app.put("/pag-ibig/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const {
-      salary_range_1,
-      salary_range_2,
-      employee_contribution,
-      employer_contribution,
-    } = req.body;
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
 
-    await pool.query(
-      `UPDATE "PAGIBIG_DEDUCTIONS" SET salary_range_1 = $1, salary_range_2 = $2, employee_contribution = $3, employer_contribution =$4, date_updated = CURRENT_TIMESTAMP WHERE deduction_id = $5`,
-      [
-        salary_range_1,
-        salary_range_2,
-        employee_contribution,
-        employer_contribution,
-        id,
-      ]
-    );
-    res.json("data updated");
-  } catch (error) {
-    console.error(error.message);
-  }
-});
 
-//sss
-//add
-app.post("/sss", async (req, res) => {
-  try {
-    const {
-      salary_range_1,
-      salary_range_2,
-      employee_contribution_sss,
-      employer_contribution_sss,
-      employee_contribution_ec,
-      employer_contribution_ec,
-      employee_contribution_mpf,
-      employer_contribution_mpf,
-    } = req.body;
-    const insertData = await pool.query(
-      `INSERT INTO "SSS_DEDUCTIONS" (salary_range_1, salary_range_2, employee_contribution_sss, employer_contribution_sss, employee_contribution_ec, employer_contribution_ec, employee_contribution_mpf, employer_contribution_mpf,date_created)VALUES($1,$2,$3,$4,$5,$6,$7,$8,CURRENT_TIMESTAMP) RETURNING *`,
-      [
-        salary_range_1,
-        salary_range_2,
-        employee_contribution_sss,
-        employer_contribution_sss,
-        employee_contribution_ec,
-        employer_contribution_ec,
-        employee_contribution_mpf,
-        employer_contribution_mpf,
-      ]
-    );
-    res.json(insertData.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//read
-app.get("/sss", async (req, res) => {
-  try {
-    const getAll = await pool.query(
-      `SELECT * FROM "SSS_DEDUCTIONS" ORDER BY salary_range_1`
-    );
-    res.json(getAll.rows);
-  } catch (error) {
-    console.error(error.message);
-  }
-});
-//update
-app.put("/sss/:id", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const {
-      salary_range_1,
-      salary_range_2,
-      employee_contribution_sss,
-      employer_contribution_sss,
-      employee_contribution_ec,
-      employer_contribution_ec,
-      employee_contribution_mpf,
-      employer_contribution_mpf,
-    } = req.body;
+//SALARY: GET SALARIES
+  app.get("/salaries", async (req, res) => {
+    try {
+      const getSalaries =
+        await pool.query(`SELECT s.*, e.first_name, e.last_name, e.middle_name
+        FROM "SALARIES" s
+        JOIN "EMPLOYEES" e ON s.employee_id = e.employee_id
+        ORDER BY e.last_name`);
+      res.json(getSalaries.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
 
-    const updateData = await pool.query(
-      `UPDATE "SSS_DEDUCTIONS" SET salary_range_1=$1,salary_range_2=$2,employee_contribution_sss=$3, employer_contribution_sss=$4, employee_contribution_ec=$5, employer_contribution_ec=$6,employee_contribution_mpf=$7,employer_contribution_mpf=$8,date_updated=CURRENT_TIMESTAMP WHERE deduction_id = $9`,
-      [
-        salary_range_1,
-        salary_range_2,
-        employee_contribution_sss,
-        employer_contribution_sss,
-        employee_contribution_ec,
-        employer_contribution_ec,
-        employee_contribution_mpf,
-        employer_contribution_mpf,
-        id,
-      ]
-    );
-    res.json("data updated");
-  } catch (error) {
-    console.error(error.message);
-  }
-});
+
+//SALARY: UPDATE SALARIES
+  app.put("/salaries/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { salary, rate_type, required_hours } = req.body;
+      const updateSalary = await pool.query(
+        `UPDATE "SALARIES" SET salary = $1,rate_type=$3, hours_required=$4, date_updated = CURRENT_TIMESTAMP WHERE employee_id=$2`,
+        [salary, id, rate_type, required_hours]
+      );
+      res.json("Updated successfully");
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//PHILHEALTH: ADD DEDUCTIONS
+  app.post("/philhealth/", async (req, res) => {
+    try {
+      const { salary_range_1, salary_range_2, monthly_total_contribution } =
+        req.body;
+
+      const insertPhilheath = await pool.query(
+        `INSERT INTO "PHILHEALTH_DEDUCTIONS" (salary_range_1, salary_range_2, monthly_total_contribution, date_created)VALUES($1,$2,$3,CURRENT_TIMESTAMP) RETURNING *`,
+        [salary_range_1, salary_range_2, monthly_total_contribution]
+      );
+      res.json(insertPhilheath.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+  
+//PHILHEALTH: GET DEDUCTIONS
+  app.get("/philhealth", async (req, res) => {
+    try {
+      const getAll = await pool.query(
+        `SELECT * FROM "PHILHEALTH_DEDUCTIONS" ORDER BY salary_range_1`
+      );
+      res.json(getAll.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//PHILHEALTH: EDIT DEDUCTIONS
+  app.put("/philhealth/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { salary_range_1, salary_range_2, monthly_total_contribution } =
+        req.body;
+      const updatePhilhealth = await pool.query(
+        `UPDATE "PHILHEALTH_DEDUCTIONS" SET salary_range_1 = $1, salary_range_2 = $2, monthly_total_contribution =$3, date_updated = CURRENT_TIMESTAMP WHERE deduction_id = $4`,
+        [salary_range_1, salary_range_2, monthly_total_contribution, id]
+      );
+      res.json("updated");
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//PAG-IBIG: ADD DEDUCTIONS
+  app.post("/pag-ibig", async (req, res) => {
+    try {
+      const {
+        salary_range_1, salary_range_2,
+        employee_contribution, employer_contribution,
+      } = req.body;
+      
+      const insertRange = await pool.query(
+        `INSERT INTO "PAGIBIG_DEDUCTIONS" (salary_range_1, salary_range_2, employee_contribution, employer_contribution, date_created)VALUES($1, $2, $3, $4, CURRENT_TIMESTAMP) RETURNING *`,
+        [
+          salary_range_1, salary_range_2,
+          employee_contribution, employer_contribution,
+        ]
+      );
+      res.json(insertRange.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//PAG-IBIG: GET DEDUCTIONS
+  app.get("/pag-ibig", async (req, res) => {
+    try {
+      const getPagibig = await pool.query(`SELECT * FROM "PAGIBIG_DEDUCTIONS" ORDER BY salary_range_1`);
+      res.json(getPagibig.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//PAG-IBIG: EDIT DEDUCTIONS
+  app.put("/pag-ibig/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const {
+        salary_range_1, salary_range_2,
+        employee_contribution, employer_contribution,
+      } = req.body;
+
+      await pool.query(
+        `UPDATE "PAGIBIG_DEDUCTIONS" SET salary_range_1 = $1, salary_range_2 = $2, employee_contribution = $3, employer_contribution =$4, date_updated = CURRENT_TIMESTAMP WHERE deduction_id = $5`,
+        [
+          salary_range_1, salary_range_2,
+          employee_contribution, employer_contribution,
+          id,
+        ]
+      );
+      res.json("data updated");
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//SSS: ADD DEDUCTIONS
+  app.post("/sss", async (req, res) => {
+    try {
+      const {
+        salary_range_1, salary_range_2,
+        employee_contribution_sss, employer_contribution_sss,
+        employee_contribution_ec, employer_contribution_ec,
+        employee_contribution_mpf, employer_contribution_mpf,
+      } = req.body;
+
+      const insertData = await pool.query(
+        `INSERT INTO "SSS_DEDUCTIONS" (salary_range_1, salary_range_2, employee_contribution_sss, employer_contribution_sss, employee_contribution_ec, employer_contribution_ec, employee_contribution_mpf, employer_contribution_mpf,date_created)VALUES($1,$2,$3,$4,$5,$6,$7,$8,CURRENT_TIMESTAMP) RETURNING *`,
+        [
+          salary_range_1, salary_range_2,
+          employee_contribution_sss, employer_contribution_sss,
+          employee_contribution_ec, employer_contribution_ec,
+          employee_contribution_mpf, employer_contribution_mpf,
+        ]
+      );
+      res.json(insertData.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//SSS: GET DEDUCTIONS
+  app.get("/sss", async (req, res) => {
+    try {
+      const getAll = await pool.query(
+        `SELECT * FROM "SSS_DEDUCTIONS" ORDER BY salary_range_1`
+      );
+      res.json(getAll.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//SSS: EDIT DEDUCTIONS
+  app.put("/sss/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const {
+        salary_range_1, salary_range_2,
+        employee_contribution_sss, employer_contribution_sss,
+        employee_contribution_ec, employer_contribution_ec,
+        employee_contribution_mpf, employer_contribution_mpf,
+      } = req.body;
+
+      await pool.query(
+        `UPDATE "SSS_DEDUCTIONS" SET salary_range_1=$1, salary_range_2=$2, employee_contribution_sss=$3, employer_contribution_sss=$4, employee_contribution_ec=$5, employer_contribution_ec=$6,employee_contribution_mpf=$7, employer_contribution_mpf=$8, date_updated=CURRENT_TIMESTAMP WHERE deduction_id = $9`,
+        [
+          salary_range_1, salary_range_2,
+          employee_contribution_sss, employer_contribution_sss,
+          employee_contribution_ec, employer_contribution_ec,
+          employee_contribution_mpf, employer_contribution_mpf,
+          id,
+        ]
+      );
+      res.json("data updated");
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//WITHHOLDING TAX: ADD DEDUCTIONS
+  app.post("/withholding_tax", async (req, res) => {
+    try {
+      const {
+        taxable_income_range_1, taxable_income_range_2,
+        salary_type, percentage,
+        amount_1, amount_2,
+      } = req.body;
+      
+      const insertRange = await pool.query(
+        `INSERT INTO "WITHHOLDING_TAX" (taxable_income_range_1, taxable_income_range_2, salary_type, percentage, amount_1, amount_2) VALUES($1, $2, $3, $4, $5, $6) RETURNING *`,
+        [
+          taxable_income_range_1, taxable_income_range_2,
+          salary_type, percentage,
+          amount_1, amount_2,
+        ]
+      );
+      res.json(insertRange.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//WITHHOLDING TAX: GET DEDUCTIONS
+  app.get("/withholding_tax", async (req, res) => {
+    try {
+      const getAll = await pool.query(
+        `SELECT * FROM "WITHHOLDING_TAX" ORDER BY salary_type, taxable_income_range_1 ASC`
+      );
+      res.json(getAll.rows);
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//WITHHOLDING TAX: EDIT DEDUCTIONS
+  app.put("/withholding_tax/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const {
+          taxable_income_range_1, taxable_income_range_2,
+          salary_type, percentage,
+          amount_1, amount_2,
+      } = req.body;
+
+      await pool.query(
+        `UPDATE "WITHHOLDING_TAX" SET taxable_income_range_1 = $1, taxable_income_range_2 = $2, salary_type = $3, percentage = $4, amount_1 = $5, amount_2 = $6 WHERE deduction_id = $7`,
+        [
+          taxable_income_range_1, taxable_income_range_2,
+          salary_type, percentage,
+          amount_1, amount_2,
+          id,
+        ]
+      );
+      res.json("data updated");
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+//PAYROLL: GET PAYROLLS
+  app.get("/payrolls", async (req, res) => {
+      try {
+        const getAll = await pool.query(
+          `SELECT pf.*, p.*, s.salary, s.rate_type, e.first_name, e.last_name, e.middle_name, j.job_title
+          FROM "PAYROLL_FORM" pf
+          JOIN "PAYROLLS" p ON pf.employee_id = p.employee_id
+          JOIN "EMPLOYEES" e ON p.employee_id = e.employee_id
+          JOIN "SALARIES" s ON s.employee_id = e.employee_id
+          JOIN "JOB_ROLES" j ON j.job_role_id = e.job_title
+          ORDER BY pf.date_created`
+        );
+        res.json(getAll.rows);
+      } catch (error) {
+        console.error(error.message);
+      }
+    });
+
+
+//PAYROLL: ADD PAYROLL
+  app.post("/payrolls", async (req, res) => {
+    try {
+      const {
+        employee_id, days_attended, overtime, holidays,
+        thirteenth_month, allowance, other_bonus,
+      } = req.body;
+
+      //INSERT DATA TO PAYROLL_FORM TABLE
+        const insertPayrollForm = await pool.query(
+          `INSERT INTO "PAYROLL_FORM"
+            (employee_id, days_attended, overtime, holidays, thirteenth_month, allowance, other_bonus, date_created, time_created)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, CURRENT_DATE, CURRENT_TIME) RETURNING *`,
+          [
+            employee_id, days_attended, overtime, holidays,
+            thirteenth_month, allowance, other_bonus,
+          ]
+        ); res.json(insertPayrollForm.rows);
+
+      //GET EMPLOYEE'S SALARY, SALARY RATE AND TOTAL GROSS PAY
+        const getSalary = await pool.query(
+          `SELECT salary, rate_type FROM "SALARIES" WHERE employee_id=$1`,
+          [employee_id]
+        );
+        const {salary, rate_type} = getSalary.rows[0];
+
+        const gross_pay = parseFloat(salary) * (parseFloat(days_attended) * 8);
+        const overtime_pay = parseFloat(salary) * parseFloat(overtime);
+        const holiday_pay = parseFloat(salary) * (parseFloat(holidays) * 8);
+        const total_gross_pay = gross_pay + overtime_pay + holiday_pay;
+
+      //GET PAGIBIG DEDUCTIONS
+        const getPagIbigDeductions = await pool.query(
+          `SELECT employee_contribution FROM "PAGIBIG_DEDUCTIONS"
+            WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
+          [total_gross_pay]
+        );
+
+        const { employee_contribution } = getPagIbigDeductions.rows[0];
+
+        let total_pagibig_deductions = 0;
+        if (total_gross_pay >= 5000) {
+          total_pagibig_deductions = 100;
+        } else {
+          total_pagibig_deductions =
+            total_gross_pay * (parseFloat(employee_contribution) * 0.01);
+        }
+
+      //GET PHILHEALTH DEDUCTIONS
+        const getPhilHealthDeductions = await pool.query(
+          `SELECT monthly_total_contribution FROM "PHILHEALTH_DEDUCTIONS"
+            WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
+          [total_gross_pay]
+        );
+
+        const { monthly_total_contribution} = getPhilHealthDeductions.rows[0];
+
+        let total_philhealth_deductions = 0;
+        if (total_gross_pay <= 10000) {
+          total_philhealth_deductions =
+            10000 * (parseFloat(monthly_total_contribution) * 0.01) / 2;
+        }
+        
+        else if (total_gross_pay >= 10001 && total_gross_pay <= 79999) {
+          total_philhealth_deductions =
+            (total_gross_pay * (parseFloat(monthly_total_contribution) * 0.01)) / 2;
+        }
+        
+        else if (total_gross_pay >= 80000) {
+          total_philhealth_deductions =
+            80000 * (parseFloat(monthly_total_contribution) * 0.01) / 2;
+        }
+
+      //GET SSS DEDUCTIONS
+        const getSSSDeductions = await pool.query(
+          `SELECT employee_contribution_sss, employee_contribution_ec, employee_contribution_mpf FROM "SSS_DEDUCTIONS"
+            WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
+          [total_gross_pay]
+        );
+
+        const {
+          employee_contribution_sss, employee_contribution_ec, employee_contribution_mpf,
+        } = getSSSDeductions.rows[0];
+
+        let total_sss_deductions = parseFloat(employee_contribution_sss) + parseFloat(employee_contribution_ec) + parseFloat(employee_contribution_mpf);
+
+      //GET SALARY DEDUCTIONS BASED ON EMPLOYEE'S SALARY TYPE
+        if (rate_type === "Weekly") {
+          total_pagibig_deductions /= 4;
+          total_philhealth_deductions /= 4;
+          total_sss_deductions /= 4;
+        }
+
+        else if (rate_type === "Semi-Monthly") {
+          total_pagibig_deductions /= 2;
+          total_philhealth_deductions /= 2;
+          total_sss_deductions /= 2;
+        }
+
+        else if (rate_type === "Monthly") {
+          total_pagibig_deductions += 0;
+          total_philhealth_deductions += 0;
+          total_sss_deductions += 0;
+        }
+
+      //GET TAXABLE INCOME AND WITHHOLDING TAX
+        const deductions = total_pagibig_deductions + total_philhealth_deductions + total_sss_deductions;
+        const taxable_income = total_gross_pay - deductions;
+
+        const getWithholdingTax = await pool.query(
+          `SELECT percentage, amount_1, amount_2 FROM "WITHHOLDING_TAX"
+            WHERE $1 BETWEEN taxable_income_range_1 AND taxable_income_range_2 AND salary_type=$2`,
+          [taxable_income, rate_type]
+        );
+
+        const {
+          percentage, amount_1, amount_2,
+        } = getWithholdingTax.rows[0];
+
+        let withholding_tax = (parseFloat(amount_1) + (taxable_income - parseFloat(amount_2))) * (parseFloat(percentage) * 0.01);
+
+      //GET NET PAY AND TOTAL BONUS
+        const total_bonus = parseFloat(thirteenth_month) + parseFloat(allowance) + parseFloat(other_bonus);
+        const net_pay = (taxable_income - withholding_tax) + total_bonus;
+
+      //INSERT DATA TO PAYROLLS TABLE
+        const insertPayrolls = await pool.query(
+          `INSERT INTO "PAYROLLS"
+            (employee_id, gross_pay, overtime_pay, holiday_pay, total_gross_pay, pagibig_deductions, philhealth_deductions, sss_deductions, taxable_income, withholding_tax, total_bonus, net_pay)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING *`,
+          [
+            employee_id, gross_pay, overtime_pay, holiday_pay, total_gross_pay,
+            total_pagibig_deductions, total_philhealth_deductions, total_sss_deductions,
+            taxable_income, withholding_tax, total_bonus, net_pay,
+          ]
+        ); res.json(insertPayrolls.rows);
+
+      //CODE TO PREVENT DUPLICATES IN THE PAYROLL TABLE
+        const current_date = new Date();
+        const get_current_time = new Date();
+        const hours = get_current_time.getHours();
+        const minutes = get_current_time.getMinutes();
+        const seconds = get_current_time.getSeconds();
+        const  current_time = `${hours}:${minutes}:${seconds}`;
+
+        const existingRecord = await pool.query(
+          'SELECT * FROM "PAYROLL_FORM" WHERE employee_id = $1 AND date_created = $2 AND time_created = $3',
+          [employee_id, current_date, current_time,]
+        );
+
+        if (existingRecord.length > 0) {
+          return res.status(409).json({ error: 'The payroll for this employee already exists.' });
+        }
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+
+//PAYROLL: EDIT PAYROLL
+  app.put("/payrolls/:employee_id", async (req, res) => {
+    try {
+      const { employee_id } = req.params;
+      const {
+        days_attended, overtime, holidays,
+        thirteenth_month, allowance, other_bonus,
+      } = req.body;
+
+      await pool.query(
+        `UPDATE "PAYROLL_FORM" SET employee_id=$1, days_attended=$2, overtime=$3, holidays=$4, thirteenth_month=$5, allowance=$6, other_bonus=$7, date_updated=CURRENT_DATE, time_updated=CURRENT_TIME WHERE employee_id = $1`,
+        [
+          employee_id, days_attended, overtime, holidays,
+          thirteenth_month, allowance, other_bonus,
+        ]
+      ); res.json("data updated");
+
+    //GET EMPLOYEE'S SALARY, SALARY RATE AND TOTAL GROSS PAY
+      const getSalary = await pool.query(
+        `SELECT salary, rate_type FROM "SALARIES" WHERE employee_id=$1`,
+        [employee_id]
+      );
+      const {salary, rate_type} = getSalary.rows[0];
+
+      const gross_pay = parseFloat(salary) * (parseFloat(days_attended) * 8);
+      const overtime_pay = parseFloat(salary) * parseFloat(overtime);
+      const holiday_pay = parseFloat(salary) * (parseFloat(holidays) * 8);
+      const total_gross_pay = gross_pay + overtime_pay + holiday_pay;
+
+    //GET PAGIBIG DEDUCTIONS
+      const getPagIbigDeductions = await pool.query(
+        `SELECT employee_contribution FROM "PAGIBIG_DEDUCTIONS"
+          WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
+        [total_gross_pay]
+      );
+
+      const { employee_contribution } = getPagIbigDeductions.rows[0];
+
+      let total_pagibig_deductions = 0;
+      if (total_gross_pay >= 5000) {
+        total_pagibig_deductions = 100;
+      } else {
+        total_pagibig_deductions =
+          total_gross_pay * (parseFloat(employee_contribution) * 0.01);
+      }
+
+    //GET PHILHEALTH DEDUCTIONS
+      const getPhilHealthDeductions = await pool.query(
+        `SELECT monthly_total_contribution FROM "PHILHEALTH_DEDUCTIONS"
+          WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
+        [total_gross_pay]
+      );
+
+      const { monthly_total_contribution} = getPhilHealthDeductions.rows[0];
+
+      let total_philhealth_deductions = 0;
+      if (total_gross_pay <= 10000) {
+        total_philhealth_deductions =
+          10000 * (parseFloat(monthly_total_contribution) * 0.01) / 2;
+      }
+        
+      else if (total_gross_pay >= 10001 && total_gross_pay <= 79999) {
+        total_philhealth_deductions =
+          (total_gross_pay * (parseFloat(monthly_total_contribution) * 0.01)) / 2;
+      }
+        
+      else if (total_gross_pay >= 80000) {
+        total_philhealth_deductions =
+          80000 * (parseFloat(monthly_total_contribution) * 0.01) / 2;
+      }
+
+    //GET SSS DEDUCTIONS
+      const getSSSDeductions = await pool.query(
+        `SELECT employee_contribution_sss, employee_contribution_ec, employee_contribution_mpf FROM "SSS_DEDUCTIONS"
+          WHERE $1 BETWEEN salary_range_1 AND salary_range_2`,
+        [total_gross_pay]
+      );
+
+      const {
+        employee_contribution_sss, employee_contribution_ec, employee_contribution_mpf,
+      } = getSSSDeductions.rows[0];
+
+      let total_sss_deductions = parseFloat(employee_contribution_sss) + parseFloat(employee_contribution_ec) + parseFloat(employee_contribution_mpf);
+
+    //GET SALARY DEDUCTIONS BASED ON EMPLOYEE'S SALARY TYPE
+      if (rate_type === "Weekly") {
+        total_pagibig_deductions /= 4;
+        total_philhealth_deductions /= 4;
+        total_sss_deductions /= 4;
+      }
+
+      else if (rate_type === "Semi-Monthly") {
+        total_pagibig_deductions /= 2;
+        total_philhealth_deductions /= 2;
+        total_sss_deductions /= 2;
+      }
+
+      else if (rate_type === "Monthly") {
+        total_pagibig_deductions += 0;
+        total_philhealth_deductions += 0;
+        total_sss_deductions += 0;
+      }
+
+    //GET TAXABLE INCOME AND WITHHOLDING TAX
+      const deductions = total_pagibig_deductions + total_philhealth_deductions + total_sss_deductions;
+      const taxable_income = total_gross_pay - deductions;
+
+      const getWithholdingTax = await pool.query(
+        `SELECT percentage, amount_1, amount_2 FROM "WITHHOLDING_TAX"
+          WHERE $1 BETWEEN taxable_income_range_1 AND taxable_income_range_2 AND salary_type=$2`,
+        [taxable_income, rate_type]
+      );
+
+      const {
+        percentage, amount_1, amount_2,
+      } = getWithholdingTax.rows[0];
+
+      let withholding_tax = (parseFloat(amount_1) + (taxable_income - parseFloat(amount_2))) * (parseFloat(percentage) * 0.01);
+
+    //GET NET PAY AND TOTAL BONUS
+      const total_bonus = parseFloat(thirteenth_month) + parseFloat(allowance) + parseFloat(other_bonus);
+      const net_pay = (taxable_income - withholding_tax) + total_bonus;
+
+    //INSERT DATA TO PAYROLLS TABLE
+      await pool.query(
+        `UPDATE "PAYROLLS" SET employee_id=$1, gross_pay=$2, overtime_pay=$3, holiday_pay=$4, total_gross_pay=$5, pagibig_deductions=$6, philhealth_deductions=$7, sss_deductions=$8, taxable_income=$9, withholding_tax=$10, total_bonus=$11, net_pay=$12 WHERE employee_id = $1`,
+        [
+          employee_id, gross_pay, overtime_pay, holiday_pay, total_gross_pay,
+          total_pagibig_deductions, total_philhealth_deductions, total_sss_deductions,
+          taxable_income, withholding_tax, total_bonus, net_pay,
+        ]
+      ); res.json("data updated");
+    } catch (error) {
+      console.error(error.message);
+    }
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //stack-Expense
 //get category by id
 app.get("/category/:id", async (req, res) => {
@@ -772,6 +974,7 @@ app.get("/category/:id", async (req, res) => {
     console.error(error.message);
   }
 });
+
 app.get("/category", async (req, res) => {
   try {
     const getCAT = await pool.query(`SELECT * FROM "CATEGORIES"`);

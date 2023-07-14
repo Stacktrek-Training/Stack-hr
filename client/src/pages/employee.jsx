@@ -6,6 +6,7 @@ import ViewEmployee from "../components/view_employee";
 import AddEmployee from "../components/add_employee";
 import Sidebar from "../components/sidebar_hr";
 import Navbar from "../components/navbar";
+
 const Employee = ({ employee }) => {
   // for getting all employees
   const employeeData = employee && employee.length > 0 ? employee[0] : null;
@@ -43,22 +44,22 @@ const Employee = ({ employee }) => {
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
               <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 sticky top-0">
                 <tr>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" class="px-6 py-3 text-center">
                     #
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" class="px-6 py-3 text-center">
                     Employee Name
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" class="px-6 py-3 text-center">
                     Job Roles
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" class="px-6 py-3 text-center">
                     Address
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" class="px-6 py-3 text-center">
                     Contact
                   </th>
-                  <th scope="col" class="px-6 py-3">
+                  <th scope="col" class="px-6 py-3 text-center">
                     Action
                   </th>
                 </tr>
@@ -66,7 +67,7 @@ const Employee = ({ employee }) => {
               <tbody>
                 {employees.map((employee) => (
                   <tr
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                    class="text-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                     key={employee.employee_id}
                   >
                     <th
@@ -82,7 +83,7 @@ const Employee = ({ employee }) => {
                     <td class="px-6 py-4">{employee.job_title}</td>
                     <td class="px-6 py-4 capitalize">{employee.address}</td>
                     <td class="px-6 py-4">{employee.mobile_number}</td>
-                    <td class=" py-4 px-2 flex gap-2 text-center">
+                    <td class=" py-4 px-2 flex gap-2 text-center items-center">
                       <ViewEmployee employee={employee} />
                       <EditEmployee employee={employee} />
                     </td>

@@ -19,19 +19,19 @@ const AddDeduction = () => {
   const [employee_contribution_ec, setEployeeEC] = useState("");
   const [employer_contribution_ec, setEployerEC] = useState("");
   const [employee_contribution_mpf, setEployeeMPF] = useState("");
-  const [employeer_contribution_mpf, setEployerMPF] = useState("");
+  const [employer_contribution_mpf, setEployerMPF] = useState("");
 
   const handleSave = () => {
     axios
       .post(`http://localhost:4000/sss`, {
-        salary_range_1: salary_range_1,
-        salary_range_2: salary_range_2,
-        employee_contribution_sss: employee_contribution_sss,
-        employer_contribution_sss: employer_contribution_sss,
-        employee_contribution_ec: employee_contribution_ec,
-        employer_contribution_ec: employer_contribution_ec,
-        employee_contribution_mpf: employee_contribution_mpf,
-        employer_contribution_mpf: employeer_contribution_mpf,
+        salary_range_1: parseFloat(salary_range_1),
+        salary_range_2: parseFloat(salary_range_2),
+        employee_contribution_sss: parseFloat(employee_contribution_sss),
+        employer_contribution_sss: parseFloat(employer_contribution_sss),
+        employee_contribution_ec: parseFloat(employee_contribution_ec),
+        employer_contribution_ec: parseFloat(employer_contribution_ec),
+        employee_contribution_mpf: parseFloat(employee_contribution_mpf),
+        employer_contribution_mpf: parseFloat(employer_contribution_mpf),
       })
       .then((response) => {
         console.log(response.data);
@@ -133,11 +133,11 @@ const AddDeduction = () => {
                     htmlFor="employee-name"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Social Security (%)
+                    Social Security
                   </label>
                   <input
                     onInput={OnlyNumber}
-                    maxLength={5}
+                    maxLength={20}
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
@@ -149,7 +149,7 @@ const AddDeduction = () => {
                 <div>
                   <input
                     onInput={OnlyNumber}
-                    maxLength={5}
+                    maxLength={20}
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employer"
@@ -163,11 +163,12 @@ const AddDeduction = () => {
                     htmlFor="employee-name"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Employees Compensation
+                    Employee's Compensation
                   </label>
                   <input
                     onInput={OnlyNumber}
                     type="text"
+                    maxLength={20}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
                     value={employee_contribution_ec}
@@ -180,7 +181,7 @@ const AddDeduction = () => {
                     onInput={OnlyNumber}
                     type="text"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Employeer"
+                    placeholder="Employer"
                     value={employer_contribution_ec}
                     onChange={(e) => setEployerEC(e.target.value)}
                     required
@@ -191,11 +192,11 @@ const AddDeduction = () => {
                     htmlFor="employee-name"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Mandatory Provident Fund (%)
+                    Mandatory Provident Fund (WISP)
                   </label>
                   <input
                     type="text"
-                    maxLength={5}
+                    maxLength={20}
                     onInput={OnlyNumber}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                     placeholder="Employee"
@@ -207,11 +208,11 @@ const AddDeduction = () => {
                 <div>
                   <input
                     type="text"
-                    maxLength={5}
+                    maxLength={20}
                     onInput={OnlyNumber}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Employeer"
-                    value={employeer_contribution_mpf}
+                    placeholder="Employer"
+                    value={employer_contribution_mpf}
                     onChange={(e) => setEployerMPF(e.target.value)}
                     required
                   />

@@ -23,9 +23,9 @@ const EditDeductionPhilHealth = ({ philhealth }) => {
   const editPhilhealth = async () => {
     await axios
       .put(`http://localhost:4000/philhealth/${id}`, {
-        salary_range_1: salary_range_1,
-        salary_range_2: salary_range_2,
-        monthly_total_contribution: monthly_total_contribution,
+        salary_range_1: parseFloat(salary_range_1),
+        salary_range_2: parseFloat(salary_range_2),
+        monthly_total_contribution: parseFloat(monthly_total_contribution),
       })
       .then((response) => {
         console.log(response.data);
