@@ -208,3 +208,4 @@ const EditSalary = ({ salaries }) => {
 };
 
 export default EditSalary;
+

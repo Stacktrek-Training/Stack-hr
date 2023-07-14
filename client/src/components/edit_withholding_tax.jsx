@@ -249,3 +249,6 @@ const EditWithholdingTax = ({ withholding_tax }) => {
 };
 
 export default EditWithholdingTax;
+
+
+

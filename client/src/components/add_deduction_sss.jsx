@@ -234,3 +234,7 @@ const AddDeduction = () => {
 };
 
 export default AddDeduction;
+
+
+
+

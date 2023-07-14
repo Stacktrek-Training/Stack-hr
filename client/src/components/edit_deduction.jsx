@@ -172,3 +172,5 @@ const EditDeduction = ({ deduction }) => {
 };
 
 export default EditDeduction;
+
+

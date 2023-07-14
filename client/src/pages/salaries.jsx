@@ -120,3 +120,4 @@ const Salaries = ({ employee }) => {
 };
 
 export default Salaries;
+

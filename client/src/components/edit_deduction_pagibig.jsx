@@ -156,3 +156,6 @@ const EditDeductionPagIbig = ({ pagibig }) => {
 };
 
 export default EditDeductionPagIbig;
+
+
+

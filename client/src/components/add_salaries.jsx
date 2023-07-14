@@ -242,3 +242,6 @@ const AddSalaries = () => {
 };
 
 export default AddSalaries;
+
+
+

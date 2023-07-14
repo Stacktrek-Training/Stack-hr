@@ -29,7 +29,6 @@ CREATE TABLE "PAYROLLS" (payroll_number SERIAL PRIMARY KEY UNIQUE, employee_id I
 
 CREATE TABLE "PAYROLL_FORM" (form_number SERIAL PRIMARY KEY UNIQUE, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id), days_attended DECIMAL, overtime DECIMAL, holidays DECIMAL, thirteenth_month DECIMAL, allowance DECIMAL, other_bonus DECIMAL, date_created DATE, time_created TIME UNIQUE, date_updated DATE, time_updated TIME UNIQUE);
 
-
 -- Add column in salaries
 ALTER TABLE "SALARIES" ADD COLUMN rate_type VARCHAR;
 ALTER TABLE "SALARIES" ADD COLUMN hours_required DECIMAL;

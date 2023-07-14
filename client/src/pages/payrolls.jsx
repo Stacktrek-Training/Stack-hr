@@ -299,3 +299,4 @@ const Payroll = ({ employee }) => {
 };
 
 export default Payroll;
+
