@@ -918,48 +918,6 @@ app.delete("/employee/:id", async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //stack-Expense
 //get category by id
 app.get("/category/:id", async (req, res) => {
