@@ -65,7 +65,7 @@ const Sidebar = () => {
               />
               <path d="M5.082 14.254a8.287 8.287 0 00-1.308 5.135 9.687 9.687 0 01-1.764-.44l-.115-.04a.563.563 0 01-.373-.487l-.01-.121a3.75 3.75 0 013.57-4.047zM20.226 19.389a8.287 8.287 0 00-1.308-5.135 3.75 3.75 0 013.57 4.047l-.01.121a.563.563 0 01-.373.486l-.115.04c-.567.2-1.156.349-1.764.441z" />
             </svg>
-            <p className="block font-semibold text-lg pl-7"> Employee </p>
+            <p className="block font-semibold text-lg pl-7"> Employees </p>
           </li>
         </a>
 
@@ -101,9 +101,10 @@ const Sidebar = () => {
                 clip-rule="evenodd"
               />
             </svg>
-            <p className="block font-semibold text-lg pl-7"> Payrolls</p>
+            <p className="block font-semibold text-lg pl-7"> Payrolls </p>
           </li>
         </a>
+
         <a href="/salaries">
           <li className="py-3 mt-2  px-2  flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
             <svg
@@ -121,24 +122,6 @@ const Sidebar = () => {
             <p className="block font-semibold text-lg pl-7"> Salaries </p>
           </li>
         </a>
-        {/* <a href="/deduction">
-          <li className="py-3 mt-5  pl-10 flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-6 h-6"
-            >
-              <path d="M10.464 8.746c.227-.18.497-.311.786-.394v2.795a2.252 2.252 0 01-.786-.393c-.394-.313-.546-.681-.546-1.004 0-.323.152-.691.546-1.004zM12.75 15.662v-2.824c.347.085.664.228.921.421.427.32.579.686.579.991 0 .305-.152.671-.579.991a2.534 2.534 0 01-.921.42z" />
-              <path
-                fill-rule="evenodd"
-                d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zM12.75 6a.75.75 0 00-1.5 0v.816a3.836 3.836 0 00-1.72.756c-.712.566-1.112 1.35-1.112 2.178 0 .829.4 1.612 1.113 2.178.502.4 1.102.647 1.719.756v2.978a2.536 2.536 0 01-.921-.421l-.879-.66a.75.75 0 00-.9 1.2l.879.66c.533.4 1.169.645 1.821.75V18a.75.75 0 001.5 0v-.81a4.124 4.124 0 001.821-.749c.745-.559 1.179-1.344 1.179-2.191 0-.847-.434-1.632-1.179-2.191a4.122 4.122 0 00-1.821-.75V8.354c.29.082.559.213.786.393l.415.33a.75.75 0 00.933-1.175l-.415-.33a3.836 3.836 0 00-1.719-.755V6z"
-                clip-rule="evenodd"
-              />
-            </svg>
-            <p className="block font-semibold text-xl pl-7"> Deduction </p>
-          </li>
-        </a> */}
 
         <a href="# ">
           <li
@@ -159,9 +142,10 @@ const Sidebar = () => {
                 clip-rule="evenodd"
               />
             </svg>
-            <p className="block font-semibold text-lg pl-7"> Deduction </p>
+            <p className="block font-semibold text-lg pl-7"> Deductions </p>
           </li>
         </a>
+
         <a href="/expense">
           <li className="py-3 mt-2  px-2  flex items-center text-center hover:bg-orange-600 hover:rounded-tl-lg hover:rounded-bl-lg">
             <svg
@@ -186,13 +170,8 @@ const Sidebar = () => {
         <div
           class={` ${
             isDropdownOpen ? "" : "hidden "
-          } z-10 dropdown  bg-orange-500 divide-y divide-gray-100   w-44 h-45    `}>
+          } z-10 dropdown  bg-orange-500 divide-y divide-gray-100   w-50 h-45    `}>
           <ul class="py-1 text-sm text-center  text-white ">
-            <li>
-              <a href="deduction" className="block font-semibold  py-2 px-10 ">
-                Deduction
-              </a>
-            </li>
             <li>
               <a href="pag-ibig" className="block font-semibold  py-2 px-10 ">
                 Pag-Ibig
@@ -201,13 +180,19 @@ const Sidebar = () => {
             <li>
               <a
                 href="philhealth"
-                className="block font-semibold  py-2 px-10    ">
+                className="block font-semibold  py-2 px-10">
                 PhilHealth
               </a>
             </li>
             <li>
               <a href="sss" className="block font-semibold  py-2 px-10 ">
                 SSS
+              </a>
+            </li>
+
+            <li>
+              <a href="withholding_tax" className="block font-semibold  py-2 px-10 ">
+                Withholding Tax
               </a>
             </li>
           </ul>

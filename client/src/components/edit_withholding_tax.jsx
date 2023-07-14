@@ -1,65 +1,58 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-const EditSalary = ({ salaries }) => {
-  console.log(salaries);
+const EditWithholdingTax = ({ withholding_tax }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
-
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
   const OnlyNumber = (event) => {
-    event.target.value = event.target.value.replace(/[^0-9 .]/gi, "");
+    event.target.value = event.target.value.replace(/[^0-9.]/gi, "");
   };
 
-  const [salary, setSalary] = useState(salaries.salary);
-  const [id, setId] = useState(salaries.salary_id);
-  const [rate_type, setRateType] = useState(salaries.rate_type);
-  const [employee_id, setEmpID] = useState(salaries.employee_id);
-  const [required_hours, setrequiredHours] = useState(salaries.hours_required);
-  const [emps, setEmp] = useState([]);
-  const emp_id = employee_id;
+  const [taxable_income_range_1, setRange1] = useState(withholding_tax.taxable_income_range_1);
+  const [taxable_income_range_2, setRange2] = useState(withholding_tax.taxable_income_range_2);
+  const [salary_type, setSalaryType] = useState(withholding_tax.salary_type);
+  const [percentage, setPercentage] = useState(withholding_tax.percentage);
+  const [amount_1, setAmount1] = useState(withholding_tax.amount_1);
+  const [amount_2, setAmount2] = useState(withholding_tax.amount_2);
+  const [id, setId] = useState(withholding_tax.deduction_id);
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/employee/${emp_id}`)
-      .then((response) => {
-        console.log(response.data);
-        setEmp(response.data);
-      })
-      .catch((error) => console.error(error));
-  }, []);
-  
-
-  const editSalary = async () => {
-    const response = await axios
-      .put(`http://localhost:4000/salaries/${emp_id}`, {
-        salary: parseFloat(salary),
-        rate_type: rate_type,
-        required_hours: required_hours,
+  const editWithholdingTax = async () => {
+    await axios
+      .put(`http://localhost:4000/withholding_tax/${id}`, {
+        taxable_income_range_1: parseFloat(taxable_income_range_1),
+        taxable_income_range_2: parseFloat(taxable_income_range_2),
+        salary_type: salary_type,
+        percentage: parseFloat(percentage),
+        amount_1: parseFloat(amount_1),
+        amount_2: parseFloat(amount_2),
       })
       .then((response) => {
-        console.log(response.data);
+        editWithholdingTax(response.data);
+        window.location.href = "/withholding_tax";
       })
       .catch((error) => {
         console.error(error.message);
       });
   };
-
   return (
-    <>
+    <div className="flex w-full justify-between">
       {/* <!-- Modal toggle --> */}
+
       <button
         onClick={handleModalOpen}
-        class=" border-none bg-blue-800 px-2 py-1 rounded-md text-white hover:bg-blue-700  font-semibold text-xs tracking-widest"
+        class=" border-none bg-blue-800 px-2 py-1 rounded-md text-white
+        hover:bg-blue-700  font-semibold text-xs tracking-widest"
         type="button"
         title="Edit"
       >
         Edit
       </button>
+
       {/* <!-- Main modal --> */}
       <div
         id="modal"
@@ -69,7 +62,7 @@ const EditSalary = ({ salaries }) => {
           isModalOpen ? "" : "hidden"
         } flex items-center justify-center`}
       >
-        <div class="relative w-full max-w-md max-h-full">
+        <div class="relative w-full max-w-md  max-h-full Modal ">
           {/* <!-- Modal content --> */}
           <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <button
@@ -79,7 +72,7 @@ const EditSalary = ({ salaries }) => {
             >
               <svg
                 aria-hidden="true"
-                class="w-5 h-5"
+                class="w-5 h-5 "
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -93,8 +86,8 @@ const EditSalary = ({ salaries }) => {
               <span class="sr-only">Close modal</span>
             </button>
 
-            <div class="px-6 py-6 lg:px-8">
-              <h3 class="mb-4 text-xl text-left flex  font-bold text-gray-900 dark:text-white">
+            <div class="px-6 py-6 lg:px-8 text-left">
+              <h3 class="mb-4 text-xl inline-flex gap-2 font-bold text-gray-900 dark:text-white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -104,108 +97,158 @@ const EditSalary = ({ salaries }) => {
                   <path d="M21.731 2.269a2.625 2.625 0 00-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 000-3.712zM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 00-1.32 2.214l-.8 2.685a.75.75 0 00.933.933l2.685-.8a5.25 5.25 0 002.214-1.32l8.4-8.4z" />
                   <path d="M5.25 5.25a3 3 0 00-3 3v10.5a3 3 0 003 3h10.5a3 3 0 003-3V13.5a.75.75 0 00-1.5 0v5.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5V8.25a1.5 1.5 0 011.5-1.5h5.25a.75.75 0 000-1.5H5.25z" />
                 </svg>{" "}
-                Edit Salaries
+                Edit Withholding Tax
               </h3>
               <form
-                class="space-y flex flex-wrap gap-1.5 flex-col text-left "
-                onSubmit={editSalary}
+                class="space-y flex flex-wrap gap-1.5 flex-col text-left  "
+                onSubmit={editWithholdingTax}
               >
+                
                 <div>
                   <label
-                    for="firstname"
+                    for="taxable_income_range_1"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Employee Name
-                  </label>
-                  {emps.map((emp) => (
-                    <input
-                      disabled
-                      type="text"
-                      value={`${emp.last_name} ${","} ${emp.first_name} ${
-                        emp.middle_name
-                      } `}
-                      key={emp.employee_id}
-                      class="bg-gray-50 border border-gray-300 capitalize text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                      required
-                    />
-                  ))}
-                </div>
-                <div>
-                  <label
-                    for="salary"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Salary Rate
+                    Taxable Income Range 1
                   </label>
                   <input
                     type="text"
-                    value={salary}
-                    onChange={(e) => setSalary(e.target.value)}
+                    value={taxable_income_range_1}
+                    onChange={(e) => setRange1(e.target.value)}
                     onInput={OnlyNumber}
+                    maxLength={10}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Salary Rate"
+                    placeholder="Taxable Income Range 1"
                     required
                   />
                 </div>
+
                 <div>
                   <label
-                    for="type"
+                    for="taxable_income_range_2"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Rate Type
+                    Taxable Income Range 2
+                  </label>
+                  <input
+                    type="text"
+                    value={taxable_income_range_2}
+                    onChange={(e) => setRange2(e.target.value)}
+                    onInput={OnlyNumber}
+                    maxLength={10}
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Taxable Income Range 2"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label
+                    for="salary_type"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Salary Type
                   </label>
                   <select
-                    id="type"
-                    name="type"
-                    value={rate_type}
-                    onChange={(e) => setRateType(e.target.value)}
+                    id="salary_type"
+                    name="salary_type"
+                    value={salary_type}
+                    onChange={(e) => setSalaryType(e.target.value)}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                   >
                     <option value="" disabled selected hidden>
-                      Rate Type
+                      Salary Type
                     </option>
+
                     <option className="capitalize" value="Weekly">
                       Weekly
                     </option>
+                    
                     <option className="capitalize" value="Semi-Monthly">
                       Semi-Monthly
                     </option>
+                    
                     <option className="capitalize" value="Monthly">
                       Monthly
                     </option>
                   </select>
                 </div>
+              
                 <div>
                   <label
-                    for="required_hours"
+                    for="percentage"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Required Hours
+                    Percentage (%)
                   </label>
                   <input
                     type="text"
-                    value={required_hours}
-                    onChange={(e) => setrequiredHours(e.target.value)}
+                    value={percentage}
+                    onChange={(e) => setPercentage(e.target.value)}
                     onInput={OnlyNumber}
+                    maxLength={3}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                    placeholder="Required Hours"
+                    placeholder="Percentage (%)"
                     required
                   />
                 </div>
+
+                <div>
+                  <label
+                    for="amount_1"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Amount 1
+                  </label>
+
+                  <input
+                    type="text"
+                    value={amount_1}
+                    onChange={(e) => setAmount1(e.target.value)}
+                    onInput={OnlyNumber}
+                    maxLength={10}
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Amount 1"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label
+                    for="amount_2"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Amount 2
+                  </label>
+
+                  <input
+                    type="text"
+                    value={amount_2}
+                    onChange={(e) => setAmount2(e.target.value)}
+                    onInput={OnlyNumber}
+                    maxLength={10}
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                    placeholder="Amount 2"
+                    required
+                  />
+                </div>
+
                 <button
                   type="submit"
                   class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  Update
+                  Save
                 </button>
               </form>
             </div>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default EditSalary;
+export default EditWithholdingTax;
+
+
 

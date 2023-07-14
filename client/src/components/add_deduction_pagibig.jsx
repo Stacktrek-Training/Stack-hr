@@ -19,10 +19,10 @@ const AddDeductionPagIbig = () => {
   const addPagibig = async () => {
     await axios
       .post(`http://localhost:4000/pag-ibig`, {
-        salary_range_1: salary_range_1,
-        salary_range_2: salary_range_2,
-        employee_contribution: employee_contribution,
-        employer_contribution: employer_contribution,
+        salary_range_1: parseFloat(salary_range_1),
+        salary_range_2: parseFloat(salary_range_2),
+        employee_contribution: parseFloat(employee_contribution),
+        employer_contribution: parseFloat(employer_contribution),
       })
       .then((response) => {
         console.log(response.data);
@@ -158,3 +158,4 @@ const AddDeductionPagIbig = () => {
 };
 
 export default AddDeductionPagIbig;
+

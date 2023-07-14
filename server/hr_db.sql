@@ -21,6 +21,13 @@ CREATE TABLE "PAGIBIG_DEDUCTIONS" (deduction_id SERIAL PRIMARY KEY, salary_range
 
 CREATE TABLE "DEDUCTIONS" (deduction_id SERIAL PRIMARY KEY, employee_id INTEGER, monthly_salary DECIMAL, philhealth_deduction DECIMAL, sss_deduction DECIMAL, pagibig_deduction DECIMAL, date_created DATE, date_updated DATE);
 
+CREATE TABLE "WITHHOLDING_TAX" (deduction_id SERIAL PRIMARY KEY, taxable_income_range_1 DECIMAL, taxable_income_range_2 DECIMAL, salary_type VARCHAR(20), percentage DECIMAL, amount_1 DECIMAL, amount_2 DECIMAL);
+
+
+
+CREATE TABLE "PAYROLLS" (payroll_number SERIAL PRIMARY KEY UNIQUE, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id), gross_pay DECIMAL, overtime_pay DECIMAL, holiday_pay DECIMAL, total_gross_pay DECIMAL, pagibig_deductions DECIMAL, philhealth_deductions DECIMAL, sss_deductions DECIMAL, taxable_income DECIMAL, withholding_tax DECIMAL, total_bonus DECIMAL, net_pay DECIMAL);
+
+CREATE TABLE "PAYROLL_FORM" (form_number SERIAL PRIMARY KEY UNIQUE, employee_id INTEGER UNIQUE REFERENCES "EMPLOYEES"(employee_id), days_attended DECIMAL, overtime DECIMAL, holidays DECIMAL, thirteenth_month DECIMAL, allowance DECIMAL, other_bonus DECIMAL, date_created DATE, time_created TIME UNIQUE, date_updated DATE, time_updated TIME UNIQUE);
 
 -- Add column in salaries
 ALTER TABLE "SALARIES" ADD COLUMN rate_type VARCHAR;
@@ -36,8 +43,3 @@ ALTER TABLE "EXPENSES" ALTER COLUMN receipt TYPE TEXT;
 ALTER TABLE "EXPENSES" ADD COLUMN employee_id INT REFERENCES "EMPLOYEES" (employee_id);
 
 ALTER TABLE "EXPENSES" ALTER COLUMN employee_id SET DATA TYPE INT, ADD CONSTRAINT fk_employee_id FOREIGN KEY (employee_id) REFERENCES "EMPLOYEES" (employee_id);
-
-
-
-
-

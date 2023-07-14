@@ -13,21 +13,17 @@ const EditDeductionPagIbig = ({ pagibig }) => {
   };
   const [salary_range_1, setRange1] = useState(pagibig.salary_range_1);
   const [salary_range_2, setRange2] = useState(pagibig.salary_range_2);
-  const [employee_contribution, setEmployeeContribution] = useState(
-    pagibig.employee_contribution
-  );
-  const [employer_contribution, setEmployerContribution] = useState(
-    pagibig.employer_contribution
-  );
+  const [employee_contribution, setEmployeeContribution] = useState(pagibig.employee_contribution);
+  const [employer_contribution, setEmployerContribution] = useState(pagibig.employer_contribution);
   const [id, setId] = useState(pagibig.deduction_id);
 
   const editPagibig = async () => {
     await axios
       .put(`http://localhost:4000/pag-ibig/${id}`, {
-        salary_range_1: salary_range_1,
-        salary_range_2: salary_range_2,
-        employee_contribution: employee_contribution,
-        employer_contribution: employer_contribution,
+        salary_range_1: parseFloat(salary_range_1),
+        salary_range_2: parseFloat(salary_range_2),
+        employee_contribution: parseFloat(employee_contribution),
+        employer_contribution: parseFloat(employer_contribution),
       })
       .then((response) => {
         console.log(response.data);
@@ -160,3 +156,6 @@ const EditDeductionPagIbig = ({ pagibig }) => {
 };
 
 export default EditDeductionPagIbig;
+
+
+

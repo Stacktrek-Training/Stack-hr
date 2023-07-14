@@ -17,6 +17,7 @@ const PhilHealth = ({ employee }) => {
     currency: "PHP",
     minimumFractionDigits: 2,
   });
+
   // fetch all the data in database
   const [philhealths, setPhilhealth] = useState([]);
   useEffect(() => {
@@ -38,12 +39,13 @@ const PhilHealth = ({ employee }) => {
       <div className="flex h-screen bg-gray-200 m-0">
         {/* Sidebar */}
         <Sidebar />
-        <div className="flex-1 p-12 mt-20">
+        <div className="flex-1 p-12 mt-10">
           <div className=" flex justify-between mb-2">
             {/* {" show the dropdown table "} */}
             {/* <ShowTable /> */}
           </div>
-          <div className="mb-5 flex ">
+
+          <div className="mb-5 flex">
             <AddDeductionPhilHealth />
           </div>
           <div class="relative Table overflow-x-auto shadow-md sm:rounded-lg">
@@ -70,6 +72,7 @@ const PhilHealth = ({ employee }) => {
                   </th>
                 </tr>
               </thead>
+              
               <tbody>
                 {philhealths.map((philhealth, index) => (
                   <tr
@@ -99,7 +102,7 @@ const PhilHealth = ({ employee }) => {
                     <td class=" px-6 py-4">{`${parseFloat(
                       philhealth.monthly_total_contribution * 0.5
                     )}${"%"}`}</td>
-                    <td class=" px-6 py-4">
+                    <td class=" px-6 py-4 items-center">
                       <EditDeductionPhilHealth philhealth={philhealth} />
                     </td>
                   </tr>
@@ -114,3 +117,4 @@ const PhilHealth = ({ employee }) => {
 };
 
 export default PhilHealth;
+

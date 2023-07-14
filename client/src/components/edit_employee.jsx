@@ -73,7 +73,6 @@ const EditEmployee = ({ employee }) => {
   };
 
   const [job_roles, setJobRoles] = useState([]);
-
   useEffect(() => {
     axios
       .get("http://localhost:4000/jobroles")

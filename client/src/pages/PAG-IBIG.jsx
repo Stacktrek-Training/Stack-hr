@@ -17,6 +17,7 @@ const PAGIBIG = ({ employee }) => {
     currency: "PHP",
     minimumFractionDigits: 2,
   });
+  
   const [PAGIBIG, setPagibig] = useState([]);
   useEffect(() => {
     axios
@@ -28,6 +29,7 @@ const PAGIBIG = ({ employee }) => {
         console.error(error.message);
       });
   }, []);
+
   return (
     <div className="h-screen relative ">
       {" "}
@@ -38,7 +40,7 @@ const PAGIBIG = ({ employee }) => {
 
         <Sidebar />
 
-        <div className="flex-1 p-12 mt-20">
+        <div className="flex-1 p-12 mt-10">
           <div className=" flex justify-between mb-2">
             {" "}
             {/* <ShowTable /> */}
@@ -48,76 +50,73 @@ const PAGIBIG = ({ employee }) => {
           </div>
           <div class="relative Table  shadow-md rounded-lg ">
             <table class="sticky top-0 text-center text-xs">
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
-              <colgroup class="bg-gray-100"></colgroup>
 
               <thead className=" text-gray-700 font-semibold  uppercase">
                 <tr>
                   <th
                     rowspan="2  "
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300 bg-gray-100">
                     #
                   </th>
                   <th
                     rowspan="2"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300 bg-gray-100">
                     Monthly Compensation
                   </th>
 
                   <th
                     colspan="3"
                     scope="colgroup"
-                    class="w-2/4 border border-gray-300">
+                    class="w-2/4 border border-gray-300 bg-gray-100">
                     Membership Savings (Contribution)
                   </th>
                   <th
                     rowspan="2"
-                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300">
+                    class="w-1/10 border px-4 py-8 rounded-tl-lg  border-gray-300 bg-gray-100">
                     Action
                   </th>
                 </tr>
 
                 <tr>
-                  <th scope="col" class="w-1/3 border border-gray-300">
+                  <th scope="col" class="w-1/3 border border-gray-300 bg-gray-100">
                     Employee
                   </th>
-                  <th scope="col" class="w-1/3 border border-gray-300">
+                  <th scope="col" class="w-1/3 border border-gray-300 bg-gray-100">
                     Employeer (if any)
                   </th>
-                  <th scope="col" class="w-1/3 border border-gray-300">
+                  <th scope="col" class="w-1/3 border border-gray-300 bg-gray-100">
                     Total
                   </th>
                 </tr>
               </thead>
+
               <tbody className="text-gray-900">
                 {PAGIBIG.map((pagibig, index) => (
                   <tr
                     key={pagibig.deduction_id}
-                    className="border border-gray-300 ">
-                    <td className="border border-gray-300">{index + 1}</td>
-                    <td className="w-1/5 px-6 py-4 capitalize border border-gray-300">
+                    className="border border-gray-300 bg-white">
+                    <td className="border border-gray-300 bg-white">{index + 1}</td>
+                    <td className="w-1/5 px-6 py-4 capitalize border border-gray-300 bg-white">
                       {`${formatter.format(pagibig.salary_range_1)} ${"-"} ${
-                        pagibig.salary_range_2 > 1500
+                        pagibig.salary_range_2 > 4999
                           ? "Above"
                           : formatter.format(pagibig.salary_range_2)
                       }`}
                     </td>
 
-                    <td class="w-1/5 px-6 py-4 capitalize border border-gray-300">
+                    <td class="w-1/5 px-6 py-4 capitalize border border-gray-300 bg-white">
                       {`${pagibig.employee_contribution}${"%"}`}
                     </td>
-                    <td class="w-1/5 border border-gray-300">{`${
+
+                    <td class="w-1/5 border border-gray-300 bg-white">{`${
                       pagibig.employer_contribution
                     }${"%"}`}</td>
-                    <td class="w-1/5 border border-gray-300 px-4">{`${
+                    
+                    <td class="w-1/5 border border-gray-300 px-4 bg-white">{`${
                       parseFloat(pagibig.employee_contribution) +
                       parseFloat(pagibig.employer_contribution)
                     }${"%"}`}</td>
-                    <td class="w-1/5 border border-gray-300 px-4">
+                    <td class="w-1/5 border border-gray-300 px-4 bg-white">
                       <EditDeductionPagIbig pagibig={pagibig} />
                     </td>
                   </tr>
@@ -132,3 +131,5 @@ const PAGIBIG = ({ employee }) => {
 };
 
 export default PAGIBIG;
+
+
